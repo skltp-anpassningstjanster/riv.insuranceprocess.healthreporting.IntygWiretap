@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mule 
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:spring="http://www.springframework.org/schema/beans"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" 
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
+		http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+		http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
+	">
+
+	<flow name="wiretap-1-service">
+
+		<http:inbound-endpoint
+            connector-ref="soitoolkit-http-connector"
+			address="${WIRETAP_1_INBOUND_URL}"
+			exchange-pattern="request-response"
+			transformer-refs="objToStr"
+			responseTransformer-refs="createSoapFaultIfException logRespOut" doc:name="HTTP"/>
+			
+		<!--  Set the name of this wiretap service for logging purposes -->
+		<set-variable variableName="wiretap-name" value="${WIRETAP_1_NAME}" doc:name="Set name"/>
+
+		<!--  Log incoming request now when the wiretap-name is set -->
+		<transformer ref="logReqIn" />
+		
+		<!--  Save the request for wiretapping if the response is ok -->
+		<set-variable variableName="request" value="#[payload]" doc:name="Save Request"/>
+
+		<!-- Wiretap the request only if no error occurred during the outbound request -->
+		<response>
+			<wire-tap>
+		        <choice doc:name="Choice">
+		            <when expression="exception == null">
+						<processor-chain>
+
+							<!-- Ok, no error occurred. Let's restore the request and send it to the queue -->
+					        <set-payload value="#[variable:request]" doc:name="Set Wiretap Payload"/>        
+
+							<jms:outbound-endpoint 
+								connector-ref="soitoolkit-jms-connector" 
+								queue="${WIRETAP_1_QUEUE}" 
+								transformer-refs="strToJms logMsgOut" />		
+
+						</processor-chain>
+		            </when>
+		        </choice>
+			</wire-tap>
+		</response>
+
+		<http:outbound-endpoint 
+            connector-ref="soitoolkit-http-connector"
+			address="${WIRETAP_1_OUTBOUND_URL}" 
+			exchange-pattern="request-response"
+			responseTimeout="${SERVICE_TIMEOUT_MS}"
+			transformer-refs="logReqOut"
+			responseTransformer-refs="logRespIn" doc:name="HTTP">
+		</http:outbound-endpoint>
+
+		<custom-exception-strategy class="org.soitoolkit.commons.mule.error.ServiceExceptionStrategy"/>
+	</flow>
+</mule>

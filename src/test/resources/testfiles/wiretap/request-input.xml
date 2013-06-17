@@ -1,0 +1,7 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<sample xmlns="urn:org.soitoolkit.refapps.sd.sample.schema:v1">
+			<id>1234567890</id>
+		</sample>
+	</soap:Body>
+</soap:Envelope>
