@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="wiretap">
-    <flow SubFlow="false" name="wiretap-1-service" entity-id="2cf61e14-446a-47b9-9acc-8450c4da633d">
+    <flow SubFlow="false" name="wiretap-1-service" entity-id="b6ff9077-b4f2-4ac9-ac12-d94f64652aeb">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
@@ -68,7 +68,7 @@
                 <graphicalData height="0" width="0" y="0" x="0"/>
                 <properties>
                     <property value="noSoapFaults" name="variableName"/>
-                    <property value="#[xpath('not(boolean(//*[local-name() = \'Body\']/*[local-name() = \'Fault\']))') ]" name="value"/>
+                    <property value="#[xpath('not(boolean(/*[local-name() = \'Envelope\']/*[local-name() = \'Body\']/*[local-name() = \'Fault\']))') ]" name="value"/>
                     <property value="http://www.mulesoft.org/schema/mule/core/set-variable" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
                     <property value="6" name="auxiliary;index"/>
                 </properties>
@@ -142,7 +142,7 @@
             </unknown>
         </lane>
     </flow>
-    <flow SubFlow="false" name="wiretap-2-service" entity-id="4a44f440-0dbe-4a4a-8a24-e92e942d6c7a">
+    <flow SubFlow="false" name="wiretap-2-service" entity-id="5723dd55-e88d-4d15-a0b9-e74430e65d03">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
