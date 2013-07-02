@@ -35,11 +35,18 @@
 		<set-variable variableName="request" value="#[payload]" doc:name="Save Request"/>
 
 		<!-- Wiretap the request only if no error occurred during the outbound request -->
+
+		<!-- Check if we got a SoapFault or not by inspecting the content -->		
+		<set-variable value="#[xpath('not(boolean(//*[local-name() = \'Body\']/*[local-name() = \'Fault\']))') ]" variableName="noSoapFaults" />
+		<logger level="DEBUG" message="#[groovy:flowVars['noSoapFaults']]" />  
+		
 		<response>
 			<wire-tap>
 		        <choice doc:name="Choice">
-		            <when expression="exception == null">
+		            <when expression="exception == null and flowVars['noSoapFaults'] == true">
 						<processor-chain>
+
+							<logger message="No soapfault found" level="INFO" />
 
 							<!-- Ok, no error occurred. Let's restore the request and send it to the queue -->
 					        <set-payload value="#[variable:request]" doc:name="Set Wiretap Payload"/>        
@@ -51,6 +58,7 @@
 
 						</processor-chain>
 		            </when>
+
 		        </choice>
 			</wire-tap>
 		</response>
