@@ -18,4 +18,11 @@
         component-class="se.skltp.services.anp.intyg.wiretap.NotifyTestProducer"
         type="jax-ws" />
 
+	<simple-service 
+		name="wiretap-2-notify-teststub-service"
+        address="${WIRETAP_2_NOTIFY_TESTSTUB_INBOUND_URL}?connector=soitoolkit-http-connector" 
+        component-class="se.skltp.services.anp.intyg.wiretap.NotifyTestProducer"
+        type="jax-ws" />
+
+
 </mule>

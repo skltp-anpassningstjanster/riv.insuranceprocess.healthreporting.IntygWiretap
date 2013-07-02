@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="notify-service">
-    <flow SubFlow="false" name="notify-1-service" entity-id="6ce46858-f7cd-4cb2-8cda-93d4e37fc649">
+    <flow SubFlow="false" name="notify-1-service" entity-id="cef68f30-9dd4-44e9-8dd4-44d7fb7e5b58">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
             <property name="bussinessEventsLabel"/>
             <property name="tracking:enable-default-events"/>
-            <property name="auxiliary;index" value="1"/>
+            <property value="1" name="auxiliary;index"/>
         </properties>
-        <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#1">
-            <graphicalData x="0" y="0" width="0" height="0"/>
-            <endpoint direction="Inbound" message-exchange-pattern="OneWay" name="JMS Queue" type="http://www.mulesoft.org/schema/mule/jms/endpoint" entity-id="JMS#1">
-                <graphicalData x="0" y="0" width="0" height="0"/>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#1">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <endpoint message-exchange-pattern="OneWay" direction="Inbound" type="http://www.mulesoft.org/schema/mule/jms/endpoint" name="JMS Queue" entity-id="JMS#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
                 <properties>
                     <property name="topic"/>
-                    <property name="queue" value="${WIRETAP_1_QUEUE}"/>
+                    <property value="${WIRETAP_1_QUEUE}" name="queue"/>
                     <property name="durableName"/>
                     <property name="businessEventsLabel"/>
                     <property name="disableTransportTransformer"/>
@@ -26,74 +26,172 @@
                     <property name="address"/>
                     <property name="encoding"/>
                     <property name="responseTransformer-refs"/>
-                    <property name="auxiliary;index" value="2"/>
+                    <property value="2" name="auxiliary;index"/>
                     <property name="mimeType"/>
                     <property name="responseTimeout"/>
-                    <property name="connector-ref" value="soitoolkit-jms-connector"/>
+                    <property value="soitoolkit-jms-connector" name="connector-ref"/>
                     <property-collection name="@http://www.mulesoft.org/schema/mule/jms/transaction;0">
-                        <property name="action2" value="ALWAYS_BEGIN"/>
-                        <property name="action1" value="ALWAYS_BEGIN"/>
-                        <property name="auxiliary;index" value="3"/>
-                        <property name="auxiliary;wrapIn" value="3"/>
+                        <property value="ALWAYS_BEGIN" name="action2"/>
+                        <property value="ALWAYS_BEGIN" name="action1"/>
+                        <property value="3" name="auxiliary;index"/>
+                        <property value="3" name="auxiliary;wrapIn"/>
                     </property-collection>
                 </properties>
             </endpoint>
-            <pattern name="Set name" type="http://www.mulesoft.org/schema/mule/core/variable-transformer" entity-id="Variable#1">
-                <graphicalData x="0" y="0" width="0" height="0"/>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/variable-transformer" name="Set name" entity-id="Variable#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
                 <properties>
-                    <property name="variableName" value="wiretap-name"/>
-                    <property name="value" value="${WIRETAP_1_NAME}"/>
-                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/core/set-variable"/>
-                    <property name="auxiliary;index" value="4"/>
+                    <property value="wiretap-name" name="variableName"/>
+                    <property value="${WIRETAP_1_NAME}" name="value"/>
+                    <property value="http://www.mulesoft.org/schema/mule/core/set-variable" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="4" name="auxiliary;index"/>
                 </properties>
             </pattern>
-            <pattern name="Transformer Reference" type="org.mule.tooling.ui.modules.core.pattern.globalXformRef" entity-id="Transformer Reference#1">
-                <graphicalData x="0" y="0" width="0" height="0"/>
+            <pattern type="org.mule.tooling.ui.modules.core.pattern.globalXformRef" name="Transformer Reference" entity-id="Transformer Reference#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
                 <properties>
-                    <property name="ref" value="logMsgIn"/>
-                    <property name="auxiliary;index" value="5"/>
+                    <property value="logMsgIn" name="ref"/>
+                    <property value="5" name="auxiliary;index"/>
                 </properties>
             </pattern>
-            <pattern name="x-rivta-original-serviceconsumer-hsaid" type="http://www.mulesoft.org/schema/mule/core/properties-transformer" entity-id="Property#1">
-                <graphicalData x="0" y="0" width="0" height="0"/>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/properties-transformer" name="x-rivta-original-serviceconsumer-hsaid" entity-id="Property#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
                 <properties>
-                    <property name="propertyName" value="x-rivta-original-serviceconsumer-hsaid"/>
-                    <property name="value" value="${WIRETAP_ORIGINAL_HSA_ID}"/>
-                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/core/set-property"/>
-                    <property name="auxiliary;index" value="6"/>
+                    <property value="x-rivta-original-serviceconsumer-hsaid" name="propertyName"/>
+                    <property value="${WIRETAP_ORIGINAL_HSA_ID}" name="value"/>
+                    <property value="http://www.mulesoft.org/schema/mule/core/set-property" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="6" name="auxiliary;index"/>
                 </properties>
             </pattern>
-            <endpoint direction="Outbound" message-exchange-pattern="RequestResponse" name="HTTP" type="http://www.mulesoft.org/schema/mule/http/endpoint" entity-id="HTTP#1">
-                <graphicalData x="0" y="0" width="0" height="0"/>
+            <endpoint message-exchange-pattern="RequestResponse" direction="Outbound" type="http://www.mulesoft.org/schema/mule/http/endpoint" name="HTTP" entity-id="HTTP#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
                 <properties>
                     <property name="port"/>
                     <property name="host"/>
                     <property name="businessEventsLabel"/>
                     <property name="followRedirects"/>
-                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/http/endpoint"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
                     <property name="keep-alive"/>
                     <property name="contentType"/>
                     <property name="disableTransportTransformer"/>
                     <property name="password"/>
-                    <property name="exchange-pattern" value="request-response"/>
+                    <property value="request-response" name="exchange-pattern"/>
                     <property name="tracking:enable-default-events"/>
                     <property name="ref"/>
-                    <property name="transformer-refs" value="logReqOut"/>
+                    <property value="logReqOut" name="transformer-refs"/>
                     <property name="httpLabel"/>
-                    <property name="address" value="${WIRETAP_1_NOTIFY_OUTBOUND_URL}"/>
+                    <property value="${WIRETAP_1_NOTIFY_OUTBOUND_URL}" name="address"/>
                     <property name="path"/>
                     <property name="encoding"/>
-                    <property name="responseTransformer-refs" value="logRespIn"/>
+                    <property value="logRespIn" name="responseTransformer-refs"/>
                     <property name="method"/>
                     <property name="user"/>
-                    <property name="responseTimeout" value="${SERVICE_TIMEOUT_MS}"/>
+                    <property value="${SERVICE_TIMEOUT_MS}" name="responseTimeout"/>
                     <property name="mimeType"/>
-                    <property name="auxiliary;index" value="7"/>
-                    <property name="connector-ref" value="soitoolkit-http-connector"/>
+                    <property value="7" name="auxiliary;index"/>
+                    <property value="soitoolkit-http-connector" name="connector-ref"/>
                 </properties>
             </endpoint>
-            <unknown description="false" index="9" entity-id="unknown#1">
-                <graphicalData x="0" y="0" width="0" height="0"/>
+            <unknown index="9" description="false" entity-id="unknown#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <content>&lt;custom-exception-strategy xmlns=&quot;http://www.mulesoft.org/schema/mule/core&quot; class=&quot;org.soitoolkit.commons.mule.error.ServiceExceptionStrategy&quot;/&gt;</content>
+            </unknown>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="notify-2-service" entity-id="4610f3b9-2e68-4b95-84ad-d04f64b68746">
+        <properties>
+            <property name="processingStrategy"/>
+            <property name="processingStrategy2"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property value="10" name="auxiliary;index"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#2">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <endpoint message-exchange-pattern="OneWay" direction="Inbound" type="http://www.mulesoft.org/schema/mule/jms/endpoint" name="JMS Queue" entity-id="JMS#2">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property name="topic"/>
+                    <property value="${WIRETAP_2_QUEUE}" name="queue"/>
+                    <property name="durableName"/>
+                    <property name="businessEventsLabel"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="disableTemporaryReplyToDestinations"/>
+                    <property name="exchange-pattern"/>
+                    <property name="tracking:enable-default-events"/>
+                    <property name="ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="address"/>
+                    <property name="encoding"/>
+                    <property name="responseTransformer-refs"/>
+                    <property value="11" name="auxiliary;index"/>
+                    <property name="mimeType"/>
+                    <property name="responseTimeout"/>
+                    <property value="soitoolkit-jms-connector" name="connector-ref"/>
+                    <property-collection name="@http://www.mulesoft.org/schema/mule/jms/transaction;0">
+                        <property value="ALWAYS_BEGIN" name="action2"/>
+                        <property value="ALWAYS_BEGIN" name="action1"/>
+                        <property value="12" name="auxiliary;index"/>
+                        <property value="12" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                </properties>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/variable-transformer" name="Set name" entity-id="Variable#2">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="wiretap-name" name="variableName"/>
+                    <property value="${WIRETAP_2_NAME}" name="value"/>
+                    <property value="http://www.mulesoft.org/schema/mule/core/set-variable" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="13" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <pattern type="org.mule.tooling.ui.modules.core.pattern.globalXformRef" name="Transformer Reference" entity-id="Transformer Reference#2">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="logMsgIn" name="ref"/>
+                    <property value="14" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/properties-transformer" name="x-rivta-original-serviceconsumer-hsaid" entity-id="Property#2">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="x-rivta-original-serviceconsumer-hsaid" name="propertyName"/>
+                    <property value="${WIRETAP_ORIGINAL_HSA_ID}" name="value"/>
+                    <property value="http://www.mulesoft.org/schema/mule/core/set-property" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="15" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <endpoint message-exchange-pattern="RequestResponse" direction="Outbound" type="http://www.mulesoft.org/schema/mule/http/endpoint" name="HTTP" entity-id="HTTP#2">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property name="port"/>
+                    <property name="host"/>
+                    <property name="businessEventsLabel"/>
+                    <property name="followRedirects"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property name="keep-alive"/>
+                    <property name="contentType"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="password"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property name="tracking:enable-default-events"/>
+                    <property name="ref"/>
+                    <property value="logReqOut" name="transformer-refs"/>
+                    <property name="httpLabel"/>
+                    <property value="${WIRETAP_2_NOTIFY_OUTBOUND_URL}" name="address"/>
+                    <property name="path"/>
+                    <property name="encoding"/>
+                    <property value="logRespIn" name="responseTransformer-refs"/>
+                    <property name="method"/>
+                    <property name="user"/>
+                    <property value="${SERVICE_TIMEOUT_MS}" name="responseTimeout"/>
+                    <property name="mimeType"/>
+                    <property value="16" name="auxiliary;index"/>
+                    <property value="soitoolkit-http-connector" name="connector-ref"/>
+                </properties>
+            </endpoint>
+            <unknown index="18" description="false" entity-id="unknown#2">
+                <graphicalData height="0" width="0" y="0" x="0"/>
                 <content>&lt;custom-exception-strategy xmlns=&quot;http://www.mulesoft.org/schema/mule/core&quot; class=&quot;org.soitoolkit.commons.mule.error.ServiceExceptionStrategy&quot;/&gt;</content>
             </unknown>
         </lane>

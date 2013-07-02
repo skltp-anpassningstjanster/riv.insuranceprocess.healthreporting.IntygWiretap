@@ -43,7 +43,7 @@ public class WiretapIntegrationTest extends AbstractTestCase {
 	private static final RecursiveResourceBundle rb = new RecursiveResourceBundle("wiretap-config");
 
 	private static final String DEFAULT_SERVICE_ADDRESS = getAddress("WIRETAP_1_INBOUND_URL");
-	private static final String WIRETAP_1_QUEUE = rb.getString("WIRETAP_1_QUEUE");
+	private static final String WIRETAP_QUEUE = rb.getString("WIRETAP_1_QUEUE");
  
 	private static final String ERROR_LOG_QUEUE = "SOITOOLKIT.LOG.ERROR";
 	private AbstractJmsTestUtil jmsUtil = null;
@@ -78,7 +78,7 @@ public class WiretapIntegrationTest extends AbstractTestCase {
 		
  
 		// Clear queues used for error handling
-		jmsUtil.clearQueues(ERROR_LOG_QUEUE, WIRETAP_1_QUEUE);
+		jmsUtil.clearQueues(ERROR_LOG_QUEUE, WIRETAP_QUEUE);
     }
 
 
@@ -104,7 +104,7 @@ public class WiretapIntegrationTest extends AbstractTestCase {
 		assertEquals(0, jmsUtil.browseMessagesOnQueue(ERROR_LOG_QUEUE).size());
 
 		// Expect one message on the wiretap queue
-		List<Message> messagesOnQueue = jmsUtil.browseMessagesOnQueue(WIRETAP_1_QUEUE);
+		List<Message> messagesOnQueue = jmsUtil.browseMessagesOnQueue(WIRETAP_QUEUE);
 		assertEquals(1, messagesOnQueue.size());
 
 		// Verify that the message on the wiretap queue is the same as the request
@@ -129,7 +129,7 @@ public class WiretapIntegrationTest extends AbstractTestCase {
 		assertEquals(0, messagesOnErrorLogQueue.size());
 
 		// Verify that the processing error caused that no message was put on the wiretap queue
-		assertEquals(0, jmsUtil.browseMessagesOnQueue(WIRETAP_1_QUEUE).size());
+		assertEquals(0, jmsUtil.browseMessagesOnQueue(WIRETAP_QUEUE).size());
 	}
 
     @Test
@@ -157,7 +157,7 @@ public class WiretapIntegrationTest extends AbstractTestCase {
 		assertTrue("Unexpected error message: " + errMsg, errMsg.contains(EXPECTED_ERR_TIMEOUT_LOG_MSG));
 		
 		// Verify that the processing error caused that no message was put on the wiretap queue
-		assertEquals(0, jmsUtil.browseMessagesOnQueue(WIRETAP_1_QUEUE).size());
+		assertEquals(0, jmsUtil.browseMessagesOnQueue(WIRETAP_QUEUE).size());
     }
  
     private String getFirstMessage(List<Message> messagesOnQueue) throws JMSException {
