@@ -38,7 +38,7 @@
 		<!-- Wiretap the request only if no error occurred during the outbound request -->
 
 		<!-- Check if we got a SoapFault or not by inspecting the content -->		
-		<set-variable value="#[xpath('not(boolean(//*[local-name() = \'Body\']/*[local-name() = \'Fault\']))') ]" variableName="noSoapFaults" />
+		<set-variable value="#[xpath('not(boolean(/*[local-name() = \'Envelope\']/*[local-name() = \'Body\']/*[local-name() = \'Fault\']))') ]" variableName="noSoapFaults" />
 		<logger level="DEBUG" message="#[groovy:flowVars['noSoapFaults']]" />  
 		
 		<response>
@@ -96,7 +96,8 @@
 		<!-- Wiretap the request only if no error occurred during the outbound request -->
 
 		<!-- Check if we got a SoapFault or not by inspecting the content -->		
-		<set-variable value="#[xpath('not(boolean(//*[local-name() = \'Body\']/*[local-name() = \'Fault\']))') ]" variableName="noSoapFaults" />
+		<set-variable value="#[xpath('not(boolean(/*[local-name() = \'Envelope\']/*[local-name() = \'Body\']/*[local-name() = \'Fault\']))') ]" variableName="noSoapFaults" />
+		
 		<logger level="DEBUG" message="#[groovy:flowVars['noSoapFaults']]" />  
 		
 		<response>
