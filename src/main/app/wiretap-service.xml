@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<mule 
+<mule xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml"
+	
 	xmlns="http://www.mulesoft.org/schema/mule/core"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:spring="http://www.springframework.org/schema/beans"
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 	xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
 	xmlns:http="http://www.mulesoft.org/schema/mule/http"
-	xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" 
+	xmlns:https="http://www.mulesoft.org/schema/mule/https"
+	xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 		http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
 		http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+		http://www.mulesoft.org/schema/mule/https http://www.mulesoft.org/schema/mule/https/current/mule-https.xsd
 		http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
+		http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
 	">
-
 
 	<flow name="wiretap-1-service">
 
@@ -24,7 +27,7 @@
 			address="${WIRETAP_1_INBOUND_URL}"
 			exchange-pattern="request-response"
 			transformer-refs="objToStr"
-			responseTransformer-refs="createSoapFaultIfException logRespOut" doc:name="HTTP"/>
+			responseTransformer-refs="logRespOut" doc:name="HTTP"/>
 			
 		<!--  Set the name of this wiretap service for logging purposes -->
 		<set-variable variableName="wiretap-name" value="${WIRETAP_1_NAME}" doc:name="Set name"/>
@@ -35,16 +38,20 @@
 		<!--  Save the request for wiretapping if the response is ok -->
 		<set-variable variableName="request" value="#[payload]" doc:name="Save Request"/>
 
-		<!-- Wiretap the request only if no error occurred during the outbound request -->
 
-		<!-- Check if we got a SoapFault or not by inspecting the content -->		
-		<set-variable value="#[xpath('not(boolean(/*[local-name() = \'Envelope\']/*[local-name() = \'Body\']/*[local-name() = \'Fault\']))') ]" variableName="noSoapFaults" />
-		<logger level="DEBUG" message="#[groovy:flowVars['noSoapFaults']]" />  
-		
 		<response>
+
+			<object-to-string-transformer />
+			
+			<!-- Fetch the fault-element (if it exist) -->
+			<set-variable value="#[xpath('//Envelope/Body/Fault')]" variableName="faultElement" />
+
+			<!-- Wiretap the request only if no error occurred during the outbound request -->
 			<wire-tap>
+
 		        <choice doc:name="Choice">
-		            <when expression="exception == null and flowVars['noSoapFaults'] == true">
+		        
+		        		<when expression="exception == null and flowVars['faultElement'] == null">
 						<processor-chain>
 
 							<!-- Ok, no error occurred. Let's restore the request and send it to the queue -->
@@ -57,24 +64,50 @@
 
 						</processor-chain>
 		            </when>
+		            <otherwise>
+		            	<processor-chain>
+		            		<logger level="DEBUG" message="WE GOT A SOAP ERROR" />
+		            	</processor-chain>
+		            </otherwise>
+
 
 		        </choice>
-			</wire-tap>
-		</response>
 
-		<http:outbound-endpoint 
-            connector-ref="soitoolkit-http-connector"
+			</wire-tap>
+
+		</response>
+		
+		<custom-transformer name="SetNewLogicalAdressTransformer" class="se.skltp.services.anp.intyg.wiretap.LogicalAddressTransformer">
+			<spring:property
+            	name="newLogicalAddress"
+            	value="${WIRETAP_1_OUTBOUND_LOGICAL_ADDRESS}" />
+		</custom-transformer>
+
+    
+    	<!-- Used for testing -->
+<!-- 		<http:outbound-endpoint  -->
+<!--             connector-ref="soitoolkit-http-connector" -->
+<!-- 			address="${WIRETAP_1_OUTBOUND_URL}"  -->
+<!-- 			exchange-pattern="request-response" -->
+<!-- 			responseTimeout="${SERVICE_TIMEOUT_MS}" -->
+<!-- 			transformer-refs="logReqOut" -->
+<!-- 			responseTransformer-refs="logRespIn" doc:name="HTTP"> -->
+<!-- 		</http:outbound-endpoint> -->
+
+
+		<https:outbound-endpoint 
+            connector-ref="soitoolkit-https-connector"
 			address="${WIRETAP_1_OUTBOUND_URL}" 
 			exchange-pattern="request-response"
 			responseTimeout="${SERVICE_TIMEOUT_MS}"
 			transformer-refs="logReqOut"
 			responseTransformer-refs="logRespIn" doc:name="HTTP">
-		</http:outbound-endpoint>
+		</https:outbound-endpoint>
+
 
 		<custom-exception-strategy class="org.soitoolkit.commons.mule.error.ServiceExceptionStrategy"/>
 	</flow>
-	
-	
+
 	<flow name="wiretap-2-service">
 
 		<http:inbound-endpoint
@@ -82,7 +115,7 @@
 			address="${WIRETAP_2_INBOUND_URL}"
 			exchange-pattern="request-response"
 			transformer-refs="objToStr"
-			responseTransformer-refs="createSoapFaultIfException logRespOut" doc:name="HTTP"/>
+			responseTransformer-refs="logRespOut" doc:name="HTTP"/>
 			
 		<!--  Set the name of this wiretap service for logging purposes -->
 		<set-variable variableName="wiretap-name" value="${WIRETAP_2_NAME}" doc:name="Set name"/>
@@ -93,17 +126,20 @@
 		<!--  Save the request for wiretapping if the response is ok -->
 		<set-variable variableName="request" value="#[payload]" doc:name="Save Request"/>
 
-		<!-- Wiretap the request only if no error occurred during the outbound request -->
 
-		<!-- Check if we got a SoapFault or not by inspecting the content -->		
-		<set-variable value="#[xpath('not(boolean(/*[local-name() = \'Envelope\']/*[local-name() = \'Body\']/*[local-name() = \'Fault\']))') ]" variableName="noSoapFaults" />
-		
-		<logger level="DEBUG" message="#[groovy:flowVars['noSoapFaults']]" />  
-		
 		<response>
+
+			<object-to-string-transformer />
+			
+			<!-- Fetch the fault-element (if it exist) -->
+			<set-variable value="#[xpath('//Envelope/Body/Fault')]" variableName="faultElement" />
+
+			<!-- Wiretap the request only if no error occurred during the outbound request -->
 			<wire-tap>
+
 		        <choice doc:name="Choice">
-		            <when expression="exception == null and flowVars['noSoapFaults'] == true">
+		        
+		        		<when expression="exception == null and flowVars['faultElement'] == null">
 						<processor-chain>
 
 							<!-- Ok, no error occurred. Let's restore the request and send it to the queue -->
@@ -116,20 +152,49 @@
 
 						</processor-chain>
 		            </when>
+		            <otherwise>
+		            	<processor-chain>
+		            		<logger level="DEBUG" message="WE GOT A SOAP ERROR" />
+		            	</processor-chain>
+		            </otherwise>
+
 
 		        </choice>
-			</wire-tap>
-		</response>
 
-		<http:outbound-endpoint 
-            connector-ref="soitoolkit-http-connector"
+			</wire-tap>
+
+		</response>
+		
+		<custom-transformer name="SetNewLogicalAdressTransformer2" class="se.skltp.services.anp.intyg.wiretap.LogicalAddressTransformer">
+			<spring:property
+            	name="newLogicalAddress"
+            	value="${WIRETAP_2_OUTBOUND_LOGICAL_ADDRESS}" />
+		</custom-transformer>
+
+
+    	<!-- Used for testing -->
+<!-- 		<http:outbound-endpoint  -->
+<!--             connector-ref="soitoolkit-http-connector" -->
+<!-- 			address="${WIRETAP_1_OUTBOUND_URL}"  -->
+<!-- 			exchange-pattern="request-response" -->
+<!-- 			responseTimeout="${SERVICE_TIMEOUT_MS}" -->
+<!-- 			transformer-refs="logReqOut" -->
+<!-- 			responseTransformer-refs="logRespIn" doc:name="HTTP"> -->
+<!-- 		</http:outbound-endpoint> -->
+
+    
+		<https:outbound-endpoint 
+            connector-ref="soitoolkit-https-connector"
 			address="${WIRETAP_2_OUTBOUND_URL}" 
 			exchange-pattern="request-response"
 			responseTimeout="${SERVICE_TIMEOUT_MS}"
 			transformer-refs="logReqOut"
 			responseTransformer-refs="logRespIn" doc:name="HTTP">
-		</http:outbound-endpoint>
+		</https:outbound-endpoint>
+
 
 		<custom-exception-strategy class="org.soitoolkit.commons.mule.error.ServiceExceptionStrategy"/>
-	</flow>
+	</flow>	
+
+	
 </mule>

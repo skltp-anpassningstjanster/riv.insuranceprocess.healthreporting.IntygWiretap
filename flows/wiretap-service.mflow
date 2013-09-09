@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="wiretap">
-    <flow SubFlow="false" name="wiretap-1-service" entity-id="78c0d135-5f5f-4608-aebc-cd2cd40b0141">
+    <flow SubFlow="false" name="wiretap-1-service" entity-id="25167e15-5275-4d94-910a-187e9e50493e">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
@@ -30,7 +30,7 @@
                     <property name="address" value="${WIRETAP_1_INBOUND_URL}"/>
                     <property name="path"/>
                     <property name="encoding"/>
-                    <property name="responseTransformer-refs" value="createSoapFaultIfException logRespOut"/>
+                    <property name="responseTransformer-refs" value="logRespOut"/>
                     <property name="method"/>
                     <property name="user"/>
                     <property name="responseTimeout"/>
@@ -64,33 +64,36 @@
                     <property name="auxiliary;index" value="5"/>
                 </properties>
             </pattern>
-            <pattern name="Variable" type="http://www.mulesoft.org/schema/mule/core/variable-transformer" entity-id="Variable#3">
-                <graphicalData x="0" y="0" width="0" height="0"/>
-                <properties>
-                    <property name="variableName" value="noSoapFaults"/>
-                    <property name="value" value="#[xpath('not(boolean(/*[local-name() = \'Envelope\']/*[local-name() = \'Body\']/*[local-name() = \'Fault\']))') ]"/>
-                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/core/set-variable"/>
-                    <property name="auxiliary;index" value="6"/>
-                </properties>
-            </pattern>
-            <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#1">
-                <graphicalData x="0" y="0" width="0" height="0"/>
-                <properties>
-                    <property name="message" value="#[groovy:flowVars['noSoapFaults']]"/>
-                    <property name="category"/>
-                    <property name="level" value="DEBUG"/>
-                    <property name="auxiliary;index" value="7"/>
-                </properties>
-            </pattern>
-            <response index="8" entity-id="response#1">
+            <response index="6" entity-id="response#1">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <compartment entity-id="compartment#1">
                     <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#2">
+                        <pattern name="Object to String" type="http://www.mulesoft.org/schema/mule/core/object-to-string-transformer" entity-id="Object to String#1">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="returnClass"/>
+<property name="ignoreBadInput"/>
+<property name="encoding"/>
+<property name="mimeType"/>
+<property name="auxiliary;index" value="7"/>
+                            </properties>
+                        </pattern>
+                        <pattern name="Variable" type="http://www.mulesoft.org/schema/mule/core/variable-transformer" entity-id="Variable#3">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="variableName" value="faultElement"/>
+<property name="value" value="#[xpath('//Envelope/Body/Fault')]"/>
+<property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/core/set-variable"/>
+<property name="auxiliary;index" value="8"/>
+                            </properties>
+                        </pattern>
                         <unknown description="false" index="9" entity-id="unknown#1">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <content>&lt;wire-tap xmlns=&quot;http://www.mulesoft.org/schema/mule/core&quot;&gt;
+
 		        &lt;choice xmlns:doc=&quot;http://www.mulesoft.org/schema/mule/documentation&quot; doc:name=&quot;Choice&quot;&gt;
-		            &lt;when expression=&quot;exception == null and flowVars['noSoapFaults'] == true&quot;&gt;
+		        
+		        		&lt;when expression=&quot;exception == null and flowVars['faultElement'] == null&quot;&gt;
 						&lt;processor-chain&gt;
 
 							&lt;!-- Ok, no error occurred. Let's restore the request and send it to the queue --&gt;
@@ -100,13 +103,37 @@
 
 						&lt;/processor-chain&gt;
 		            &lt;/when&gt;
+		            &lt;otherwise&gt;
+		            	&lt;processor-chain&gt;
+		            		&lt;logger level=&quot;DEBUG&quot; message=&quot;WE GOT A SOAP ERROR&quot;/&gt;
+		            	&lt;/processor-chain&gt;
+		            &lt;/otherwise&gt;
+
 
 		        &lt;/choice&gt;
+
 			&lt;/wire-tap&gt;</content>
                         </unknown>
                     </lane>
                 </compartment>
             </response>
+            <pattern name="Java" type="org.mule.tooling.ui.modules.core.pattern.customTransformer" entity-id="Java#1">
+                <graphicalData x="0" y="0" width="0" height="0"/>
+                <properties>
+                    <property name="returnClass"/>
+                    <property name="ignoreBadInput"/>
+                    <property name="encoding"/>
+                    <property name="class" value="se.skltp.services.anp.intyg.wiretap.LogicalAddressTransformer"/>
+                    <property name="mimeType"/>
+                    <property name="auxiliary;index" value="18"/>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                        <property name="name" value="newLogicalAddress"/>
+                        <property name="value" value="${WIRETAP_1_OUTBOUND_LOGICAL_ADDRESS}"/>
+                        <property name="auxiliary;index" value="19"/>
+                        <property name="auxiliary;wrapIn" value="19"/>
+                    </property-collection>
+                </properties>
+            </pattern>
             <endpoint direction="Outbound" message-exchange-pattern="RequestResponse" name="HTTP" type="http://www.mulesoft.org/schema/mule/http/endpoint" entity-id="HTTP#2">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
@@ -114,7 +141,7 @@
                     <property name="host"/>
                     <property name="businessEventsLabel"/>
                     <property name="followRedirects"/>
-                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/http/endpoint"/>
+                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/https/endpoint"/>
                     <property name="keep-alive"/>
                     <property name="contentType"/>
                     <property name="disableTransportTransformer"/>
@@ -130,25 +157,26 @@
                     <property name="responseTransformer-refs" value="logRespIn"/>
                     <property name="method"/>
                     <property name="user"/>
+                    <property name="connector-ref-outbound" value="soitoolkit-https-connector"/>
                     <property name="responseTimeout" value="${SERVICE_TIMEOUT_MS}"/>
                     <property name="mimeType"/>
-                    <property name="auxiliary;index" value="15"/>
-                    <property name="connector-ref" value="soitoolkit-http-connector"/>
+                    <property name="auxiliary;index" value="20"/>
+                    <property name="connector-ref" value="soitoolkit-https-connector"/>
                 </properties>
             </endpoint>
-            <unknown description="false" index="16" entity-id="unknown#2">
+            <unknown description="false" index="21" entity-id="unknown#2">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <content>&lt;custom-exception-strategy xmlns=&quot;http://www.mulesoft.org/schema/mule/core&quot; class=&quot;org.soitoolkit.commons.mule.error.ServiceExceptionStrategy&quot;/&gt;</content>
             </unknown>
         </lane>
     </flow>
-    <flow SubFlow="false" name="wiretap-2-service" entity-id="390739c2-0aa2-4a8d-9982-e4b1ec8e09fd">
+    <flow SubFlow="false" name="wiretap-2-service" entity-id="53549707-e767-491f-aa69-7bbf3368de7f">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
             <property name="bussinessEventsLabel"/>
             <property name="tracking:enable-default-events"/>
-            <property name="auxiliary;index" value="17"/>
+            <property name="auxiliary;index" value="22"/>
         </properties>
         <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#3">
             <graphicalData x="0" y="0" width="0" height="0"/>
@@ -172,12 +200,12 @@
                     <property name="address" value="${WIRETAP_2_INBOUND_URL}"/>
                     <property name="path"/>
                     <property name="encoding"/>
-                    <property name="responseTransformer-refs" value="createSoapFaultIfException logRespOut"/>
+                    <property name="responseTransformer-refs" value="logRespOut"/>
                     <property name="method"/>
                     <property name="user"/>
                     <property name="responseTimeout"/>
                     <property name="mimeType"/>
-                    <property name="auxiliary;index" value="18"/>
+                    <property name="auxiliary;index" value="23"/>
                     <property name="connector-ref" value="soitoolkit-http-connector"/>
                 </properties>
             </endpoint>
@@ -187,14 +215,14 @@
                     <property name="variableName" value="wiretap-name"/>
                     <property name="value" value="${WIRETAP_2_NAME}"/>
                     <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/core/set-variable"/>
-                    <property name="auxiliary;index" value="19"/>
+                    <property name="auxiliary;index" value="24"/>
                 </properties>
             </pattern>
             <pattern name="Transformer Reference" type="org.mule.tooling.ui.modules.core.pattern.globalXformRef" entity-id="Transformer Reference#2">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
                     <property name="ref" value="logReqIn"/>
-                    <property name="auxiliary;index" value="20"/>
+                    <property name="auxiliary;index" value="25"/>
                 </properties>
             </pattern>
             <pattern name="Save Request" type="http://www.mulesoft.org/schema/mule/core/variable-transformer" entity-id="Variable#5">
@@ -203,36 +231,39 @@
                     <property name="variableName" value="request"/>
                     <property name="value" value="#[payload]"/>
                     <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/core/set-variable"/>
-                    <property name="auxiliary;index" value="21"/>
+                    <property name="auxiliary;index" value="26"/>
                 </properties>
             </pattern>
-            <pattern name="Variable" type="http://www.mulesoft.org/schema/mule/core/variable-transformer" entity-id="Variable#6">
-                <graphicalData x="0" y="0" width="0" height="0"/>
-                <properties>
-                    <property name="variableName" value="noSoapFaults"/>
-                    <property name="value" value="#[xpath('not(boolean(/*[local-name() = \'Envelope\']/*[local-name() = \'Body\']/*[local-name() = \'Fault\']))') ]"/>
-                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/core/set-variable"/>
-                    <property name="auxiliary;index" value="22"/>
-                </properties>
-            </pattern>
-            <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#2">
-                <graphicalData x="0" y="0" width="0" height="0"/>
-                <properties>
-                    <property name="message" value="#[groovy:flowVars['noSoapFaults']]"/>
-                    <property name="category"/>
-                    <property name="level" value="DEBUG"/>
-                    <property name="auxiliary;index" value="23"/>
-                </properties>
-            </pattern>
-            <response index="24" entity-id="response#2">
+            <response index="27" entity-id="response#2">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <compartment entity-id="compartment#2">
                     <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#4">
-                        <unknown description="false" index="25" entity-id="unknown#3">
+                        <pattern name="Object to String" type="http://www.mulesoft.org/schema/mule/core/object-to-string-transformer" entity-id="Object to String#2">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="returnClass"/>
+<property name="ignoreBadInput"/>
+<property name="encoding"/>
+<property name="mimeType"/>
+<property name="auxiliary;index" value="28"/>
+                            </properties>
+                        </pattern>
+                        <pattern name="Variable" type="http://www.mulesoft.org/schema/mule/core/variable-transformer" entity-id="Variable#6">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="variableName" value="faultElement"/>
+<property name="value" value="#[xpath('//Envelope/Body/Fault')]"/>
+<property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/core/set-variable"/>
+<property name="auxiliary;index" value="29"/>
+                            </properties>
+                        </pattern>
+                        <unknown description="false" index="30" entity-id="unknown#3">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <content>&lt;wire-tap xmlns=&quot;http://www.mulesoft.org/schema/mule/core&quot;&gt;
+
 		        &lt;choice xmlns:doc=&quot;http://www.mulesoft.org/schema/mule/documentation&quot; doc:name=&quot;Choice&quot;&gt;
-		            &lt;when expression=&quot;exception == null and flowVars['noSoapFaults'] == true&quot;&gt;
+		        
+		        		&lt;when expression=&quot;exception == null and flowVars['faultElement'] == null&quot;&gt;
 						&lt;processor-chain&gt;
 
 							&lt;!-- Ok, no error occurred. Let's restore the request and send it to the queue --&gt;
@@ -242,13 +273,37 @@
 
 						&lt;/processor-chain&gt;
 		            &lt;/when&gt;
+		            &lt;otherwise&gt;
+		            	&lt;processor-chain&gt;
+		            		&lt;logger level=&quot;DEBUG&quot; message=&quot;WE GOT A SOAP ERROR&quot;/&gt;
+		            	&lt;/processor-chain&gt;
+		            &lt;/otherwise&gt;
+
 
 		        &lt;/choice&gt;
+
 			&lt;/wire-tap&gt;</content>
                         </unknown>
                     </lane>
                 </compartment>
             </response>
+            <pattern name="Java" type="org.mule.tooling.ui.modules.core.pattern.customTransformer" entity-id="Java#2">
+                <graphicalData x="0" y="0" width="0" height="0"/>
+                <properties>
+                    <property name="returnClass"/>
+                    <property name="ignoreBadInput"/>
+                    <property name="encoding"/>
+                    <property name="class" value="se.skltp.services.anp.intyg.wiretap.LogicalAddressTransformer"/>
+                    <property name="mimeType"/>
+                    <property name="auxiliary;index" value="39"/>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                        <property name="name" value="newLogicalAddress"/>
+                        <property name="value" value="${WIRETAP_2_OUTBOUND_LOGICAL_ADDRESS}"/>
+                        <property name="auxiliary;index" value="40"/>
+                        <property name="auxiliary;wrapIn" value="40"/>
+                    </property-collection>
+                </properties>
+            </pattern>
             <endpoint direction="Outbound" message-exchange-pattern="RequestResponse" name="HTTP" type="http://www.mulesoft.org/schema/mule/http/endpoint" entity-id="HTTP#4">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
@@ -256,7 +311,7 @@
                     <property name="host"/>
                     <property name="businessEventsLabel"/>
                     <property name="followRedirects"/>
-                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/http/endpoint"/>
+                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/https/endpoint"/>
                     <property name="keep-alive"/>
                     <property name="contentType"/>
                     <property name="disableTransportTransformer"/>
@@ -272,13 +327,14 @@
                     <property name="responseTransformer-refs" value="logRespIn"/>
                     <property name="method"/>
                     <property name="user"/>
+                    <property name="connector-ref-outbound" value="soitoolkit-https-connector"/>
                     <property name="responseTimeout" value="${SERVICE_TIMEOUT_MS}"/>
                     <property name="mimeType"/>
-                    <property name="auxiliary;index" value="31"/>
-                    <property name="connector-ref" value="soitoolkit-http-connector"/>
+                    <property name="auxiliary;index" value="41"/>
+                    <property name="connector-ref" value="soitoolkit-https-connector"/>
                 </properties>
             </endpoint>
-            <unknown description="false" index="32" entity-id="unknown#4">
+            <unknown description="false" index="42" entity-id="unknown#4">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <content>&lt;custom-exception-strategy xmlns=&quot;http://www.mulesoft.org/schema/mule/core&quot; class=&quot;org.soitoolkit.commons.mule.error.ServiceExceptionStrategy&quot;/&gt;</content>
             </unknown>

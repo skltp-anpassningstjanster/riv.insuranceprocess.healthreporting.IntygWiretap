@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <mule xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
-	
 	xmlns="http://www.mulesoft.org/schema/mule/core"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:spring="http://www.springframework.org/schema/beans"
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 	xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
 	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:https="http://www.mulesoft.org/schema/mule/https"
 	xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" 
 	xsi:schemaLocation="
-http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd 
+		
+		http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd 
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 		http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
 		http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+		http://www.mulesoft.org/schema/mule/https http://www.mulesoft.org/schema/mule/https/current/mule-https.xsd
 		http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
 	">
-
+	
     <flow name="notify-1-service">
         <jms:inbound-endpoint 
             connector-ref="soitoolkit-jms-connector"
@@ -34,22 +36,43 @@ http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/
 
  		<set-property propertyName="x-rivta-original-serviceconsumer-hsaid" value="${WIRETAP_ORIGINAL_HSA_ID}" doc:name="x-rivta-original-serviceconsumer-hsaid" />
 
-        <http:outbound-endpoint 
-            connector-ref="soitoolkit-http-connector"
+		<custom-transformer name="SetNewLogicalAdressTransformerForNotify" class="se.skltp.services.anp.intyg.wiretap.LogicalAddressTransformer">
+			<spring:property
+            	name="newLogicalAddress"
+            	value="${WIRETAP_1_NOTIFY_OUTBOUND_LOGICAL_ADDRESS}" />
+		</custom-transformer>
+
+		<!-- Used for testing -->
+<!--         <http:outbound-endpoint  -->
+<!--             connector-ref="soitoolkit-http-connector" -->
+<!--             address="${WIRETAP_1_NOTIFY_OUTBOUND_URL}"  -->
+<!--             exchange-pattern="request-response" -->
+<!--             responseTimeout="${SERVICE_TIMEOUT_MS}" -->
+<!--             transformer-refs="logReqOut" -->
+<!--             responseTransformer-refs="logRespIn"> -->
+
+<!--             <jms:transaction action="ALWAYS_JOIN"/> -->
+
+<!--         </http:outbound-endpoint> -->
+        
+        <https:outbound-endpoint 
+            connector-ref="soitoolkit-https-connector"
             address="${WIRETAP_1_NOTIFY_OUTBOUND_URL}" 
             exchange-pattern="request-response"
             responseTimeout="${SERVICE_TIMEOUT_MS}"
             transformer-refs="logReqOut"
             responseTransformer-refs="logRespIn">
-
+            
             <jms:transaction action="ALWAYS_JOIN"/>
-
-        </http:outbound-endpoint>
+            
+        </https:outbound-endpoint>
+        
+        
         
         <custom-exception-strategy class="org.soitoolkit.commons.mule.error.ServiceExceptionStrategy"/>
     </flow>
     
-   	<flow name="notify-2-service">
+    <flow name="notify-2-service">
         <jms:inbound-endpoint 
             connector-ref="soitoolkit-jms-connector"
             queue="${WIRETAP_2_QUEUE}" 
@@ -65,18 +88,40 @@ http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/
 
  		<set-property propertyName="x-rivta-original-serviceconsumer-hsaid" value="${WIRETAP_ORIGINAL_HSA_ID}" doc:name="x-rivta-original-serviceconsumer-hsaid" />
 
-        <http:outbound-endpoint 
-            connector-ref="soitoolkit-http-connector"
+		<custom-transformer name="SetNewLogicalAdressTransformerForNotify2" class="se.skltp.services.anp.intyg.wiretap.LogicalAddressTransformer">
+			<spring:property
+            	name="newLogicalAddress"
+            	value="${WIRETAP_2_NOTIFY_OUTBOUND_LOGICAL_ADDRESS}" />
+		</custom-transformer>
+
+        
+        <!-- Used for testing -->
+<!--         <http:outbound-endpoint  -->
+<!--             connector-ref="soitoolkit-http-connector" -->
+<!--             address="${WIRETAP_1_NOTIFY_OUTBOUND_URL}"  -->
+<!--             exchange-pattern="request-response" -->
+<!--             responseTimeout="${SERVICE_TIMEOUT_MS}" -->
+<!--             transformer-refs="logReqOut" -->
+<!--             responseTransformer-refs="logRespIn"> -->
+
+<!--             <jms:transaction action="ALWAYS_JOIN"/> -->
+<!--         </http:outbound-endpoint> -->
+        
+        
+        <https:outbound-endpoint 
+            connector-ref="soitoolkit-https-connector"
             address="${WIRETAP_2_NOTIFY_OUTBOUND_URL}" 
             exchange-pattern="request-response"
             responseTimeout="${SERVICE_TIMEOUT_MS}"
             transformer-refs="logReqOut"
             responseTransformer-refs="logRespIn">
-
+            
             <jms:transaction action="ALWAYS_JOIN"/>
-
-        </http:outbound-endpoint>
+        </https:outbound-endpoint>
+        
+        
         
         <custom-exception-strategy class="org.soitoolkit.commons.mule.error.ServiceExceptionStrategy"/>
     </flow>
+
 </mule>

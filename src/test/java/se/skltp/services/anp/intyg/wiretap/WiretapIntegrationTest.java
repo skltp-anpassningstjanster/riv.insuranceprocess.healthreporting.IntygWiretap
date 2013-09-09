@@ -120,8 +120,8 @@ public class WiretapIntegrationTest extends AbstractTestCase {
 	        fail("expected fault, but got a response of type: " + ((response == null) ? "NULL" : response.getClass().getName()));
 
 		} catch (SOAPFaultException e) {
-	    	// assertEquals("Invalid Id: " + TEST_ID_FAULT_INVALID_ID, e.getMessage());
-	    	assertEquals("Internal Server Error, code: 500", e.getMessage());
+	    	 assertEquals("Invalid Id: " + TEST_ID_FAULT_INVALID_ID, e.getMessage());
+//	    	assertEquals("Internal Server Error, code: 500", e.getMessage());
 	    }
 		
 		// FIXME. We should get a error-log message here!
