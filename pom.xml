@@ -5,10 +5,7 @@
 	[soi-toolkit.gen.type=services] 
 	[soi-toolkit.gen.createDate=2013-06-13T11:17:09.494+02:00] 
 	[soi-toolkit.gen.artifactId=wiretap] -->
-<project 
-	xmlns="http://maven.apache.org/POM/4.0.0" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	
@@ -20,14 +17,14 @@
 
 	<groupId>se.skltp.services.anp</groupId>
 	<artifactId>intyg-wiretap</artifactId>
-	<version>1.0.0-RC3-SNAPSHOT</version>
+	<version>1.0.0-RC3</version>
 	<packaging>mule</packaging>
 	<name>intyg-wiretap</name>
 		
 	<scm>
-		<connection>https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/trunk</connection>
-		<developerConnection>scm:svn:https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/trunk</developerConnection>
-		<url>https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/trunk</url>
+		<connection>https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/tags/intyg-wiretap-1.0.0-RC3</connection>
+		<developerConnection>scm:svn:https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/tags/intyg-wiretap-1.0.0-RC3</developerConnection>
+		<url>https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/tags/intyg-wiretap-1.0.0-RC3</url>
 	</scm>
 
 	<dependencies>
