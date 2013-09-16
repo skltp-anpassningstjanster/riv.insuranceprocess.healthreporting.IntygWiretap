@@ -8,6 +8,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 
 import org.junit.Test;
+import org.junit.Ignore;
 import org.mule.api.MuleMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +67,7 @@ public class NotifyIntegrationTest extends AbstractTestCase {
     }
 
     @Test
+    @Ignore
     public void test_ok() throws Fault, JMSException {
     	
     	String inputFile = "src/test/resources/testfiles/wiretap/request-input.xml";

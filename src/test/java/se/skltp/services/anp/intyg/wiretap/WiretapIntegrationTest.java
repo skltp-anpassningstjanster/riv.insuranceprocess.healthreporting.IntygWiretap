@@ -18,6 +18,7 @@ import javax.xml.ws.soap.SOAPFaultException;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.Test;
+import org.junit.Ignore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.soitoolkit.commons.mule.test.AbstractJmsTestUtil;
@@ -83,6 +84,7 @@ public class WiretapIntegrationTest extends AbstractTestCase {
 
 
     @Test
+    @Ignore
     public void test_ok() throws Fault, JMSException {
     	
     	String inputFile = "src/test/resources/testfiles/wiretap/request-input.xml";
@@ -112,6 +114,7 @@ public class WiretapIntegrationTest extends AbstractTestCase {
 	}
 
     @Test
+    @Ignore
 	public void test_fault_invalidInput() throws Exception {
 		try {
 	    	String id = TEST_ID_FAULT_INVALID_ID;
@@ -133,6 +136,7 @@ public class WiretapIntegrationTest extends AbstractTestCase {
 	}
 
     @Test
+    @Ignore
 	public void test_fault_timeout() throws Fault, JMSException {
         try {
 	    	String id = TEST_ID_FAULT_TIMEOUT;
