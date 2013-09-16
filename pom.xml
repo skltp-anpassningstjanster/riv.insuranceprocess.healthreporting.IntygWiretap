@@ -17,14 +17,14 @@
 
 	<groupId>se.skltp.services.anp</groupId>
 	<artifactId>intyg-wiretap</artifactId>
-	<version>1.0.0-RC3</version>
+	<version>1.0.0-RC4-SNAPSHOT</version>
 	<packaging>mule</packaging>
 	<name>intyg-wiretap</name>
 		
 	<scm>
-		<connection>https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/tags/intyg-wiretap-1.0.0-RC3</connection>
-		<developerConnection>scm:svn:https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/tags/intyg-wiretap-1.0.0-RC3</developerConnection>
-		<url>https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/tags/intyg-wiretap-1.0.0-RC3</url>
+		<connection>https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/trunk</connection>
+		<developerConnection>scm:svn:https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/trunk</developerConnection>
+		<url>https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/trunk</url>
 	</scm>
 
 	<dependencies>
