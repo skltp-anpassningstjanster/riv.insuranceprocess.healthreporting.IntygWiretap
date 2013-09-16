@@ -20,7 +20,7 @@
 
 	<groupId>se.skltp.services.anp</groupId>
 	<artifactId>intyg-wiretap</artifactId>
-	<version>1.0.0-RC3</version>
+	<version>1.0.0-RC3-SNAPSHOT</version>
 	<packaging>mule</packaging>
 	<name>intyg-wiretap</name>
 		
