@@ -41,6 +41,9 @@
             	name="newLogicalAddress"
             	value="${WIRETAP_1_NOTIFY_OUTBOUND_LOGICAL_ADDRESS}" />
 		</custom-transformer>
+		
+		<!-- Save the payload before sending it -->
+		<set-variable variableName="request" value="#[payload]" doc:name="Save Request"/>
 
 		<!-- Used for testing -->
 <!--         <http:outbound-endpoint  -->
@@ -52,9 +55,9 @@
 <!--             responseTransformer-refs="logRespIn"> -->
 
 <!--             <jms:transaction action="ALWAYS_JOIN"/> -->
-
 <!--         </http:outbound-endpoint> -->
-        
+
+
         <https:outbound-endpoint 
             connector-ref="soitoolkit-https-connector"
             address="${WIRETAP_1_NOTIFY_OUTBOUND_URL}" 
@@ -64,9 +67,28 @@
             responseTransformer-refs="logRespIn">
             
             <jms:transaction action="ALWAYS_JOIN"/>
-            
         </https:outbound-endpoint>
         
+        
+        
+        <!-- Logs unsuccessful http requests when trying to notify WIRETAP_1_NOTIFY_OUTBOUND_URL. Will not log exceptions.  -->
+		<choice doc:name="Choice - log only errors">
+
+			<when expression="#[message.inboundProperties['http.status'] >= 400]">
+				<object-to-string-transformer />
+				<logger level="ERROR" message="Could not notify host - We got status: #[message.inboundProperties['http.status']]" />
+				<logger level="ERROR" message="InboundProperties: #[message.inboundProperties.entrySet()]" />
+				<logger level="ERROR" message="OutboundProperties: #[message.outboundProperties.entrySet()]" />
+				<logger level="ERROR" message="Response Payload: #[payload]" />
+				<logger level="ERROR" message="Request Payload: #[variable:request]" />
+			</when>
+			<otherwise>
+			
+				<!--  The transformer is needed for handling the problem with hanging VP. -->
+				<object-to-string-transformer />
+				<logger level="DEBUG" message="Notify successful!" />
+			</otherwise>
+		</choice>
         
         
         <custom-exception-strategy class="org.soitoolkit.commons.mule.error.ServiceExceptionStrategy"/>
@@ -85,7 +107,7 @@
 
 		<!--  Log incoming request now when the wiretap-name is set -->
 		<transformer ref="logMsgIn" />
-
+ 		
  		<set-property propertyName="x-rivta-original-serviceconsumer-hsaid" value="${WIRETAP_ORIGINAL_HSA_ID}" doc:name="x-rivta-original-serviceconsumer-hsaid" />
 
 		<custom-transformer name="SetNewLogicalAdressTransformerForNotify2" class="se.skltp.services.anp.intyg.wiretap.LogicalAddressTransformer">
@@ -94,6 +116,9 @@
             	value="${WIRETAP_2_NOTIFY_OUTBOUND_LOGICAL_ADDRESS}" />
 		</custom-transformer>
 
+		<!-- Save the payload before sending it -->
+		<set-variable variableName="request" value="#[payload]" doc:name="Save Request"/>
+        
         
         <!-- Used for testing -->
 <!--         <http:outbound-endpoint  -->
@@ -104,7 +129,7 @@
 <!--             transformer-refs="logReqOut" -->
 <!--             responseTransformer-refs="logRespIn"> -->
 
-<!--             <jms:transaction action="ALWAYS_JOIN"/> -->
+<!--    			<jms:transaction action="ALWAYS_JOIN"/> -->
 <!--         </http:outbound-endpoint> -->
         
         
@@ -118,8 +143,27 @@
             
             <jms:transaction action="ALWAYS_JOIN"/>
         </https:outbound-endpoint>
-        
-        
+
+
+        <!-- Logs unsuccessful http requests when trying to notify WIRETAP_2_NOTIFY_OUTBOUND_URL. Will not log exceptions.  -->
+		<choice doc:name="Choice - log only errors">
+
+			<when expression="#[message.inboundProperties['http.status'] >= 400]">
+				<object-to-string-transformer />
+				<logger level="ERROR" message="Could not notify host - We got status: #[message.inboundProperties['http.status']]" />
+				<logger level="ERROR" message="InboundProperties: #[message.inboundProperties.entrySet()]" />
+				<logger level="ERROR" message="OutboundProperties: #[message.outboundProperties.entrySet()]" />
+				<logger level="ERROR" message="Response Payload: #[payload]" />
+				<logger level="ERROR" message="Request Payload: #[variable:request]" />
+			</when>
+			<otherwise>
+			
+				<!--  The transformer is needed for handling the problem with hanging VP. -->
+				<object-to-string-transformer />
+				<logger level="DEBUG" message="Notify successful!" />
+			</otherwise>
+		</choice>
+
         
         <custom-exception-strategy class="org.soitoolkit.commons.mule.error.ServiceExceptionStrategy"/>
     </flow>

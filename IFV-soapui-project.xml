@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project name="QA - IFV" resourceRoot="" soapui-version="3.5" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="RegisterMedicalCertificateResponderBinding" type="wsdl" bindingName="{urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificate:3:rivtabp20}RegisterMedicalCertificateResponderBinding" soapVersion="1_1" anonymous="optional" definition="https://vp.qa2.tp.cybercom.carelink.sjunet.org:20000/vp/RegisterMedicalCertificate/3/rivtabp20?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="https://vp.qa2.tp.cybercom.carelink.sjunet.org:20000/vp/RegisterMedicalCertificate/3/rivtabp20?wsdl"><con:part><con:url>https://vp.qa2.tp.cybercom.carelink.sjunet.org:20000/vp/RegisterMedicalCertificate/3/rivtabp20?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="RegisterMedicalCertificateInteraction" targetNamespace="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificate:3:rivtabp20" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tjs="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3" xmlns:tns="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificate:3:rivtabp20" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<con:soapui-project name="QA - IFV" resourceRoot="" soapui-version="3.0.1" abortOnError="false" runType="SEQUENTIAL" activeEnvironment="Default" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="RegisterMedicalCertificateResponderBinding" type="wsdl" bindingName="{urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificate:3:rivtabp20}RegisterMedicalCertificateResponderBinding" soapVersion="1_1" anonymous="optional" definition="https://vp.qa2.tp.cybercom.carelink.sjunet.org:20000/vp/RegisterMedicalCertificate/3/rivtabp20?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="https://vp.qa2.tp.cybercom.carelink.sjunet.org:20000/vp/RegisterMedicalCertificate/3/rivtabp20?wsdl"><con:part><con:url>https://vp.qa2.tp.cybercom.carelink.sjunet.org:20000/vp/RegisterMedicalCertificate/3/rivtabp20?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="RegisterMedicalCertificateInteraction" targetNamespace="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificate:3:rivtabp20" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tjs="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3" xmlns:tns="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificate:3:rivtabp20" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <wsdl:types>
     <xs:schema>
       <xs:import namespace="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3" schemaLocation="https://vp.qa2.tp.cybercom.carelink.sjunet.org:20000/vp/RegisterMedicalCertificate/3/rivtabp20?xsd=RegisterMedicalCertificateResponder_3.0.xsd"/>
@@ -870,9 +870,9 @@
     </xs:sequence>
     <xs:anyAttribute namespace="##other" processContents="lax"/>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>https://qa1.esb.ntjp.sjunet.org:20000/vp/RegisterMedicalCertificate/3/rivtabp20</con:endpoint><con:endpoint>http://test.minaintyg.se/services/register-certificate/v3.0</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:1" name="RegisterMedicalCertificate" bindingOperationName="RegisterMedicalCertificate" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="NormalRequest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://qa1.esb.ntjp.sjunet.org:20000/vp/RegisterMedicalCertificate/3/rivtabp20</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>https://qa1.esb.ntjp.sjunet.org:20000/vp/RegisterMedicalCertificate/3/rivtabp20</con:endpoint><con:endpoint>http://test.minaintyg.se/services/register-certificate/v3.0</con:endpoint><con:endpoint>http://192.168.19.10:10081/intyg/wiretap/RegisterMedicalCertificate/v1</con:endpoint><con:endpoint>http://localhost:8081/vp/RegisterMedicalCertificate/3/rivtabp20</con:endpoint><con:endpoint>https://192.168.19.10:30000/vp/RegisterMedicalCertificate/3/rivtabp20</con:endpoint><con:endpoint>http://192.168.19.10:11081/intyg/wiretap/RegisterMedicalCertificate/v1</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:1" name="RegisterMedicalCertificate" bindingOperationName="RegisterMedicalCertificate" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="NormalRequest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://192.168.19.10:10081/intyg/wiretap/RegisterMedicalCertificate/v1</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
    <soap:Header>
-      <ns4:To xmlns:ns4="http://www.w3.org/2005/08/addressing" xmlns:ns3="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3" xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns="urn:riv:insuranceprocess:healthreporting:mu7263:3">2021005521</ns4:To>
+      <ns4:To xmlns:ns4="http://www.w3.org/2005/08/addressing" xmlns:ns3="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3" xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns="urn:riv:insuranceprocess:healthreporting:mu7263:3">Validate</ns4:To>
    </soap:Header>
    <soap:Body>
       <ns3:RegisterMedicalCertificate xmlns="urn:riv:insuranceprocess:healthreporting:mu7263:3" xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns:ns3="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3" xmlns:ns4="http://www.w3.org/2005/08/addressing">
@@ -962,9 +962,9 @@
          </ns3:lakarutlatande>
       </ns3:RegisterMedicalCertificate>
    </soap:Body>
-</soap:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:1"/><con:wsrmConfig version="1.2"/></con:call><con:call name="MinimalRequest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://qa1.esb.ntjp.sjunet.org:20000/vp/RegisterMedicalCertificate/3/rivtabp20</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+</soap:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:1"/><con:wsrmConfig version="1.2"/></con:call><con:call name="MinimalRequest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://192.168.19.10:30000/vp/RegisterMedicalCertificate/3/rivtabp20</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
    <soap:Header>
-      <ns4:To xmlns:ns4="http://www.w3.org/2005/08/addressing" xmlns:ns3="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3" xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns="urn:riv:insuranceprocess:healthreporting:mu7263:3">ToFK-external</ns4:To>
+      <ns4:To xmlns:ns4="http://www.w3.org/2005/08/addressing" xmlns:ns3="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3" xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns="urn:riv:insuranceprocess:healthreporting:mu7263:3">Validate</ns4:To>
    </soap:Header>
    <soap:Body>
       <ns3:RegisterMedicalCertificate xmlns="urn:riv:insuranceprocess:healthreporting:mu7263:3" xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns:ns3="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3" xmlns:ns4="http://www.w3.org/2005/08/addressing">
@@ -1291,7 +1291,70 @@
 </lakarutlatande>
       </ns3:RegisterMedicalCertificate>
    </soap:Body>
-</soap:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:1"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="SendMedicalCertificateAnswerResponderBinding" type="wsdl" bindingName="{urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateAnswer:1:rivtabp20}SendMedicalCertificateAnswerResponderBinding" soapVersion="1_1" anonymous="optional" definition="https://vp.qa2.tp.cybercom.carelink.sjunet.org:20000/vp/SendMedicalCertificateAnswer/1/rivtabp20?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="https://vp.qa2.tp.cybercom.carelink.sjunet.org:20000/vp/SendMedicalCertificateAnswer/1/rivtabp20?wsdl"><con:part><con:url>https://vp.qa2.tp.cybercom.carelink.sjunet.org:20000/vp/SendMedicalCertificateAnswer/1/rivtabp20?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="ReceiveMedicalCertificateAnswerInteraction" targetNamespace="urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateAnswer:1:rivtabp20" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tjs="urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateAnswerResponder:1" xmlns:tns="urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateAnswer:1:rivtabp20" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+</soap:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:1"/><con:wsrmConfig version="1.2"/></con:call><con:call name="Copy of MinimalRequest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://192.168.19.10:30000/vp/RegisterMedicalCertificate/3/rivtabp20</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Header>
+      <ns4:To xmlns:ns4="http://www.w3.org/2005/08/addressing" xmlns:ns3="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3" xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns="urn:riv:insuranceprocess:healthreporting:mu7263:3">ToFK-external</ns4:To>
+   </soap:Header>
+   <soap:Body>
+      <ns3:RegisterMedicalCertificate xmlns="urn:riv:insuranceprocess:healthreporting:mu7263:3" xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns:ns3="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3" xmlns:ns4="http://www.w3.org/2005/08/addressing">
+         <ns3:lakarutlatande>
+            <lakarutlatande-id>09a9f186-ba33-4a6b-9014-0564e6868387</lakarutlatande-id>
+            <typAvUtlatande>Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring</typAvUtlatande>
+            <signeringsdatum>2011-01-24T00:00:00.000+01:00</signeringsdatum>
+            <skickatDatum>2011-03-23T09:28:10.876+01:00</skickatDatum>
+            <patient>
+               <ns2:person-id extension="19790926-1922" root="1.2.752.129.2.1.3.1"/>
+               <ns2:fullstandigtNamn>Test Testorsson</ns2:fullstandigtNamn>
+            </patient>
+            <skapadAvHosPersonal>
+               <ns2:personal-id extension="Personal HSA-ID" root="1.2.752.129.2.1.4.1"/>
+               <ns2:fullstandigtNamn>En Läkare</ns2:fullstandigtNamn>
+               <ns2:enhet>
+                  <ns2:enhets-id extension="VardenhetY" root="1.2.752.129.2.1.4.1"/>
+                  <ns2:arbetsplatskod extension="123456789011" root="1.2.752.29.4.71"/>
+                  <ns2:enhetsnamn>Kir mott</ns2:enhetsnamn>
+                  <ns2:postadress>Lasarettsvägen 13</ns2:postadress>
+                  <ns2:postnummer>85150</ns2:postnummer>
+                  <ns2:postort>Sundsvall</ns2:postort>
+                  <ns2:telefonnummer>060-1818000</ns2:telefonnummer>
+                  <ns2:vardgivare>
+                     <ns2:vardgivare-id extension="VardgivareId" root="1.2.752.129.2.1.4.1"/>
+                     <ns2:vardgivarnamn>Landstinget Norrland</ns2:vardgivarnamn>
+                  </ns2:vardgivare>
+               </ns2:enhet>
+            </skapadAvHosPersonal>
+            <vardkontakt>
+               <vardkontakttyp>Min_undersokning_av_patienten</vardkontakttyp>
+               <vardkontaktstid>2011-01-24+01:00</vardkontaktstid>
+            </vardkontakt>
+            <medicinsktTillstand>
+               <tillstandskod codeSystemName="ICD-10" code="M25"/>
+            </medicinsktTillstand>
+            <funktionstillstand>
+               <beskrivning>Svullnad och värmeökning. Smärta vid manipulation.</beskrivning>
+               <typAvFunktionstillstand>Kroppsfunktion</typAvFunktionstillstand>
+            </funktionstillstand>
+            <funktionstillstand>
+               <beskrivning>Patienten arbetar som postiljon i distrikt med höghus, sjukdomen omöjliggör gång i trappor.</beskrivning>
+               <typAvFunktionstillstand>Aktivitet</typAvFunktionstillstand>
+               <arbetsformaga>
+                  <arbetsuppgift>
+                     <typAvArbetsuppgift>Brevbärare</typAvArbetsuppgift>
+                  </arbetsuppgift>
+                  <arbetsformagaNedsattning>
+                     <varaktighetFrom>2011-01-24+01:00</varaktighetFrom>
+                     <varaktighetTom>2011-02-20+01:00</varaktighetTom>
+                     <nedsattningsgrad>Helt_nedsatt</nedsattningsgrad>
+                  </arbetsformagaNedsattning>
+                  <sysselsattning>
+                     <typAvSysselsattning>Nuvarande_arbete</typAvSysselsattning>
+                  </sysselsattning>
+               </arbetsformaga>
+            </funktionstillstand>
+         </ns3:lakarutlatande>
+      </ns3:RegisterMedicalCertificate>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:1"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="SendMedicalCertificateAnswerResponderBinding" type="wsdl" bindingName="{urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateAnswer:1:rivtabp20}SendMedicalCertificateAnswerResponderBinding" soapVersion="1_1" anonymous="optional" definition="https://vp.qa2.tp.cybercom.carelink.sjunet.org:20000/vp/SendMedicalCertificateAnswer/1/rivtabp20?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="https://vp.qa2.tp.cybercom.carelink.sjunet.org:20000/vp/SendMedicalCertificateAnswer/1/rivtabp20?wsdl"><con:part><con:url>https://vp.qa2.tp.cybercom.carelink.sjunet.org:20000/vp/SendMedicalCertificateAnswer/1/rivtabp20?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="ReceiveMedicalCertificateAnswerInteraction" targetNamespace="urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateAnswer:1:rivtabp20" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tjs="urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateAnswerResponder:1" xmlns:tns="urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateAnswer:1:rivtabp20" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <wsdl:types>
     <xs:schema>
       <xs:import namespace="urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateAnswerResponder:1" schemaLocation="https://vp.qa2.tp.cybercom.carelink.sjunet.org:20000/vp/SendMedicalCertificateAnswer/1/rivtabp20?xsd=SendMedicalCertificateAnswerResponder_1.0.xsd"/>
@@ -4062,4 +4125,18 @@ If ERROR is set the fields errorId and errorText will contain information about 
          </var:FK.SKL.TaEmotFraga.Anrop>
       </urn:TaEmotFraga>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:fk:vardgivare:sjukvard:TaEmotFragaResponder:1"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:fk:vardgivare:sjukvard:TaEmotFragaResponder:1"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:mockService port="8080" path="/vp/RegisterMedicalCertificate/3/rivtabp20" host="mubarpro.local" name="MockService 1" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="RegisterMedicalCertificate" interface="RegisterMedicalCertificateResponderBinding" operation="RegisterMedicalCertificate"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="Response 1" encoding="UTF-8"><con:settings/><con:responseContent>&lt;ok>TRUE&lt;/ok></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:1"/></con:response><con:response name="Response 2 - SoapFault" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<?xml version='1.0' encoding='UTF-8'?>
+
+<SOAP-ENV:Envelope
+  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:xsi="http://www.w3.org/1999/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/1999/XMLSchema">
+   <SOAP-ENV:Body>
+     <SOAP-ENV:Fault>
+     <faultcode xsi:type="xsd:string">12345</faultcode>
+     <faultstring xsi:type="xsd:string">This is an error
+        </faultstring>
+
+      </SOAP-ENV:Fault>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:1"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:properties/><con:wssContainer/><con:sensitiveInformation/></con:soapui-project>
