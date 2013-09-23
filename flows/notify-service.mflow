@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="notify-service">
-    <flow SubFlow="false" name="notify-1-service" entity-id="bb53e801-a562-48e6-9b73-6b2af9057de9">
+    <flow SubFlow="false" name="notify-1-service" entity-id="1f9710eb-da76-467f-8698-e66b3f8a6fae">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
@@ -119,23 +119,23 @@
                     <property name="connector-ref" value="soitoolkit-https-connector"/>
                 </properties>
             </endpoint>
-            <splitter index="12" name="Choice - log only errors" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
+            <splitter index="12" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
-                    <property-collection name="8b8f1abb-340e-4df1-92fc-6c1e5aa23d6c">
+                    <property-collection name="50e5b8b4-b75c-4596-aaeb-564d11522347">
+                        <property name="choice.otherwise" value="true"/>
+                        <property-collection name="choice.attributes"/>
+                    </property-collection>
+                    <property-collection name="86c74ed0-ca7c-4a10-b3ee-54754cdf65e5">
                         <property name="choice.expression" value="#[message.inboundProperties['http.status'] &gt;= 400]"/>
                         <property-collection name="choice.attributes">
                             <property name="expression" value="#[message.inboundProperties['http.status'] &gt;= 400]"/>
                         </property-collection>
                     </property-collection>
-                    <property-collection name="9e89c51b-2e24-4133-bf86-e3a073f3c510">
-                        <property name="choice.otherwise" value="true"/>
-                        <property-collection name="choice.attributes"/>
-                    </property-collection>
                 </properties>
                 <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#2"/>
                 <compartment entity-id="compartment#1">
-                    <lane hadOnlyOneElement="false" index="14" isChoiceOtherwiseLane="false" entity-id="8b8f1abb-340e-4df1-92fc-6c1e5aa23d6c">
+                    <lane hadOnlyOneElement="false" index="14" isChoiceOtherwiseLane="false" entity-id="86c74ed0-ca7c-4a10-b3ee-54754cdf65e5">
                         <pattern name="Object to String" type="http://www.mulesoft.org/schema/mule/core/object-to-string-transformer" entity-id="Object to String#1">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
@@ -146,53 +146,24 @@
 <property name="auxiliary;index" value="14"/>
                             </properties>
                         </pattern>
-                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#1">
+                        <pattern name="Property" type="http://www.mulesoft.org/schema/mule/core/properties-transformer" entity-id="Property#2">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property name="message" value="Could not notify host - We got status: #[message.inboundProperties['http.status']]"/>
-<property name="category"/>
-<property name="level" value="ERROR"/>
+<property name="propertyName" value="RequestPayload"/>
+<property name="value" value="#[variable:request]"/>
+<property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/core/set-property"/>
 <property name="auxiliary;index" value="15"/>
                             </properties>
                         </pattern>
-                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#2">
+                        <pattern name="Java" type="http://www.mulesoft.org/schema/mule/core/component" entity-id="Java#2">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property name="message" value="InboundProperties: #[message.inboundProperties.entrySet()]"/>
-<property name="category"/>
-<property name="level" value="ERROR"/>
+<property name="class" value="se.skltp.services.anp.intyg.wiretap.WiretapExceptionThrower"/>
 <property name="auxiliary;index" value="16"/>
                             </properties>
                         </pattern>
-                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#3">
-                            <graphicalData x="0" y="0" width="0" height="0"/>
-                            <properties>
-<property name="message" value="OutboundProperties: #[message.outboundProperties.entrySet()]"/>
-<property name="category"/>
-<property name="level" value="ERROR"/>
-<property name="auxiliary;index" value="17"/>
-                            </properties>
-                        </pattern>
-                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#4">
-                            <graphicalData x="0" y="0" width="0" height="0"/>
-                            <properties>
-<property name="message" value="Response Payload: #[payload]"/>
-<property name="category"/>
-<property name="level" value="ERROR"/>
-<property name="auxiliary;index" value="18"/>
-                            </properties>
-                        </pattern>
-                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#5">
-                            <graphicalData x="0" y="0" width="0" height="0"/>
-                            <properties>
-<property name="message" value="Request Payload: #[variable:request]"/>
-<property name="category"/>
-<property name="level" value="ERROR"/>
-<property name="auxiliary;index" value="19"/>
-                            </properties>
-                        </pattern>
                     </lane>
-                    <lane hadOnlyOneElement="false" index="21" isChoiceOtherwiseLane="true" entity-id="9e89c51b-2e24-4133-bf86-e3a073f3c510">
+                    <lane hadOnlyOneElement="false" index="18" isChoiceOtherwiseLane="true" entity-id="50e5b8b4-b75c-4596-aaeb-564d11522347">
                         <pattern name="Object to String" type="http://www.mulesoft.org/schema/mule/core/object-to-string-transformer" entity-id="Object to String#2">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
@@ -200,34 +171,36 @@
 <property name="ignoreBadInput"/>
 <property name="encoding"/>
 <property name="mimeType"/>
-<property name="auxiliary;index" value="21"/>
+<property name="auxiliary;index" value="18"/>
                             </properties>
                         </pattern>
-                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#6">
+                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#1">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
 <property name="message" value="Notify successful!"/>
 <property name="category"/>
 <property name="level" value="DEBUG"/>
-<property name="auxiliary;index" value="22"/>
+<property name="auxiliary;index" value="19"/>
                             </properties>
                         </pattern>
                     </lane>
                 </compartment>
             </splitter>
-            <unknown description="false" index="23" entity-id="unknown#1">
+            <unknown description="false" index="20" entity-id="unknown#1">
                 <graphicalData x="0" y="0" width="0" height="0"/>
-                <content>&lt;custom-exception-strategy xmlns=&quot;http://www.mulesoft.org/schema/mule/core&quot; class=&quot;org.soitoolkit.commons.mule.error.ServiceExceptionStrategy&quot;/&gt;</content>
+                <content>&lt;custom-exception-strategy xmlns=&quot;http://www.mulesoft.org/schema/mule/core&quot; class=&quot;se.skltp.services.anp.intyg.wiretap.WiretapCustomNotifierExceptionStrategy&quot;&gt;
+			&lt;spring:property xmlns:spring=&quot;http://www.springframework.org/schema/beans&quot; name=&quot;logNotifyPayloads&quot; value=&quot;${LOG_NOTIFY_PAYLOADS}&quot;/&gt;
+		&lt;/custom-exception-strategy&gt;</content>
             </unknown>
         </lane>
     </flow>
-    <flow SubFlow="false" name="notify-2-service" entity-id="b14ce7c0-04a7-4ec5-9dd3-534c6f23f9aa">
+    <flow SubFlow="false" name="notify-2-service" entity-id="cf85c425-b46e-42cc-8bd3-b77e2dc8f78e">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
             <property name="bussinessEventsLabel"/>
             <property name="tracking:enable-default-events"/>
-            <property name="auxiliary;index" value="24"/>
+            <property name="auxiliary;index" value="22"/>
         </properties>
         <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#2">
             <graphicalData x="0" y="0" width="0" height="0"/>
@@ -247,15 +220,15 @@
                     <property name="address"/>
                     <property name="encoding"/>
                     <property name="responseTransformer-refs"/>
-                    <property name="auxiliary;index" value="25"/>
+                    <property name="auxiliary;index" value="23"/>
                     <property name="mimeType"/>
                     <property name="responseTimeout"/>
                     <property name="connector-ref" value="soitoolkit-jms-connector"/>
                     <property-collection name="@http://www.mulesoft.org/schema/mule/jms/transaction;0">
                         <property name="action2" value="ALWAYS_BEGIN"/>
                         <property name="action1" value="ALWAYS_BEGIN"/>
-                        <property name="auxiliary;index" value="26"/>
-                        <property name="auxiliary;wrapIn" value="26"/>
+                        <property name="auxiliary;index" value="24"/>
+                        <property name="auxiliary;wrapIn" value="24"/>
                     </property-collection>
                 </properties>
             </endpoint>
@@ -265,26 +238,26 @@
                     <property name="variableName" value="wiretap-name"/>
                     <property name="value" value="${WIRETAP_2_NAME}"/>
                     <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/core/set-variable"/>
-                    <property name="auxiliary;index" value="27"/>
+                    <property name="auxiliary;index" value="25"/>
                 </properties>
             </pattern>
             <pattern name="Transformer Reference" type="org.mule.tooling.ui.modules.core.pattern.globalXformRef" entity-id="Transformer Reference#2">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
                     <property name="ref" value="logMsgIn"/>
-                    <property name="auxiliary;index" value="28"/>
+                    <property name="auxiliary;index" value="26"/>
                 </properties>
             </pattern>
-            <pattern name="x-rivta-original-serviceconsumer-hsaid" type="http://www.mulesoft.org/schema/mule/core/properties-transformer" entity-id="Property#2">
+            <pattern name="x-rivta-original-serviceconsumer-hsaid" type="http://www.mulesoft.org/schema/mule/core/properties-transformer" entity-id="Property#3">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
                     <property name="propertyName" value="x-rivta-original-serviceconsumer-hsaid"/>
                     <property name="value" value="${WIRETAP_ORIGINAL_HSA_ID}"/>
                     <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/core/set-property"/>
-                    <property name="auxiliary;index" value="29"/>
+                    <property name="auxiliary;index" value="27"/>
                 </properties>
             </pattern>
-            <pattern name="Java" type="org.mule.tooling.ui.modules.core.pattern.customTransformer" entity-id="Java#2">
+            <pattern name="Java" type="org.mule.tooling.ui.modules.core.pattern.customTransformer" entity-id="Java#3">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
                     <property name="returnClass"/>
@@ -292,12 +265,12 @@
                     <property name="encoding"/>
                     <property name="class" value="se.skltp.services.anp.intyg.wiretap.LogicalAddressTransformer"/>
                     <property name="mimeType"/>
-                    <property name="auxiliary;index" value="30"/>
+                    <property name="auxiliary;index" value="28"/>
                     <property-collection name="@http://www.springframework.org/schema/beans/property;0">
                         <property name="name" value="newLogicalAddress"/>
                         <property name="value" value="${WIRETAP_2_NOTIFY_OUTBOUND_LOGICAL_ADDRESS}"/>
-                        <property name="auxiliary;index" value="31"/>
-                        <property name="auxiliary;wrapIn" value="31"/>
+                        <property name="auxiliary;index" value="29"/>
+                        <property name="auxiliary;wrapIn" value="29"/>
                     </property-collection>
                 </properties>
             </pattern>
@@ -307,7 +280,7 @@
                     <property name="variableName" value="request"/>
                     <property name="value" value="#[payload]"/>
                     <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/core/set-variable"/>
-                    <property name="auxiliary;index" value="32"/>
+                    <property name="auxiliary;index" value="30"/>
                 </properties>
             </pattern>
             <endpoint direction="Outbound" message-exchange-pattern="RequestResponse" name="HTTP" type="http://www.mulesoft.org/schema/mule/http/endpoint" entity-id="HTTP#2">
@@ -336,27 +309,27 @@
                     <property name="connector-ref-outbound" value="soitoolkit-https-connector"/>
                     <property name="responseTimeout" value="${SERVICE_TIMEOUT_MS}"/>
                     <property name="mimeType"/>
-                    <property name="auxiliary;index" value="33"/>
+                    <property name="auxiliary;index" value="31"/>
                     <property name="connector-ref" value="soitoolkit-https-connector"/>
                 </properties>
             </endpoint>
-            <splitter index="35" name="Choice - log only errors" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#3">
+            <splitter index="33" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#3">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
-                    <property-collection name="566cddd0-6dec-4921-88a1-bad6e47a2ca8">
+                    <property-collection name="b495aa0e-f8f7-4bfb-9822-9a75619b74b1">
+                        <property name="choice.otherwise" value="true"/>
+                        <property-collection name="choice.attributes"/>
+                    </property-collection>
+                    <property-collection name="06c63ac3-393c-4bd6-9bba-94380c5544ea">
                         <property name="choice.expression" value="#[message.inboundProperties['http.status'] &gt;= 400]"/>
                         <property-collection name="choice.attributes">
                             <property name="expression" value="#[message.inboundProperties['http.status'] &gt;= 400]"/>
                         </property-collection>
                     </property-collection>
-                    <property-collection name="9af6bf57-681a-4de3-8219-b3aa7ae441ba">
-                        <property name="choice.otherwise" value="true"/>
-                        <property-collection name="choice.attributes"/>
-                    </property-collection>
                 </properties>
                 <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#4"/>
                 <compartment entity-id="compartment#2">
-                    <lane hadOnlyOneElement="false" index="37" isChoiceOtherwiseLane="false" entity-id="566cddd0-6dec-4921-88a1-bad6e47a2ca8">
+                    <lane hadOnlyOneElement="false" index="35" isChoiceOtherwiseLane="false" entity-id="06c63ac3-393c-4bd6-9bba-94380c5544ea">
                         <pattern name="Object to String" type="http://www.mulesoft.org/schema/mule/core/object-to-string-transformer" entity-id="Object to String#3">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
@@ -364,56 +337,27 @@
 <property name="ignoreBadInput"/>
 <property name="encoding"/>
 <property name="mimeType"/>
+<property name="auxiliary;index" value="35"/>
+                            </properties>
+                        </pattern>
+                        <pattern name="Property" type="http://www.mulesoft.org/schema/mule/core/properties-transformer" entity-id="Property#4">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="propertyName" value="RequestPayload"/>
+<property name="value" value="#[variable:request]"/>
+<property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/core/set-property"/>
+<property name="auxiliary;index" value="36"/>
+                            </properties>
+                        </pattern>
+                        <pattern name="Java" type="http://www.mulesoft.org/schema/mule/core/component" entity-id="Java#4">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="class" value="se.skltp.services.anp.intyg.wiretap.WiretapExceptionThrower"/>
 <property name="auxiliary;index" value="37"/>
                             </properties>
                         </pattern>
-                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#7">
-                            <graphicalData x="0" y="0" width="0" height="0"/>
-                            <properties>
-<property name="message" value="Could not notify host - We got status: #[message.inboundProperties['http.status']]"/>
-<property name="category"/>
-<property name="level" value="ERROR"/>
-<property name="auxiliary;index" value="38"/>
-                            </properties>
-                        </pattern>
-                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#8">
-                            <graphicalData x="0" y="0" width="0" height="0"/>
-                            <properties>
-<property name="message" value="InboundProperties: #[message.inboundProperties.entrySet()]"/>
-<property name="category"/>
-<property name="level" value="ERROR"/>
-<property name="auxiliary;index" value="39"/>
-                            </properties>
-                        </pattern>
-                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#9">
-                            <graphicalData x="0" y="0" width="0" height="0"/>
-                            <properties>
-<property name="message" value="OutboundProperties: #[message.outboundProperties.entrySet()]"/>
-<property name="category"/>
-<property name="level" value="ERROR"/>
-<property name="auxiliary;index" value="40"/>
-                            </properties>
-                        </pattern>
-                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#10">
-                            <graphicalData x="0" y="0" width="0" height="0"/>
-                            <properties>
-<property name="message" value="Response Payload: #[payload]"/>
-<property name="category"/>
-<property name="level" value="ERROR"/>
-<property name="auxiliary;index" value="41"/>
-                            </properties>
-                        </pattern>
-                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#11">
-                            <graphicalData x="0" y="0" width="0" height="0"/>
-                            <properties>
-<property name="message" value="Request Payload: #[variable:request]"/>
-<property name="category"/>
-<property name="level" value="ERROR"/>
-<property name="auxiliary;index" value="42"/>
-                            </properties>
-                        </pattern>
                     </lane>
-                    <lane hadOnlyOneElement="false" index="44" isChoiceOtherwiseLane="true" entity-id="9af6bf57-681a-4de3-8219-b3aa7ae441ba">
+                    <lane hadOnlyOneElement="false" index="39" isChoiceOtherwiseLane="true" entity-id="b495aa0e-f8f7-4bfb-9822-9a75619b74b1">
                         <pattern name="Object to String" type="http://www.mulesoft.org/schema/mule/core/object-to-string-transformer" entity-id="Object to String#4">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
@@ -421,24 +365,26 @@
 <property name="ignoreBadInput"/>
 <property name="encoding"/>
 <property name="mimeType"/>
-<property name="auxiliary;index" value="44"/>
+<property name="auxiliary;index" value="39"/>
                             </properties>
                         </pattern>
-                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#12">
+                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#2">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
 <property name="message" value="Notify successful!"/>
 <property name="category"/>
 <property name="level" value="DEBUG"/>
-<property name="auxiliary;index" value="45"/>
+<property name="auxiliary;index" value="40"/>
                             </properties>
                         </pattern>
                     </lane>
                 </compartment>
             </splitter>
-            <unknown description="false" index="46" entity-id="unknown#2">
+            <unknown description="false" index="41" entity-id="unknown#2">
                 <graphicalData x="0" y="0" width="0" height="0"/>
-                <content>&lt;custom-exception-strategy xmlns=&quot;http://www.mulesoft.org/schema/mule/core&quot; class=&quot;org.soitoolkit.commons.mule.error.ServiceExceptionStrategy&quot;/&gt;</content>
+                <content>&lt;custom-exception-strategy xmlns=&quot;http://www.mulesoft.org/schema/mule/core&quot; class=&quot;se.skltp.services.anp.intyg.wiretap.WiretapCustomNotifierExceptionStrategy&quot;&gt;
+			&lt;spring:property xmlns:spring=&quot;http://www.springframework.org/schema/beans&quot; name=&quot;logNotifyPayloads&quot; value=&quot;${LOG_NOTIFY_PAYLOADS}&quot;/&gt;
+		&lt;/custom-exception-strategy&gt;</content>
             </unknown>
         </lane>
     </flow>

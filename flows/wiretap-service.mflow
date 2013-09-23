@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="wiretap">
-    <flow SubFlow="false" name="wiretap-1-service" entity-id="d48bd5da-0d25-4554-803f-8def17f93229">
+    <flow SubFlow="false" name="wiretap-1-service" entity-id="01af4776-c932-4f22-83c2-575e13291921">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
@@ -170,7 +170,7 @@
             </unknown>
         </lane>
     </flow>
-    <flow SubFlow="false" name="wiretap-2-service" entity-id="5c0f851e-ae8d-44d8-9479-19ad92ae8793">
+    <flow SubFlow="false" name="wiretap-2-service" entity-id="b2d0b51f-28de-4432-a76d-dc0b755f61d4">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>

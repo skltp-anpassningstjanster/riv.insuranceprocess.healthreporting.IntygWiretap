@@ -8,19 +8,16 @@
 	xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
 	xmlns:http="http://www.mulesoft.org/schema/mule/http"
 	xmlns:https="http://www.mulesoft.org/schema/mule/https"
-	xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" 
-	xsi:schemaLocation="
-		
-		http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd 
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
-		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-		http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
-		http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
-		http://www.mulesoft.org/schema/mule/https http://www.mulesoft.org/schema/mule/https/current/mule-https.xsd
-		http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
-	">
+	xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/https http://www.mulesoft.org/schema/mule/https/current/mule-https.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd">
 	
-    <flow name="notify-1-service">
+    <flow name="notify-1-service" doc:name="notify-1-service">
         <jms:inbound-endpoint 
             connector-ref="soitoolkit-jms-connector"
             queue="${WIRETAP_1_QUEUE}" 
@@ -32,11 +29,11 @@
 		<set-variable variableName="wiretap-name" value="${WIRETAP_1_NAME}" doc:name="Set name"/>
 
 		<!--  Log incoming request now when the wiretap-name is set -->
-		<transformer ref="logMsgIn" />
+		<transformer ref="logMsgIn" doc:name="Transformer Reference"/>
 
  		<set-property propertyName="x-rivta-original-serviceconsumer-hsaid" value="${WIRETAP_ORIGINAL_HSA_ID}" doc:name="x-rivta-original-serviceconsumer-hsaid" />
 
-		<custom-transformer name="SetNewLogicalAdressTransformerForNotify" class="se.skltp.services.anp.intyg.wiretap.LogicalAddressTransformer">
+		<custom-transformer  class="se.skltp.services.anp.intyg.wiretap.LogicalAddressTransformer" doc:name="Java">
 			<spring:property
             	name="newLogicalAddress"
             	value="${WIRETAP_1_NOTIFY_OUTBOUND_LOGICAL_ADDRESS}" />
@@ -52,7 +49,7 @@
 <!--             exchange-pattern="request-response" -->
 <!--             responseTimeout="${SERVICE_TIMEOUT_MS}" -->
 <!--             transformer-refs="logReqOut" -->
-<!--             responseTransformer-refs="logRespIn"> -->
+<!--             responseTransformer-refs="logRespIn" doc:name="HTTP"> -->
 
 <!--             <jms:transaction action="ALWAYS_JOIN"/> -->
 <!--         </http:outbound-endpoint> -->
@@ -72,29 +69,35 @@
         
         
         <!-- Logs unsuccessful http requests when trying to notify WIRETAP_1_NOTIFY_OUTBOUND_URL. Will not log exceptions.  -->
-		<choice doc:name="Choice - log only errors">
+		<choice doc:name="Choice">
 
 			<when expression="#[message.inboundProperties['http.status'] >= 400]">
-				<object-to-string-transformer />
-				<logger level="ERROR" message="Could not notify host - We got status: #[message.inboundProperties['http.status']]" />
-				<logger level="ERROR" message="InboundProperties: #[message.inboundProperties.entrySet()]" />
-				<logger level="ERROR" message="OutboundProperties: #[message.outboundProperties.entrySet()]" />
-				<logger level="ERROR" message="Response Payload: #[payload]" />
-				<logger level="ERROR" message="Request Payload: #[variable:request]" />
+			
+				<object-to-string-transformer doc:name="Object to String"/>
+			
+				<!-- Save payload for logging -->
+				<set-property propertyName="RequestPayload" value="#[variable:request]" doc:name="Property"/>
+
+				<!-- We need to treat http_stats >= 400 as an exception, so we need throw an exception here -->
+				<component doc:name="Java" class="se.skltp.services.anp.intyg.wiretap.WiretapExceptionThrower" />
+				
 			</when>
 			<otherwise>
 			
 				<!--  The transformer is needed for handling the problem with hanging VP. -->
-				<object-to-string-transformer />
-				<logger level="DEBUG" message="Notify successful!" />
+				<object-to-string-transformer doc:name="Object to String"/>
+				<logger level="DEBUG" message="Notify successful!" doc:name="Logger"/>
+				
 			</otherwise>
 		</choice>
-        
-        
-        <custom-exception-strategy class="org.soitoolkit.commons.mule.error.ServiceExceptionStrategy"/>
+
+		<!-- Custom strategy for adding even more information to the EventLogMessage -->
+		<custom-exception-strategy class="se.skltp.services.anp.intyg.wiretap.WiretapCustomNotifierExceptionStrategy">
+			<spring:property name="logNotifyPayloads" value="${LOG_NOTIFY_PAYLOADS}" />
+		</custom-exception-strategy>
     </flow>
     
-    <flow name="notify-2-service">
+    <flow name="notify-2-service" doc:name="notify-2-service">
         <jms:inbound-endpoint 
             connector-ref="soitoolkit-jms-connector"
             queue="${WIRETAP_2_QUEUE}" 
@@ -106,11 +109,11 @@
 		<set-variable variableName="wiretap-name" value="${WIRETAP_2_NAME}" doc:name="Set name"/>
 
 		<!--  Log incoming request now when the wiretap-name is set -->
-		<transformer ref="logMsgIn" />
+		<transformer ref="logMsgIn" doc:name="Transformer Reference"/>
  		
  		<set-property propertyName="x-rivta-original-serviceconsumer-hsaid" value="${WIRETAP_ORIGINAL_HSA_ID}" doc:name="x-rivta-original-serviceconsumer-hsaid" />
 
-		<custom-transformer name="SetNewLogicalAdressTransformerForNotify2" class="se.skltp.services.anp.intyg.wiretap.LogicalAddressTransformer">
+		<custom-transformer  class="se.skltp.services.anp.intyg.wiretap.LogicalAddressTransformer" doc:name="Java">
 			<spring:property
             	name="newLogicalAddress"
             	value="${WIRETAP_2_NOTIFY_OUTBOUND_LOGICAL_ADDRESS}" />
@@ -127,7 +130,7 @@
 <!--             exchange-pattern="request-response" -->
 <!--             responseTimeout="${SERVICE_TIMEOUT_MS}" -->
 <!--             transformer-refs="logReqOut" -->
-<!--             responseTransformer-refs="logRespIn"> -->
+<!--             responseTransformer-refs="logRespIn" doc:name="HTTP"> -->
 
 <!--    			<jms:transaction action="ALWAYS_JOIN"/> -->
 <!--         </http:outbound-endpoint> -->
@@ -146,26 +149,32 @@
 
 
         <!-- Logs unsuccessful http requests when trying to notify WIRETAP_2_NOTIFY_OUTBOUND_URL. Will not log exceptions.  -->
-		<choice doc:name="Choice - log only errors">
+		<choice doc:name="Choice">
 
 			<when expression="#[message.inboundProperties['http.status'] >= 400]">
-				<object-to-string-transformer />
-				<logger level="ERROR" message="Could not notify host - We got status: #[message.inboundProperties['http.status']]" />
-				<logger level="ERROR" message="InboundProperties: #[message.inboundProperties.entrySet()]" />
-				<logger level="ERROR" message="OutboundProperties: #[message.outboundProperties.entrySet()]" />
-				<logger level="ERROR" message="Response Payload: #[payload]" />
-				<logger level="ERROR" message="Request Payload: #[variable:request]" />
+			
+				<object-to-string-transformer doc:name="Object to String"/>
+			
+				<!-- Save payload for logging -->
+				<set-property propertyName="RequestPayload" value="#[variable:request]" doc:name="Property"/>
+
+				<!-- We need to treat http_status >= 400 as an exception, so we need throw an exception here -->
+				<component doc:name="Java" class="se.skltp.services.anp.intyg.wiretap.WiretapExceptionThrower" />
+				
 			</when>
 			<otherwise>
 			
 				<!--  The transformer is needed for handling the problem with hanging VP. -->
-				<object-to-string-transformer />
-				<logger level="DEBUG" message="Notify successful!" />
+				<object-to-string-transformer doc:name="Object to String"/>
+				<logger level="DEBUG" message="Notify successful!" doc:name="Logger"/>
+				
 			</otherwise>
 		</choice>
 
-        
-        <custom-exception-strategy class="org.soitoolkit.commons.mule.error.ServiceExceptionStrategy"/>
+		<!-- Custom strategy for adding even more information to the EventLogMessage -->
+		<custom-exception-strategy class="se.skltp.services.anp.intyg.wiretap.WiretapCustomNotifierExceptionStrategy">
+			<spring:property name="logNotifyPayloads" value="${LOG_NOTIFY_PAYLOADS}" />
+		</custom-exception-strategy>
     </flow>
 
 </mule>
