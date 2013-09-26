@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="wiretap">
-    <flow SubFlow="false" name="wiretap-1-service" entity-id="a79357e8-b811-4632-a887-13272ec4d3f7">
+    <flow SubFlow="false" name="wiretap-1-service" entity-id="ad700770-f380-435d-94ea-fd37a02dcf4d">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
@@ -169,7 +169,7 @@
             </unknown>
         </lane>
     </flow>
-    <flow SubFlow="false" name="wiretap-2-service" entity-id="1fa46611-a666-450d-bb8f-40a54cadd3da">
+    <flow SubFlow="false" name="wiretap-2-service" entity-id="d2bcced3-bd18-4a17-854f-7d76ef9d93f4">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
@@ -310,7 +310,7 @@
                     <property name="host"/>
                     <property name="businessEventsLabel"/>
                     <property name="followRedirects"/>
-                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/http/endpoint"/>
+                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/https/endpoint"/>
                     <property name="keep-alive"/>
                     <property name="contentType"/>
                     <property name="disableTransportTransformer"/>
@@ -320,16 +320,17 @@
                     <property name="ref"/>
                     <property name="transformer-refs" value="logReqOut"/>
                     <property name="httpLabel"/>
-                    <property name="address" value="${WIRETAP_1_OUTBOUND_URL}"/>
+                    <property name="address" value="${WIRETAP_2_OUTBOUND_URL}"/>
                     <property name="path"/>
                     <property name="encoding"/>
                     <property name="responseTransformer-refs" value="logRespIn"/>
                     <property name="method"/>
                     <property name="user"/>
+                    <property name="connector-ref-outbound" value="soitoolkit-https-connector"/>
                     <property name="responseTimeout" value="${SERVICE_TIMEOUT_MS}"/>
                     <property name="mimeType"/>
                     <property name="auxiliary;index" value="41"/>
-                    <property name="connector-ref" value="soitoolkit-http-connector"/>
+                    <property name="connector-ref" value="soitoolkit-https-connector"/>
                 </properties>
             </endpoint>
             <unknown description="false" index="42" entity-id="unknown#4">
