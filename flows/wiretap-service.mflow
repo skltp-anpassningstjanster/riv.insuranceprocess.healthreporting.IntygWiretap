@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="wiretap">
-    <flow SubFlow="false" name="wiretap-1-service" entity-id="ad700770-f380-435d-94ea-fd37a02dcf4d">
+    <flow SubFlow="false" name="wiretap-1-service" entity-id="11bb7efc-d04b-43a6-bd4a-db8e706f83d4">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
@@ -169,7 +169,7 @@
             </unknown>
         </lane>
     </flow>
-    <flow SubFlow="false" name="wiretap-2-service" entity-id="d2bcced3-bd18-4a17-854f-7d76ef9d93f4">
+    <flow SubFlow="false" name="wiretap-2-service" entity-id="6e3befef-e4b9-4cf0-bdc3-531ac14f86fe">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
@@ -310,7 +310,7 @@
                     <property name="host"/>
                     <property name="businessEventsLabel"/>
                     <property name="followRedirects"/>
-                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/https/endpoint"/>
+                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/http/endpoint"/>
                     <property name="keep-alive"/>
                     <property name="contentType"/>
                     <property name="disableTransportTransformer"/>
@@ -326,11 +326,10 @@
                     <property name="responseTransformer-refs" value="logRespIn"/>
                     <property name="method"/>
                     <property name="user"/>
-                    <property name="connector-ref-outbound" value="soitoolkit-https-connector"/>
                     <property name="responseTimeout" value="${SERVICE_TIMEOUT_MS}"/>
                     <property name="mimeType"/>
                     <property name="auxiliary;index" value="41"/>
-                    <property name="connector-ref" value="soitoolkit-https-connector"/>
+                    <property name="connector-ref" value="soitoolkit-http-connector"/>
                 </properties>
             </endpoint>
             <unknown description="false" index="42" entity-id="unknown#4">
