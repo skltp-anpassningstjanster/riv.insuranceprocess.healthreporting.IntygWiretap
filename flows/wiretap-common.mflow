@@ -155,6 +155,32 @@
             <property name="auxiliary;index" value="25"/>
         </properties>
     </global-element>
+    <global-element name="HTTP\HTTPS" type="org.mule.tooling.ui.modules.core.global.httpConnector" entity-id="HTTP\HTTPS#1">
+        <properties>
+            <property name="proxyUsername"/>
+            <property name="reuseAddress"/>
+            <property name="receiveBacklog"/>
+            <property name="enableCookies"/>
+            <property name="serverSoTimeout"/>
+            <property name="socketSoLinger"/>
+            <property name="clientSoTimeout"/>
+            <property name="validateConnections"/>
+            <property name="keepAlive"/>
+            <property name="label"/>
+            <property name="sendTcpNoDelay"/>
+            <property name="proxyPort"/>
+            <property name="cookieSpec"/>
+            <property name="dispatcherPoolFactory-ref"/>
+            <property name="proxyHostname"/>
+            <property name="receiveBufferSize"/>
+            <property name="name" value="custom-soitoolkit-http-connector-without-session-data"/>
+            <property name="keepSendSocketOpen"/>
+            <property name="dynamicNotification"/>
+            <property name="sendBufferSize"/>
+            <property name="proxyPassword"/>
+            <property name="auxiliary;index" value="26"/>
+        </properties>
+    </global-element>
     <global-element name="Message Properties" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#1">
         <properties>
             <property name="returnClass"/>
@@ -164,12 +190,12 @@
             <property name="overwrite"/>
             <property name="encoding"/>
             <property name="mimeType"/>
-            <property name="auxiliary;index" value="26"/>
+            <property name="auxiliary;index" value="28"/>
             <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
                 <property name="value" value="application/json;charset=UTF-8"/>
                 <property name="key" value="Content-Type"/>
-                <property name="auxiliary;index" value="27"/>
-                <property name="auxiliary;wrapIn" value="27"/>
+                <property name="auxiliary;index" value="29"/>
+                <property name="auxiliary;wrapIn" value="29"/>
             </property-collection>
         </properties>
     </global-element>
@@ -182,10 +208,10 @@
             <property name="encoding"/>
             <property name="mapper-ref"/>
             <property name="mimeType"/>
-            <property name="auxiliary;index" value="28"/>
+            <property name="auxiliary;index" value="30"/>
         </properties>
     </global-element>
-    <global-unknown description="false" unknownName="jaxbContext" index="29" entity-id="global-unknown#3">
+    <global-unknown description="false" unknownName="jaxbContext" index="31" entity-id="global-unknown#3">
         <content>&lt;mulexml:jaxb-context xmlns:mulexml=&quot;http://www.mulesoft.org/schema/mule/xml&quot; name=&quot;jaxbContext&quot; packageNames=&quot;org.soitoolkit.commons.logentry.schema.v1&quot;/&gt;</content>
     </global-unknown>
     <global-element name="Java" type="http://www.mulesoft.org/schema/mule/core/custom-transformer" entity-id="Java#1">
@@ -196,7 +222,7 @@
             <property name="encoding"/>
             <property name="class" value="org.soitoolkit.commons.mule.core.ObjectToStringTransformer"/>
             <property name="mimeType"/>
-            <property name="auxiliary;index" value="30"/>
+            <property name="auxiliary;index" value="32"/>
         </properties>
     </global-element>
     <global-element name="Java" type="http://www.mulesoft.org/schema/mule/core/custom-transformer" entity-id="Java#2">
@@ -207,7 +233,7 @@
             <property name="encoding"/>
             <property name="class" value="org.soitoolkit.commons.mule.log.correlationid.CreateCorrelationIdTransformer"/>
             <property name="mimeType"/>
-            <property name="auxiliary;index" value="31"/>
+            <property name="auxiliary;index" value="33"/>
         </properties>
     </global-element>
     <global-element name="Java" type="http://www.mulesoft.org/schema/mule/core/custom-transformer" entity-id="Java#3">
@@ -218,7 +244,7 @@
             <property name="encoding"/>
             <property name="class" value="org.soitoolkit.commons.mule.log.correlationid.SaveCorrelationIdTransformer"/>
             <property name="mimeType"/>
-            <property name="auxiliary;index" value="32"/>
+            <property name="auxiliary;index" value="34"/>
         </properties>
     </global-element>
     <global-element name="Java" type="http://www.mulesoft.org/schema/mule/core/custom-transformer" entity-id="Java#4">
@@ -229,7 +255,7 @@
             <property name="encoding"/>
             <property name="class" value="org.soitoolkit.commons.mule.log.correlationid.RestoreCorrelationIdTransformer"/>
             <property name="mimeType"/>
-            <property name="auxiliary;index" value="33"/>
+            <property name="auxiliary;index" value="35"/>
         </properties>
     </global-element>
     <global-element name="Java" type="http://www.mulesoft.org/schema/mule/core/custom-transformer" entity-id="Java#5">
@@ -240,7 +266,7 @@
             <property name="encoding"/>
             <property name="class" value="org.soitoolkit.commons.mule.soap.CreateSoapFaultIfExceptionTransformer"/>
             <property name="mimeType"/>
-            <property name="auxiliary;index" value="34"/>
+            <property name="auxiliary;index" value="36"/>
         </properties>
     </global-element>
     <global-element name="Java" type="http://www.mulesoft.org/schema/mule/core/custom-transformer" entity-id="Java#6">
@@ -251,7 +277,7 @@
             <property name="encoding"/>
             <property name="class" value="org.soitoolkit.commons.mule.mime.MimeToStringTransformer"/>
             <property name="mimeType"/>
-            <property name="auxiliary;index" value="35"/>
+            <property name="auxiliary;index" value="37"/>
         </properties>
     </global-element>
     <global-element name="Java" type="http://www.mulesoft.org/schema/mule/core/custom-transformer" entity-id="Java#7">
@@ -262,31 +288,31 @@
             <property name="encoding"/>
             <property name="class" value="org.soitoolkit.commons.mule.log.LogTransformer"/>
             <property name="mimeType"/>
-            <property name="auxiliary;index" value="36"/>
+            <property name="auxiliary;index" value="38"/>
             <property-collection name="@http://www.springframework.org/schema/beans/property;0">
                 <property name="name" value="logType"/>
                 <property name="value" value="msg-in"/>
-                <property name="auxiliary;index" value="37"/>
-                <property name="auxiliary;wrapIn" value="37"/>
+                <property name="auxiliary;index" value="39"/>
+                <property name="auxiliary;wrapIn" value="39"/>
             </property-collection>
             <property-collection name="@http://www.springframework.org/schema/beans/property;1">
                 <property name="ref" value="jaxbContext"/>
                 <property name="name" value="jaxbContext"/>
-                <property name="auxiliary;index" value="38"/>
-                <property name="auxiliary;wrapIn" value="38"/>
+                <property name="auxiliary;index" value="40"/>
+                <property name="auxiliary;wrapIn" value="40"/>
             </property-collection>
             <property-collection name="@http://www.springframework.org/schema/beans/property;2">
                 <property name="name" value="extraInfo"/>
-                <property name="auxiliary;index" value="39"/>
-                <property name="auxiliary;wrapIn" value="39"/>
+                <property name="auxiliary;index" value="41"/>
+                <property name="auxiliary;wrapIn" value="41"/>
                 <property-collection name="@http://www.springframework.org/schema/beans/map;1">
-                    <property name="auxiliary;index" value="40"/>
-                    <property name="auxiliary;wrapIn" value="40"/>
+                    <property name="auxiliary;index" value="42"/>
+                    <property name="auxiliary;wrapIn" value="42"/>
                     <property-collection name="@http://www.springframework.org/schema/beans/entry;1">
                         <property name="value" value="#[variable:wiretap-name]"/>
                         <property name="key" value="wiretap-name"/>
-                        <property name="auxiliary;index" value="41"/>
-                        <property name="auxiliary;wrapIn" value="41"/>
+                        <property name="auxiliary;index" value="43"/>
+                        <property name="auxiliary;wrapIn" value="43"/>
                     </property-collection>
                 </property-collection>
             </property-collection>
@@ -300,31 +326,31 @@
             <property name="encoding"/>
             <property name="class" value="org.soitoolkit.commons.mule.log.LogTransformer"/>
             <property name="mimeType"/>
-            <property name="auxiliary;index" value="42"/>
+            <property name="auxiliary;index" value="44"/>
             <property-collection name="@http://www.springframework.org/schema/beans/property;0">
                 <property name="name" value="logType"/>
                 <property name="value" value="msg-out"/>
-                <property name="auxiliary;index" value="43"/>
-                <property name="auxiliary;wrapIn" value="43"/>
+                <property name="auxiliary;index" value="45"/>
+                <property name="auxiliary;wrapIn" value="45"/>
             </property-collection>
             <property-collection name="@http://www.springframework.org/schema/beans/property;1">
                 <property name="ref" value="jaxbContext"/>
                 <property name="name" value="jaxbContext"/>
-                <property name="auxiliary;index" value="44"/>
-                <property name="auxiliary;wrapIn" value="44"/>
+                <property name="auxiliary;index" value="46"/>
+                <property name="auxiliary;wrapIn" value="46"/>
             </property-collection>
             <property-collection name="@http://www.springframework.org/schema/beans/property;2">
                 <property name="name" value="extraInfo"/>
-                <property name="auxiliary;index" value="45"/>
-                <property name="auxiliary;wrapIn" value="45"/>
+                <property name="auxiliary;index" value="47"/>
+                <property name="auxiliary;wrapIn" value="47"/>
                 <property-collection name="@http://www.springframework.org/schema/beans/map;1">
-                    <property name="auxiliary;index" value="46"/>
-                    <property name="auxiliary;wrapIn" value="46"/>
+                    <property name="auxiliary;index" value="48"/>
+                    <property name="auxiliary;wrapIn" value="48"/>
                     <property-collection name="@http://www.springframework.org/schema/beans/entry;1">
                         <property name="value" value="#[variable:wiretap-name]"/>
                         <property name="key" value="wiretap-name"/>
-                        <property name="auxiliary;index" value="47"/>
-                        <property name="auxiliary;wrapIn" value="47"/>
+                        <property name="auxiliary;index" value="49"/>
+                        <property name="auxiliary;wrapIn" value="49"/>
                     </property-collection>
                 </property-collection>
             </property-collection>
@@ -338,31 +364,31 @@
             <property name="encoding"/>
             <property name="class" value="org.soitoolkit.commons.mule.log.LogTransformer"/>
             <property name="mimeType"/>
-            <property name="auxiliary;index" value="48"/>
+            <property name="auxiliary;index" value="50"/>
             <property-collection name="@http://www.springframework.org/schema/beans/property;0">
                 <property name="name" value="logType"/>
                 <property name="value" value="req-in"/>
-                <property name="auxiliary;index" value="49"/>
-                <property name="auxiliary;wrapIn" value="49"/>
+                <property name="auxiliary;index" value="51"/>
+                <property name="auxiliary;wrapIn" value="51"/>
             </property-collection>
             <property-collection name="@http://www.springframework.org/schema/beans/property;1">
                 <property name="ref" value="jaxbContext"/>
                 <property name="name" value="jaxbContext"/>
-                <property name="auxiliary;index" value="50"/>
-                <property name="auxiliary;wrapIn" value="50"/>
+                <property name="auxiliary;index" value="52"/>
+                <property name="auxiliary;wrapIn" value="52"/>
             </property-collection>
             <property-collection name="@http://www.springframework.org/schema/beans/property;2">
                 <property name="name" value="extraInfo"/>
-                <property name="auxiliary;index" value="51"/>
-                <property name="auxiliary;wrapIn" value="51"/>
+                <property name="auxiliary;index" value="53"/>
+                <property name="auxiliary;wrapIn" value="53"/>
                 <property-collection name="@http://www.springframework.org/schema/beans/map;1">
-                    <property name="auxiliary;index" value="52"/>
-                    <property name="auxiliary;wrapIn" value="52"/>
+                    <property name="auxiliary;index" value="54"/>
+                    <property name="auxiliary;wrapIn" value="54"/>
                     <property-collection name="@http://www.springframework.org/schema/beans/entry;1">
                         <property name="value" value="#[variable:wiretap-name]"/>
                         <property name="key" value="wiretap-name"/>
-                        <property name="auxiliary;index" value="53"/>
-                        <property name="auxiliary;wrapIn" value="53"/>
+                        <property name="auxiliary;index" value="55"/>
+                        <property name="auxiliary;wrapIn" value="55"/>
                     </property-collection>
                 </property-collection>
             </property-collection>
@@ -376,31 +402,31 @@
             <property name="encoding"/>
             <property name="class" value="org.soitoolkit.commons.mule.log.LogTransformer"/>
             <property name="mimeType"/>
-            <property name="auxiliary;index" value="54"/>
+            <property name="auxiliary;index" value="56"/>
             <property-collection name="@http://www.springframework.org/schema/beans/property;0">
                 <property name="name" value="logType"/>
                 <property name="value" value="req-out"/>
-                <property name="auxiliary;index" value="55"/>
-                <property name="auxiliary;wrapIn" value="55"/>
+                <property name="auxiliary;index" value="57"/>
+                <property name="auxiliary;wrapIn" value="57"/>
             </property-collection>
             <property-collection name="@http://www.springframework.org/schema/beans/property;1">
                 <property name="ref" value="jaxbContext"/>
                 <property name="name" value="jaxbContext"/>
-                <property name="auxiliary;index" value="56"/>
-                <property name="auxiliary;wrapIn" value="56"/>
+                <property name="auxiliary;index" value="58"/>
+                <property name="auxiliary;wrapIn" value="58"/>
             </property-collection>
             <property-collection name="@http://www.springframework.org/schema/beans/property;2">
                 <property name="name" value="extraInfo"/>
-                <property name="auxiliary;index" value="57"/>
-                <property name="auxiliary;wrapIn" value="57"/>
+                <property name="auxiliary;index" value="59"/>
+                <property name="auxiliary;wrapIn" value="59"/>
                 <property-collection name="@http://www.springframework.org/schema/beans/map;1">
-                    <property name="auxiliary;index" value="58"/>
-                    <property name="auxiliary;wrapIn" value="58"/>
+                    <property name="auxiliary;index" value="60"/>
+                    <property name="auxiliary;wrapIn" value="60"/>
                     <property-collection name="@http://www.springframework.org/schema/beans/entry;1">
                         <property name="value" value="#[variable:wiretap-name]"/>
                         <property name="key" value="wiretap-name"/>
-                        <property name="auxiliary;index" value="59"/>
-                        <property name="auxiliary;wrapIn" value="59"/>
+                        <property name="auxiliary;index" value="61"/>
+                        <property name="auxiliary;wrapIn" value="61"/>
                     </property-collection>
                 </property-collection>
             </property-collection>
@@ -414,31 +440,31 @@
             <property name="encoding"/>
             <property name="class" value="org.soitoolkit.commons.mule.log.LogTransformer"/>
             <property name="mimeType"/>
-            <property name="auxiliary;index" value="60"/>
+            <property name="auxiliary;index" value="62"/>
             <property-collection name="@http://www.springframework.org/schema/beans/property;0">
                 <property name="name" value="logType"/>
                 <property name="value" value="resp-in"/>
-                <property name="auxiliary;index" value="61"/>
-                <property name="auxiliary;wrapIn" value="61"/>
+                <property name="auxiliary;index" value="63"/>
+                <property name="auxiliary;wrapIn" value="63"/>
             </property-collection>
             <property-collection name="@http://www.springframework.org/schema/beans/property;1">
                 <property name="ref" value="jaxbContext"/>
                 <property name="name" value="jaxbContext"/>
-                <property name="auxiliary;index" value="62"/>
-                <property name="auxiliary;wrapIn" value="62"/>
+                <property name="auxiliary;index" value="64"/>
+                <property name="auxiliary;wrapIn" value="64"/>
             </property-collection>
             <property-collection name="@http://www.springframework.org/schema/beans/property;2">
                 <property name="name" value="extraInfo"/>
-                <property name="auxiliary;index" value="63"/>
-                <property name="auxiliary;wrapIn" value="63"/>
+                <property name="auxiliary;index" value="65"/>
+                <property name="auxiliary;wrapIn" value="65"/>
                 <property-collection name="@http://www.springframework.org/schema/beans/map;1">
-                    <property name="auxiliary;index" value="64"/>
-                    <property name="auxiliary;wrapIn" value="64"/>
+                    <property name="auxiliary;index" value="66"/>
+                    <property name="auxiliary;wrapIn" value="66"/>
                     <property-collection name="@http://www.springframework.org/schema/beans/entry;1">
                         <property name="value" value="#[variable:wiretap-name]"/>
                         <property name="key" value="wiretap-name"/>
-                        <property name="auxiliary;index" value="65"/>
-                        <property name="auxiliary;wrapIn" value="65"/>
+                        <property name="auxiliary;index" value="67"/>
+                        <property name="auxiliary;wrapIn" value="67"/>
                     </property-collection>
                 </property-collection>
             </property-collection>
@@ -452,31 +478,31 @@
             <property name="encoding"/>
             <property name="class" value="org.soitoolkit.commons.mule.log.LogTransformer"/>
             <property name="mimeType"/>
-            <property name="auxiliary;index" value="66"/>
+            <property name="auxiliary;index" value="68"/>
             <property-collection name="@http://www.springframework.org/schema/beans/property;0">
                 <property name="name" value="logType"/>
                 <property name="value" value="resp-out"/>
-                <property name="auxiliary;index" value="67"/>
-                <property name="auxiliary;wrapIn" value="67"/>
+                <property name="auxiliary;index" value="69"/>
+                <property name="auxiliary;wrapIn" value="69"/>
             </property-collection>
             <property-collection name="@http://www.springframework.org/schema/beans/property;1">
                 <property name="ref" value="jaxbContext"/>
                 <property name="name" value="jaxbContext"/>
-                <property name="auxiliary;index" value="68"/>
-                <property name="auxiliary;wrapIn" value="68"/>
+                <property name="auxiliary;index" value="70"/>
+                <property name="auxiliary;wrapIn" value="70"/>
             </property-collection>
             <property-collection name="@http://www.springframework.org/schema/beans/property;2">
                 <property name="name" value="extraInfo"/>
-                <property name="auxiliary;index" value="69"/>
-                <property name="auxiliary;wrapIn" value="69"/>
+                <property name="auxiliary;index" value="71"/>
+                <property name="auxiliary;wrapIn" value="71"/>
                 <property-collection name="@http://www.springframework.org/schema/beans/map;1">
-                    <property name="auxiliary;index" value="70"/>
-                    <property name="auxiliary;wrapIn" value="70"/>
+                    <property name="auxiliary;index" value="72"/>
+                    <property name="auxiliary;wrapIn" value="72"/>
                     <property-collection name="@http://www.springframework.org/schema/beans/entry;1">
                         <property name="value" value="#[variable:wiretap-name]"/>
                         <property name="key" value="wiretap-name"/>
-                        <property name="auxiliary;index" value="71"/>
-                        <property name="auxiliary;wrapIn" value="71"/>
+                        <property name="auxiliary;index" value="73"/>
+                        <property name="auxiliary;wrapIn" value="73"/>
                     </property-collection>
                 </property-collection>
             </property-collection>

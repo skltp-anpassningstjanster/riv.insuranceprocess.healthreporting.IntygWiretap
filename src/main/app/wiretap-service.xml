@@ -83,15 +83,14 @@
             	value="${WIRETAP_1_OUTBOUND_LOGICAL_ADDRESS}" />
 		</custom-transformer>
 
-    
+  
 		<http:outbound-endpoint 
-            connector-ref="soitoolkit-http-connector"
+            connector-ref="custom-soitoolkit-http-connector-without-session-data"
 			address="${WIRETAP_1_OUTBOUND_URL}" 
 			exchange-pattern="request-response"
 			responseTimeout="${SERVICE_TIMEOUT_MS}"
 			transformer-refs="logReqOut"
-			responseTransformer-refs="logRespIn" doc:name="HTTP">
-		</http:outbound-endpoint>
+			responseTransformer-refs="logRespIn" doc:name="HTTP" />
 
 
 <!-- 		<https:outbound-endpoint  -->
@@ -172,7 +171,7 @@
 
 
 		<http:outbound-endpoint 
-            connector-ref="soitoolkit-http-connector"
+            connector-ref="custom-soitoolkit-http-connector-without-session-data"
 			address="${WIRETAP_2_OUTBOUND_URL}" 
 			exchange-pattern="request-response"
 			responseTimeout="${SERVICE_TIMEOUT_MS}"

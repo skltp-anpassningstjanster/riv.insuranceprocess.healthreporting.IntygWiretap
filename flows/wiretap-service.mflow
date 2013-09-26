@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="wiretap">
-    <flow SubFlow="false" name="wiretap-1-service" entity-id="11bb7efc-d04b-43a6-bd4a-db8e706f83d4">
+    <flow SubFlow="false" name="wiretap-1-service" entity-id="4c059096-6461-4af4-91d9-ae0bf483644d">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
@@ -160,7 +160,7 @@
                     <property name="responseTimeout" value="${SERVICE_TIMEOUT_MS}"/>
                     <property name="mimeType"/>
                     <property name="auxiliary;index" value="20"/>
-                    <property name="connector-ref" value="soitoolkit-http-connector"/>
+                    <property name="connector-ref" value="custom-soitoolkit-http-connector-without-session-data"/>
                 </properties>
             </endpoint>
             <unknown description="false" index="21" entity-id="unknown#2">
@@ -169,7 +169,7 @@
             </unknown>
         </lane>
     </flow>
-    <flow SubFlow="false" name="wiretap-2-service" entity-id="6e3befef-e4b9-4cf0-bdc3-531ac14f86fe">
+    <flow SubFlow="false" name="wiretap-2-service" entity-id="973cbd4f-34d2-4c13-b699-c567acab6d6a">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
@@ -329,7 +329,7 @@
                     <property name="responseTimeout" value="${SERVICE_TIMEOUT_MS}"/>
                     <property name="mimeType"/>
                     <property name="auxiliary;index" value="41"/>
-                    <property name="connector-ref" value="soitoolkit-http-connector"/>
+                    <property name="connector-ref" value="custom-soitoolkit-http-connector-without-session-data"/>
                 </properties>
             </endpoint>
             <unknown description="false" index="42" entity-id="unknown#4">
