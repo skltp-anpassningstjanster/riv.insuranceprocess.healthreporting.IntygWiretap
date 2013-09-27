@@ -45,7 +45,7 @@
         <cxf:jaxws-service
             namespace="urn:riv:itintegration:monitoring:PingForConfiguration:1:rivtabp21"
             serviceClass="se.skltp.services.anp.intyg.wiretap.PingForConfigurationProducerRivTa21"
-            wsdlLocation="classpath:/Monitoring/interactions/PingForConfigurationInteraction/PingForConfigurationInteraction_1.0_RIVTABP21.wsdl" />
+            wsdlLocation="classpath:/schemas/monitoring/interactions/PingForConfigurationInteraction/PingForConfigurationInteraction_1.0_RIVTABP21.wsdl" />
   
        <component>
             <singleton-object class="se.skltp.services.anp.intyg.wiretap.PingForConfigurationProducerRivTa21" />
