@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="2.4" jmeter="2.9 r1437961">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="HOST" elementType="Argument">
+            <stringProp name="Argument.name">HOST</stringProp>
+            <stringProp name="Argument.value">https://qa.esb.ntjp.sjunet.org:20000</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Personnummer CSV" enabled="true">
+        <stringProp name="delimiter">,</stringProp>
+        <stringProp name="fileEncoding"></stringProp>
+        <stringProp name="filename">personnummer.csv</stringProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <stringProp name="shareMode">All threads</stringProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="variableNames">personnummer</stringProp>
+      </CSVDataSet>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="FK Mina Sidor" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">-1</intProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">10</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">10</stringProp>
+        <longProp name="ThreadGroup.start_time">1380279403000</longProp>
+        <longProp name="ThreadGroup.end_time">1380280132000</longProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.duration">5000</stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <SoapSampler guiclass="SoapSamplerGui" testclass="SoapSampler" testname="ListCertificates" enabled="false">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="SoapSampler.URL_DATA">${HOST}/vp/ListCertificates/1/rivtabp20</stringProp>
+          <stringProp name="HTTPSamper.xml_data">&lt;soap:Envelope xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;&lt;soap:Header&gt;&lt;ns4:To xmlns:ns4=&quot;http://www.w3.org/2005/08/addressing&quot; xmlns:ns3=&quot;urn:riv:insuranceprocess:healthreporting:2&quot; xmlns:ns2=&quot;urn:riv:insuranceprocess:certificate:1&quot; xmlns=&quot;urn:riv:insuranceprocess:healthreporting:ListCertificatesResponder:1&quot;&gt;5565594230&lt;/ns4:To&gt;&lt;/soap:Header&gt;&lt;soap:Body&gt;&lt;ListCertificatesRequest xmlns=&quot;urn:riv:insuranceprocess:healthreporting:ListCertificatesResponder:1&quot; xmlns:ns2=&quot;urn:riv:insuranceprocess:certificate:1&quot; xmlns:ns3=&quot;urn:riv:insuranceprocess:healthreporting:2&quot; xmlns:ns4=&quot;http://www.w3.org/2005/08/addressing&quot;&gt;&lt;nationalIdentityNumber&gt;${personnummer}&lt;/nationalIdentityNumber&gt;&lt;certificateType&gt;FK7263&lt;/certificateType&gt;&lt;fromDate&gt;2013-04-01&lt;/fromDate&gt;&lt;toDate&gt;2013-04-30&lt;/toDate&gt;&lt;/ListCertificatesRequest&gt;&lt;/soap:Body&gt;&lt;/soap:Envelope&gt;</stringProp>
+          <stringProp name="SoapSampler.xml_data_file"></stringProp>
+          <stringProp name="SoapSampler.SOAP_ACTION">urn:riv:insuranceprocess:healthreporting:ListCertificatesResponder:1:ListCertificates</stringProp>
+          <stringProp name="SoapSampler.SEND_SOAP_ACTION">true</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+        </SoapSampler>
+        <hashTree/>
+        <SoapSampler guiclass="SoapSamplerGui" testclass="SoapSampler" testname="GetCertificate-1" enabled="false">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="SoapSampler.URL_DATA">${HOST}/vp/GetCertificate/1/rivtabp20</stringProp>
+          <stringProp name="HTTPSamper.xml_data">&lt;soap:Envelope xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;&lt;soap:Header&gt;&lt;ns4:To xmlns:ns4=&quot;http://www.w3.org/2005/08/addressing&quot; xmlns:ns3=&quot;urn:riv:insuranceprocess:healthreporting:2&quot; xmlns:ns2=&quot;urn:riv:insuranceprocess:certificate:1&quot; xmlns=&quot;urn:riv:insuranceprocess:healthreporting:GetCertificateResponder:1&quot;&gt;5565594230&lt;/ns4:To&gt;&lt;/soap:Header&gt;&lt;soap:Body&gt;&lt;GetCertificateRequest xmlns=&quot;urn:riv:insuranceprocess:healthreporting:GetCertificateResponder:1&quot; xmlns:ns2=&quot;urn:riv:insuranceprocess:certificate:1&quot; xmlns:ns3=&quot;urn:riv:insuranceprocess:healthreporting:2&quot; xmlns:ns4=&quot;http://www.w3.org/2005/08/addressing&quot;&gt;&lt;certificateId&gt;test-${personnummer}-intyg-1&lt;/certificateId&gt;&lt;nationalIdentityNumber&gt;${personnummer}&lt;/nationalIdentityNumber&gt;&lt;/GetCertificateRequest&gt;&lt;/soap:Body&gt;&lt;/soap:Envelope&gt;</stringProp>
+          <stringProp name="SoapSampler.xml_data_file"></stringProp>
+          <stringProp name="SoapSampler.SOAP_ACTION">urn:riv:insuranceprocess:healthreporting:GetCertificateResponder:1:GetCertificate</stringProp>
+          <stringProp name="SoapSampler.SEND_SOAP_ACTION">true</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+        </SoapSampler>
+        <hashTree/>
+        <SoapSampler guiclass="SoapSamplerGui" testclass="SoapSampler" testname="GetCertificate-2" enabled="false">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="SoapSampler.URL_DATA">${HOST}/vp/GetCertificate/1/rivtabp20</stringProp>
+          <stringProp name="HTTPSamper.xml_data">&lt;soap:Envelope xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;&lt;soap:Header&gt;&lt;ns4:To xmlns:ns4=&quot;http://www.w3.org/2005/08/addressing&quot; xmlns:ns3=&quot;urn:riv:insuranceprocess:healthreporting:2&quot; xmlns:ns2=&quot;urn:riv:insuranceprocess:certificate:1&quot; xmlns=&quot;urn:riv:insuranceprocess:healthreporting:GetCertificateResponder:1&quot;&gt;5565594230&lt;/ns4:To&gt;&lt;/soap:Header&gt;&lt;soap:Body&gt;&lt;GetCertificateRequest xmlns=&quot;urn:riv:insuranceprocess:healthreporting:GetCertificateResponder:1&quot; xmlns:ns2=&quot;urn:riv:insuranceprocess:certificate:1&quot; xmlns:ns3=&quot;urn:riv:insuranceprocess:healthreporting:2&quot; xmlns:ns4=&quot;http://www.w3.org/2005/08/addressing&quot;&gt;&lt;certificateId&gt;test-${personnummer}-intyg-2&lt;/certificateId&gt;&lt;nationalIdentityNumber&gt;${personnummer}&lt;/nationalIdentityNumber&gt;&lt;/GetCertificateRequest&gt;&lt;/soap:Body&gt;&lt;/soap:Envelope&gt;</stringProp>
+          <stringProp name="SoapSampler.xml_data_file"></stringProp>
+          <stringProp name="SoapSampler.SOAP_ACTION">urn:riv:insuranceprocess:healthreporting:GetCertificateResponder:1:GetCertificate</stringProp>
+          <stringProp name="SoapSampler.SEND_SOAP_ACTION">true</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+        </SoapSampler>
+        <hashTree/>
+        <SoapSampler guiclass="SoapSamplerGui" testclass="SoapSampler" testname="SOAP/XML-RPC Request" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="SoapSampler.URL_DATA">${HOST}/vp/RegisterMedicalCertificate/3/rivtabp20</stringProp>
+          <stringProp name="HTTPSamper.xml_data">&lt;soap:Envelope xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;
+   &lt;soap:Header&gt;
+      &lt;ns4:To xmlns:ns4=&quot;http://www.w3.org/2005/08/addressing&quot; xmlns:ns3=&quot;urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3&quot; xmlns:ns2=&quot;urn:riv:insuranceprocess:healthreporting:2&quot; xmlns=&quot;urn:riv:insuranceprocess:healthreporting:mu7263:3&quot;&gt;2021005521&lt;/ns4:To&gt;
+   &lt;/soap:Header&gt;
+   &lt;soap:Body&gt;
+      &lt;ns3:RegisterMedicalCertificate xmlns=&quot;urn:riv:insuranceprocess:healthreporting:mu7263:3&quot; xmlns:ns2=&quot;urn:riv:insuranceprocess:healthreporting:2&quot; xmlns:ns3=&quot;urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3&quot; xmlns:ns4=&quot;http://www.w3.org/2005/08/addressing&quot;&gt;
+         &lt;ns3:lakarutlatande&gt;
+            &lt;lakarutlatande-id&gt;${__BeanShell(UUID.randomUUID().toString())}&lt;/lakarutlatande-id&gt;
+            &lt;typAvUtlatande&gt;Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring&lt;/typAvUtlatande&gt;
+            &lt;kommentar&gt;Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling.&lt;/kommentar&gt;
+            &lt;signeringsdatum&gt;2013-05-20T15:30:55&lt;/signeringsdatum&gt;
+            &lt;skickatDatum&gt;2013-05-20T15:33:17&lt;/skickatDatum&gt;
+            &lt;patient&gt;
+               &lt;ns2:person-id extension=&quot;${personnummer}&quot; root=&quot;1.2.752.129.2.1.3.1&quot;/&gt;
+               &lt;ns2:fullstandigtNamn&gt;Test Testorsson&lt;/ns2:fullstandigtNamn&gt;
+            &lt;/patient&gt;
+            &lt;skapadAvHosPersonal&gt;
+               &lt;ns2:personal-id extension=&quot;Personal HSA-ID&quot; root=&quot;1.2.752.129.2.1.4.1&quot;/&gt;
+               &lt;ns2:fullstandigtNamn&gt;En Läkare&lt;/ns2:fullstandigtNamn&gt;
+               &lt;ns2:enhet&gt;
+                  &lt;ns2:enhets-id extension=&quot;VardenhetY&quot; root=&quot;1.2.752.129.2.1.4.1&quot;/&gt;
+                  &lt;ns2:arbetsplatskod extension=&quot;123456789011&quot; root=&quot;1.2.752.29.4.71&quot;/&gt;
+                  &lt;ns2:enhetsnamn&gt;Kir mott som ligger till vänster&lt;/ns2:enhetsnamn&gt;
+                  &lt;ns2:postadress&gt;Lasarettsvägen lite längre adress 13&lt;/ns2:postadress&gt;
+                  &lt;ns2:postnummer&gt;85150&lt;/ns2:postnummer&gt;
+                  &lt;ns2:postort&gt;Sundsvall&lt;/ns2:postort&gt;
+                  &lt;ns2:telefonnummer&gt;012-3847654378&lt;/ns2:telefonnummer&gt;
+                  &lt;ns2:vardgivare&gt;
+                     &lt;ns2:vardgivare-id extension=&quot;VardgivarId&quot; root=&quot;1.2.752.129.2.1.4.1&quot;/&gt;
+                     &lt;ns2:vardgivarnamn&gt;Landstinget Göteborg&lt;/ns2:vardgivarnamn&gt;
+                  &lt;/ns2:vardgivare&gt;
+               &lt;/ns2:enhet&gt;
+            &lt;/skapadAvHosPersonal&gt;
+            &lt;vardkontakt&gt;
+               &lt;vardkontakttyp&gt;Min_undersokning_av_patienten&lt;/vardkontakttyp&gt;
+               &lt;vardkontaktstid&gt;2011-01-24+01:00&lt;/vardkontaktstid&gt;
+            &lt;/vardkontakt&gt;
+            &lt;vardkontakt&gt;
+               &lt;vardkontakttyp&gt;Min_telefonkontakt_med_patienten&lt;/vardkontakttyp&gt;
+               &lt;vardkontaktstid&gt;2011-01-27+01:00&lt;/vardkontaktstid&gt;
+            &lt;/vardkontakt&gt;
+            &lt;aktivitet&gt;
+               &lt;aktivitetskod&gt;Patienten_behover_fa_kontakt_med_foretagshalsovarden&lt;/aktivitetskod&gt;
+            &lt;/aktivitet&gt;
+            &lt;aktivitet&gt;
+               &lt;aktivitetskod&gt;Planerad_eller_pagaende_annan_atgard&lt;/aktivitetskod&gt;
+               &lt;beskrivning&gt;Avslappningsövningar och balansövningar, t ex promenad i ojämn terräng.&lt;/beskrivning&gt;
+            &lt;/aktivitet&gt;
+            &lt;aktivitet&gt;
+               &lt;aktivitetskod&gt;Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell&lt;/aktivitetskod&gt;
+            &lt;/aktivitet&gt;
+            &lt;aktivitet&gt;
+               &lt;aktivitetskod&gt;Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt&lt;/aktivitetskod&gt;
+            &lt;/aktivitet&gt;
+            &lt;bedomtTillstand&gt;
+               &lt;beskrivning&gt;Patienten upplever svår yrsel vid häftiga rörelser och är allmänt påverkad av sjukdomen.&lt;/beskrivning&gt;
+            &lt;/bedomtTillstand&gt;
+            &lt;medicinsktTillstand&gt;
+               &lt;beskrivning&gt;Sjukdomar i örat och mastoidutskottet&lt;/beskrivning&gt;
+               &lt;tillstandskod codeSystemName=&quot;ICD-10&quot; code=&quot;H81&quot;/&gt;
+            &lt;/medicinsktTillstand&gt;
+            &lt;funktionstillstand&gt;
+               &lt;beskrivning&gt;Ospecifierad rubbning i balansapparatens funktion. Svårighet att utföra handlingar som kräver bra balans och kropsskontroll.&lt;/beskrivning&gt;
+               &lt;typAvFunktionstillstand&gt;Kroppsfunktion&lt;/typAvFunktionstillstand&gt;
+            &lt;/funktionstillstand&gt;
+            &lt;funktionstillstand&gt;
+               &lt;beskrivning&gt;Patienten arbetar trapetsartist på Cirkus Cirkör, sjukdomen försvårar utövandet av yrket&lt;/beskrivning&gt;
+               &lt;typAvFunktionstillstand&gt;Aktivitet&lt;/typAvFunktionstillstand&gt;
+               &lt;arbetsformaga&gt;
+                  &lt;motivering&gt;Patienten kan inte utöva sitt yrke förrän en förbättring sker med avseende på yrseln. Det är förenat med livsfara att utföra trapetskonster och samtidigt lida av yrsel. Patientens besvär kommer dock att först minska för att därefter helt upphöra efter genomförd behandling.&lt;/motivering&gt;
+                  &lt;prognosangivelse&gt;Aterstallas_helt&lt;/prognosangivelse&gt;
+                  &lt;arbetsuppgift&gt;
+                     &lt;typAvArbetsuppgift&gt;Cirkusartist&lt;/typAvArbetsuppgift&gt;
+                  &lt;/arbetsuppgift&gt;
+                  &lt;arbetsformagaNedsattning&gt;
+                     &lt;varaktighetFrom&gt;2011-02-21+01:00&lt;/varaktighetFrom&gt;
+                     &lt;varaktighetTom&gt;2011-03-31+02:00&lt;/varaktighetTom&gt;
+                     &lt;nedsattningsgrad&gt;Nedsatt_med_1/2&lt;/nedsattningsgrad&gt;
+                  &lt;/arbetsformagaNedsattning&gt;
+                  &lt;arbetsformagaNedsattning&gt;
+                     &lt;varaktighetFrom&gt;2011-01-24+01:00&lt;/varaktighetFrom&gt;
+                     &lt;varaktighetTom&gt;2011-02-20+01:00&lt;/varaktighetTom&gt;
+                     &lt;nedsattningsgrad&gt;Helt_nedsatt&lt;/nedsattningsgrad&gt;
+                  &lt;/arbetsformagaNedsattning&gt;
+                  &lt;sysselsattning&gt;
+                     &lt;typAvSysselsattning&gt;Nuvarande_arbete&lt;/typAvSysselsattning&gt;
+                  &lt;/sysselsattning&gt;
+               &lt;/arbetsformaga&gt;
+            &lt;/funktionstillstand&gt;
+         &lt;/ns3:lakarutlatande&gt;
+      &lt;/ns3:RegisterMedicalCertificate&gt;
+   &lt;/soap:Body&gt;
+&lt;/soap:Envelope&gt;</stringProp>
+          <stringProp name="SoapSampler.xml_data_file"></stringProp>
+          <stringProp name="SoapSampler.SOAP_ACTION">urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3</stringProp>
+          <stringProp name="SoapSampler.SEND_SOAP_ACTION">true</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+        </SoapSampler>
+        <hashTree/>
+        <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Constant Throughput Timer" enabled="true">
+          <stringProp name="calcMode">all active threads</stringProp>
+          <doubleProp>
+            <name>throughput</name>
+            <value>300.0</value>
+            <savedValue>0.0</savedValue>
+          </doubleProp>
+        </ConstantThroughputTimer>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+            </value>
+          </objProp>
+          <stringProp name="filename">/Users/patrik/callista/intyg/jmeter/results</stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultSaver guiclass="ResultSaverGui" testclass="ResultSaver" testname="Save Error Responses to a file" enabled="true">
+          <stringProp name="FileSaver.filename">/Users/patrik/callista/intyg/jmeter/errors</stringProp>
+          <boolProp name="FileSaver.errorsonly">true</boolProp>
+          <boolProp name="FileSaver.skipautonumber">false</boolProp>
+          <boolProp name="FileSaver.skipsuffix">false</boolProp>
+          <boolProp name="FileSaver.successonly">false</boolProp>
+          <boolProp name="FileSaver.addTimstamp">true</boolProp>
+        </ResultSaver>
+        <hashTree/>
+      </hashTree>
+      <ResultCollector guiclass="RespTimeGraphVisualizer" testclass="ResultCollector" testname="Response Time Graph" enabled="true">
+        <boolProp name="ResultCollector.error_logging">true</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
