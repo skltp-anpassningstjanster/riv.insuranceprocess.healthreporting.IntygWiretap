@@ -17,7 +17,7 @@
 
 	<groupId>se.skltp.adapterservices.insuranceprocess.healthreporting</groupId>
 	<artifactId>intyg-wiretap</artifactId>
-	<version>1.0.1-RC1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<packaging>mule</packaging>
 	<name>intyg-wiretap</name>
 
@@ -26,9 +26,9 @@
 		<schema.path>${basedir}/src/main/resources</schema.path>
 	</properties>
 	<scm>
-		<connection>https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/trunk</connection>
-		<developerConnection>scm:svn:https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/trunk</developerConnection>
-		<url>https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/trunk</url>
+		<connection>https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/tags/intyg-wiretap-1.0.1</connection>
+		<developerConnection>scm:svn:https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/tags/intyg-wiretap-1.0.1</developerConnection>
+		<url>https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/tags/intyg-wiretap-1.0.1</url>
 	</scm>
 
 	<dependencies>
