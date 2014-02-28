@@ -15,9 +15,9 @@
 		<version>0.6.1-M2</version>
 	</parent>
 
-	<groupId>se.skltp.services.anp</groupId>
+	<groupId>se.skltp.adapterservices.insuranceprocess.healthreporting</groupId>
 	<artifactId>intyg-wiretap</artifactId>
-	<version>1.0.0-RC8-SNAPSHOT</version>
+	<version>1.0.1-RC1-SNAPSHOT</version>
 	<packaging>mule</packaging>
 	<name>intyg-wiretap</name>
 
