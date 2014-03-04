@@ -67,7 +67,6 @@ public class NotifyIntegrationTest extends AbstractTestCase {
     }
 
     @Test
-    @Ignore
     public void test_ok() throws Fault, JMSException {
     	
     	String inputFile = "src/test/resources/testfiles/wiretap/request-input.xml";

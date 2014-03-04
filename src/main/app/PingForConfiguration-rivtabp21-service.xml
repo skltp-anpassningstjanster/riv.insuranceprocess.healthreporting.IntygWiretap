@@ -21,20 +21,21 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 -->
-<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:https="http://www.mulesoft.org/schema/mule/https"
-    xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
-    xmlns="http://www.mulesoft.org/schema/mule/core"
-    xsi:schemaLocation="
-		http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans-current.xsd
-		http://www.mulesoft.org/schema/mule/core	http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-		http://www.mulesoft.org/schema/mule/https	http://www.mulesoft.org/schema/mule/https/current/mule-https.xsd
-		http://www.mulesoft.org/schema/mule/cxf		http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd
-	" >
-
-    <flow name="PingForConfiguration-rivtabp21-flow" >
-
-		<https:inbound-endpoint
+<mule 
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:spring="http://www.springframework.org/schema/beans"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+    xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+		http://www.mulesoft.org/schema/mule/core    http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/http    http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+	">
+	
+	<flow name="PingForConfiguration-rivtabp21-flow" >
+	
+		<http:inbound-endpoint
             name="PingForConfigurationResponderRivtabp21Service"
 			address="${WIRETAP_PINGFORCONFIGURATION_URL}"
             connector-ref="soitoolkit-https-connector"

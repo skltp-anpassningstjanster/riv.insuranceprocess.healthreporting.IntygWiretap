@@ -27,13 +27,14 @@ import javax.jws.WebService;
 
 import org.w3.wsaddressing10.AttributedURIType;
 
+import se.riv.itintegration.monitoring.v1.ConfigurationType;
 import se.riv.itintegration.monitoring.v1.PingForConfigurationResponderInterface;
 import se.riv.itintegration.monitoring.v1.PingForConfigurationResponseType;
 import se.riv.itintegration.monitoring.v1.PingForConfigurationType;
 
 @WebService(
 		serviceName = "PingForConfigurationResponderService", 
-		endpointInterface="se.riv.itintegration.monitoring.v1.rivtabp21.PingForConfigurationResponderInterface", 
+		endpointInterface="se.riv.itintegration.monitoring.v1.PingForConfigurationResponderInterface", 
 		portName = "PingForConfigurationResponderPort", 
 		targetNamespace = "urn:riv:itintegration:monitoring:PingForConfiguration:1:rivtabp21",
 		wsdlLocation = "schemas/monitoring/interactions/PingForConfigurationInteraction/PingForConfigurationInteraction_1.0_RIVTABP21.wsdl")
@@ -49,7 +50,16 @@ public class PingForConfigurationProducerRivTa21 implements PingForConfiguration
 		response.setPingDateTime(formatter.format(new Date()));
 		response.setVersion("V1.0");
 		
+		response.getConfiguration().add(createConfigType("Application", "intyg-wiretap"));
+		
 		return response;
+	}
+
+	private ConfigurationType createConfigType(String name, String value) {
+		ConfigurationType configurationType = new ConfigurationType();
+		configurationType.setName(name);
+		configurationType.setValue(value);
+		return configurationType;
 	}
 
 

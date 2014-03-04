@@ -14,13 +14,13 @@
 
 	<simple-service 
 		name="wiretap-1-teststub-service"
-        address="${WIRETAP_1_TESTSTUB_INBOUND_URL}?connector=soitoolkit-http-connector" 
+        address="${WIRETAP_1_TESTSTUB_INBOUND_URL}" 
         component-class="se.skltp.services.anp.intyg.wiretap.WiretapTestProducer"
         type="jax-ws" />
         
 	<simple-service 
 		name="wiretap-2-teststub-service"
-        address="${WIRETAP_2_TESTSTUB_INBOUND_URL}?connector=soitoolkit-http-connector" 
+        address="${WIRETAP_2_TESTSTUB_INBOUND_URL}" 
         component-class="se.skltp.services.anp.intyg.wiretap.WiretapTestProducer"
         type="jax-ws" />
 
