@@ -36,13 +36,13 @@
 	">
 	
 	<flow name="PingForConfiguration-rivtabp21-flow" >
-	
+		
 		<http:inbound-endpoint
             name="PingForConfigurationResponderRivtabp21Service"
 			address="${WIRETAP_PINGFORCONFIGURATION_URL}"
 			exchange-pattern="request-response"
-			transformer-refs="logReqIn"
-			responseTransformer-refs="logRespOut" />
+			transformer-refs="logReqInNoWiretap"
+			responseTransformer-refs="logRespOutNoWiretap" />
 			 
         <cxf:jaxws-service
             namespace="urn:riv:itintegration:monitoring:PingForConfiguration:1:rivtabp21"

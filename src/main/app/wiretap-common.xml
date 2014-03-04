@@ -208,4 +208,17 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
         </spring:property>
 	</custom-transformer>
 	
+	<!-- Used by flows not including wiretap, e.g PingForCOnfiguration -->
+	<custom-transformer class="org.soitoolkit.commons.mule.log.LogTransformer"
+		name="logReqInNoWiretap">
+		<spring:property name="logType" value="req-in" />
+		<spring:property name="jaxbContext" ref="jaxbContext" />
+	</custom-transformer>
+	
+	<custom-transformer class="org.soitoolkit.commons.mule.log.LogTransformer"
+		name="logRespOutNoWiretap">
+		<spring:property name="logType" value="resp-out" />
+		<spring:property name="jaxbContext" ref="jaxbContext" />
+	</custom-transformer>
+	
 </mule>
