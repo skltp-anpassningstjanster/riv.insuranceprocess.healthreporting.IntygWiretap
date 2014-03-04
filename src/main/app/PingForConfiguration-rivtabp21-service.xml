@@ -27,10 +27,12 @@
 	xmlns:spring="http://www.springframework.org/schema/beans"
 	xmlns:http="http://www.mulesoft.org/schema/mule/http"
     xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+    xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 		http://www.mulesoft.org/schema/mule/core    http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 		http://www.mulesoft.org/schema/mule/http    http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+		http://www.mulesoft.org/schema/mule/cxf  http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd
 	">
 	
 	<flow name="PingForConfiguration-rivtabp21-flow" >
@@ -38,7 +40,6 @@
 		<http:inbound-endpoint
             name="PingForConfigurationResponderRivtabp21Service"
 			address="${WIRETAP_PINGFORCONFIGURATION_URL}"
-            connector-ref="soitoolkit-https-connector"
 			exchange-pattern="request-response"
 			transformer-refs="logReqIn"
 			responseTransformer-refs="logRespOut" />
