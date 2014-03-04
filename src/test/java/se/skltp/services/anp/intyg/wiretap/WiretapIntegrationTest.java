@@ -84,7 +84,6 @@ public class WiretapIntegrationTest extends AbstractTestCase {
 
 
     @Test
-    @Ignore
     public void test_ok() throws Fault, JMSException {
     	
     	String inputFile = "src/test/resources/testfiles/wiretap/request-input.xml";
@@ -114,7 +113,6 @@ public class WiretapIntegrationTest extends AbstractTestCase {
 	}
 
     @Test
-    @Ignore
 	public void test_fault_invalidInput() throws Exception {
 		try {
 	    	String id = TEST_ID_FAULT_INVALID_ID;
@@ -136,7 +134,6 @@ public class WiretapIntegrationTest extends AbstractTestCase {
 	}
 
     @Test
-    @Ignore
 	public void test_fault_timeout() throws Fault, JMSException {
         try {
 	    	String id = TEST_ID_FAULT_TIMEOUT;
