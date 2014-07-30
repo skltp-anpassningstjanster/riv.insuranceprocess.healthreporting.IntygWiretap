@@ -1,31 +1,40 @@
 package se.skltp.services.anp.intyg.wiretap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.File;
+import java.io.IOException;
 
-import javax.jws.WebService;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.ws.Provider;
+import javax.xml.ws.WebServiceProvider;
 
-import org.soitoolkit.refapps.sd.sample.schema.v1.Sample;
-import org.soitoolkit.refapps.sd.sample.schema.v1.SampleResponse;
-import org.soitoolkit.refapps.sd.sample.wsdl.v1.Fault;
-import org.soitoolkit.refapps.sd.sample.wsdl.v1.SampleInterface;
+import org.xml.sax.SAXException;
 
-@WebService(serviceName = "sampleService", portName = "samplePort", targetNamespace = "urn:org.soitoolkit.refapps.sd.sample.wsdl:v1", name = "sampleService")
-public class NotifyTestProducer implements SampleInterface {
+@WebServiceProvider
+public class NotifyTestProducer implements Provider<DOMSource> {
 
-	private static final Logger log = LoggerFactory.getLogger(NotifyTestProducer.class);
-
-	public SampleResponse sample(Sample request) throws Fault {
-
-		log.info("NotifyTestProducer received the request: {}", request);
-
-		String id = request.getId();
-
-        // Produce the response
-		SampleResponse response = new SampleResponse();
-		response.setValue("Value" + id);
-		return response;
+	@Override
+	public DOMSource invoke(DOMSource request) {
+		try {
+            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            DOMSource source = new DOMSource(builder.parse(new File(inputFile)));
+            
+            return source;
+        } catch (ParserConfigurationException e) {
+            throw wrap(e);
+        } catch (SAXException e) {
+            throw wrap(e);
+        } catch (IOException e) {
+            throw wrap(e);
+		}
 	}
+
+	private RuntimeException wrap(Exception e) {
+		return new RuntimeException();
+		
+	}
+
+	public static String inputFile;
 }
-
-

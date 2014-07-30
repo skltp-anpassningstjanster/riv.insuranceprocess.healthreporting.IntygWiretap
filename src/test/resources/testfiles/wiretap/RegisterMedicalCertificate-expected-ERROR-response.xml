@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+		<rmc:RegisterMedicalCertificateResponse
+			xmlns:rmc="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3">
+			<rmc:result>
+				<hr:resultCode xmlns:hr="urn:riv:insuranceprocess:healthreporting:2">ERROR</hr:resultCode>
+				<hr:errorId xmlns:hr="urn:riv:insuranceprocess:healthreporting:2">APPLICATION_ERROR</hr:errorId>
+				<hr:errorText xmlns:hr="urn:riv:insuranceprocess:healthreporting:2">-1</hr:errorText>
+			</rmc:result>
+		</rmc:RegisterMedicalCertificateResponse>

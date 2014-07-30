@@ -26,7 +26,7 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
         </jms:inbound-endpoint>
 
 		<!--  Set the name of this wiretap service for logging purposes -->
-		<set-variable variableName="wiretap-name" value="${WIRETAP_1_NAME}" doc:name="Set name"/>
+		<set-variable variableName="wiretap-name" value="${WIRETAP_1_NAME}" doc:name="Set name"/>		
 
 		<!--  Log incoming request now when the wiretap-name is set -->
 		<transformer ref="logMsgIn" doc:name="Transformer Reference"/>
@@ -61,24 +61,33 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
             exchange-pattern="request-response"
             responseTimeout="${SERVICE_TIMEOUT_MS}"
             transformer-refs="logReqOut"
-            responseTransformer-refs="logRespIn">
+            responseTransformer-refs="logRespIn objToStr">
             
             <jms:transaction action="ALWAYS_JOIN"/>
         </https:outbound-endpoint>
         
-        
+        <!-- Fetch the status codes in resultCode ignoring namespaces and paths (only OK and INFO are acceptable). 
+             Path ignored since we had problems matching with namespaces. -->
+		<set-variable value="#[xpath('/Envelope//*[local-name()=\'resultCode\'][text()=\'OK\' or text()=\'INFO\']')]" variableName="faultElement" />
         
         <!-- Logs unsuccessful http requests when trying to notify WIRETAP_1_NOTIFY_OUTBOUND_URL. Will not log exceptions.  -->
 		<choice doc:name="Choice">
 
 			<when expression="#[message.inboundProperties['http.status'] >= 400]">
 			
-				<object-to-string-transformer doc:name="Object to String"/>
-			
 				<!-- Save payload for logging -->
 				<set-property propertyName="RequestPayload" value="#[variable:request]" doc:name="Property"/>
 
 				<!-- We need to treat http_stats >= 400 as an exception, so we need throw an exception here -->
+				<component doc:name="Java" class="se.skltp.services.anp.intyg.wiretap.WiretapExceptionThrower" />
+				
+			</when>
+			<when expression="flowVars['faultElement'] == null">
+			
+				<!-- Save payload for logging -->
+				<set-property propertyName="RequestPayload" value="#[variable:request]" doc:name="Property"/>
+
+				<!-- We need to treat non OK/INFO responses as an exception, so we need throw an exception here -->
 				<component doc:name="Java" class="se.skltp.services.anp.intyg.wiretap.WiretapExceptionThrower" />
 				
 			</when>

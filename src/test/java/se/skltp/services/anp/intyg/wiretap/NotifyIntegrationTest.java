@@ -1,6 +1,7 @@
 package se.skltp.services.anp.intyg.wiretap;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -59,24 +60,47 @@ public class NotifyIntegrationTest extends AbstractTestCase {
 
 	private void doSetUpJms() {
 		// TODO: Fix lazy init of JMS connection et al so that we can create jmsutil in the declaration
-		// (The embedded ActiveMQ queue manager is not yet started by Mule when jmsutil is delcared...)
+		// (The embedded ActiveMQ queue manager is not yet started by Mule when jmsutil is declared...)
 		if (jmsUtil == null) jmsUtil = new ActiveMqJmsTestUtil();
 		
-		// Clear queues used for error handling
-		jmsUtil.clearQueues(ERROR_LOG_QUEUE, WIRETAP_1_QUEUE);
+		// Clear queues used for error handling. Seems as if we have to clean error queue last, otherwise messages are moved to it.
+		jmsUtil.clearQueues(WIRETAP_1_QUEUE, ERROR_LOG_QUEUE);
     }
 
     @Test
-    public void test_ok() throws Fault, JMSException {
-    	
-    	String inputFile = "src/test/resources/testfiles/wiretap/request-input.xml";
+    public void test_ok() throws Exception {
+		NotifyTestProducer.inputFile = "src/test/resources/testfiles/wiretap/RegisterMedicalCertificate-expected-response.xml";		
+
+    	String inputFile = "src/test/resources/testfiles/wiretap/RegisterMedicalCertificate-request.xml";
 		String input = MiscUtil.readFileAsString(inputFile);
     	
 		MuleMessage mr = dispatchAndWaitForServiceComponent("jms://" + WIRETAP_1_QUEUE + "?connector=soitoolkit-jms-connector", input, null, "wiretap-1-notify-teststub-service", TEST_TIMEOUT);
-		SampleResponse response = (SampleResponse)mr.getPayload();
+
+		assertTrue(mr.getPayloadAsString().contains(">OK<"));
+		// Expect no message on the error log queue
+		assertEquals(0, jmsUtil.browseMessagesOnQueue(ERROR_LOG_QUEUE).size());
+
+		// Sleep for a short time period  to allow the JMS response message to be delivered, otherwise ActiveMQ data store seems to be corrupt afterwards...
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {}
 		
-		// Validate response
-		assertEquals("Value1234567890",  response.getValue());
+		// Expect zero messages on the wiretap queue, i.e. that it has been consumed
+		List<Message> messagesOnQueue = jmsUtil.browseMessagesOnQueue(WIRETAP_1_QUEUE);
+
+		assertEquals(0, messagesOnQueue.size());
+
+	}
+    
+    @Test
+    public void test_application_error() throws Exception {
+		NotifyTestProducer.inputFile = "src/test/resources/testfiles/wiretap/RegisterMedicalCertificate-expected-ERROR-response.xml";		
+    	
+    	String inputFile = "src/test/resources/testfiles/wiretap/RegisterMedicalCertificate-ERROR-request.xml";
+		String input = MiscUtil.readFileAsString(inputFile);
+    	
+		MuleMessage mr = dispatchAndWaitForServiceComponent("jms://" + WIRETAP_1_QUEUE + "?connector=soitoolkit-jms-connector", input, null, "wiretap-1-notify-teststub-service", TEST_TIMEOUT);
+		assertTrue(mr.getPayloadAsString().contains(">ERROR<"));
 		
 		// Expect no message on the error log queue
 		assertEquals(0, jmsUtil.browseMessagesOnQueue(ERROR_LOG_QUEUE).size());
@@ -86,11 +110,32 @@ public class NotifyIntegrationTest extends AbstractTestCase {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {}
 		
+		List<Message> messagesOnQueue = jmsUtil.browseMessagesOnQueue(WIRETAP_1_QUEUE);
+		assertEquals(1, messagesOnQueue.size());
+
+	}
+
+    @Test
+    public void test_exception() throws Fault, JMSException {
+		NotifyTestProducer.inputFile = "src/test/resources/testfiles/wiretap/RegisterMedicalCertificate-expected-ERROR-response.xml.nope";		
+    	
+    	String inputFile = "src/test/resources/testfiles/wiretap/RegisterMedicalCertificate-ERROR-request.xml";
+		String input = MiscUtil.readFileAsString(inputFile);
+
+		dispatchAndWaitForException("jms://" + WIRETAP_1_QUEUE + "?connector=soitoolkit-jms-connector", input, null, TEST_TIMEOUT);
+		
+		// Expect no message on the error log queue
+		assertEquals(0, jmsUtil.browseMessagesOnQueue(ERROR_LOG_QUEUE).size());
+
+		// Sleep for a short time period  to allow the JMS response message to be delivered, otherwise ActiveMQ data store seems to be corrupt afterwards...
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {}
 		
 		// Expect zero messages on the wiretap queue, i.e. that it has been consumed
 		List<Message> messagesOnQueue = jmsUtil.browseMessagesOnQueue(WIRETAP_1_QUEUE);
-		assertEquals(0, messagesOnQueue.size());
+		assertEquals(1, messagesOnQueue.size());
 
 	}
-   
+
 }
