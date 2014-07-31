@@ -7,14 +7,12 @@
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 	xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
 	xmlns:http="http://www.mulesoft.org/schema/mule/http"
-	xmlns:https="http://www.mulesoft.org/schema/mule/https"
 	xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
 	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
-http://www.mulesoft.org/schema/mule/https http://www.mulesoft.org/schema/mule/https/current/mule-https.xsd
 http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd">
 	
     <flow name="notify-1-service" doc:name="notify-1-service">
@@ -55,8 +53,8 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
 <!--         </http:outbound-endpoint> -->
 
 
-        <https:outbound-endpoint 
-            connector-ref="soitoolkit-https-connector"
+        <http:outbound-endpoint 
+            connector-ref="soitoolkit-http-connector"
             address="${WIRETAP_1_NOTIFY_OUTBOUND_URL}" 
             exchange-pattern="request-response"
             responseTimeout="${SERVICE_TIMEOUT_MS}"
@@ -64,7 +62,7 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
             responseTransformer-refs="logRespIn objToStr">
             
             <jms:transaction action="ALWAYS_JOIN"/>
-        </https:outbound-endpoint>
+        </http:outbound-endpoint>
         
         <!-- Fetch the status codes in resultCode ignoring namespaces and paths (only OK and INFO are acceptable). 
              Path ignored since we had problems matching with namespaces. -->
@@ -145,8 +143,8 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
 <!--         </http:outbound-endpoint> -->
         
         
-        <https:outbound-endpoint 
-            connector-ref="soitoolkit-https-connector"
+        <http:outbound-endpoint 
+            connector-ref="soitoolkit-http-connector"
             address="${WIRETAP_2_NOTIFY_OUTBOUND_URL}" 
             exchange-pattern="request-response"
             responseTimeout="${SERVICE_TIMEOUT_MS}"
@@ -154,7 +152,7 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
             responseTransformer-refs="logRespIn">
             
             <jms:transaction action="ALWAYS_JOIN"/>
-        </https:outbound-endpoint>
+        </http:outbound-endpoint>
 
 
         <!-- Logs unsuccessful http requests when trying to notify WIRETAP_2_NOTIFY_OUTBOUND_URL. Will not log exceptions.  -->

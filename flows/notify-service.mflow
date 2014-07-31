@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="notify-service">
-    <flow SubFlow="false" name="notify-1-service" type="http://www.mulesoft.org/schema/mule/core/flow" entity-id="0505b25e-cf8f-4a71-9106-1bef592c1874">
+    <flow SubFlow="false" name="notify-1-service" type="http://www.mulesoft.org/schema/mule/core/flow" entity-id="cb030136-b54f-4b47-b6cc-819208cb35dc">
         <properties>
             <property name="initialState"/>
             <property name="processingStrategy2"/>
@@ -93,30 +93,29 @@
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
                     <property name="port"/>
-                    <property name="contentType"/>
-                    <property name="password"/>
-                    <property name="tracking:enable-default-events"/>
-                    <property name="exchange-pattern" value="request-response"/>
-                    <property name="encoding"/>
-                    <property name="path"/>
-                    <property name="responseTransformer-refs" value="logRespIn objToStr"/>
-                    <property name="auxiliary;index" value="10"/>
-                    <property name="connector-ref-outbound" value="soitoolkit-https-connector"/>
-                    <property name="mimeType"/>
-                    <property name="responseTimeout" value="${SERVICE_TIMEOUT_MS}"/>
                     <property name="host"/>
                     <property name="businessEventsLabel"/>
                     <property name="followRedirects"/>
-                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/https/endpoint"/>
+                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/http/endpoint"/>
                     <property name="keep-alive"/>
+                    <property name="contentType"/>
                     <property name="disableTransportTransformer"/>
+                    <property name="password"/>
+                    <property name="exchange-pattern" value="request-response"/>
+                    <property name="tracking:enable-default-events"/>
                     <property name="ref"/>
-                    <property name="httpLabel"/>
                     <property name="transformer-refs" value="logReqOut"/>
+                    <property name="httpLabel"/>
                     <property name="address" value="${WIRETAP_1_NOTIFY_OUTBOUND_URL}"/>
+                    <property name="path"/>
+                    <property name="encoding"/>
+                    <property name="responseTransformer-refs" value="logRespIn objToStr"/>
                     <property name="method"/>
                     <property name="user"/>
-                    <property name="connector-ref" value="soitoolkit-https-connector"/>
+                    <property name="auxiliary;index" value="10"/>
+                    <property name="responseTimeout" value="${SERVICE_TIMEOUT_MS}"/>
+                    <property name="mimeType"/>
+                    <property name="connector-ref" value="soitoolkit-http-connector"/>
                 </properties>
             </endpoint>
             <pattern name="Variable" type="http://www.mulesoft.org/schema/mule/core/variable-transformer" entity-id="Variable#3">
@@ -131,26 +130,26 @@
             <splitter index="13" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
-                    <property-collection name="02d14c6b-75f4-4f85-ad40-542f14325319">
-                        <property name="choice.expression" value="#[message.inboundProperties['http.status'] &gt;= 400]"/>
-                        <property-collection name="choice.attributes">
-                            <property name="expression" value="#[message.inboundProperties['http.status'] &gt;= 400]"/>
-                        </property-collection>
-                    </property-collection>
-                    <property-collection name="16c5290c-e8f1-445c-8272-20f56990afdd">
+                    <property-collection name="93380886-4e10-4dd3-ba82-a18636c17586">
                         <property name="choice.otherwise" value="true"/>
                         <property-collection name="choice.attributes"/>
                     </property-collection>
-                    <property-collection name="95cadd3c-3b63-4173-90ee-fe1552dc5a05">
+                    <property-collection name="9943ab6a-77e1-4db9-9ba5-3b44fabe1b2e">
                         <property name="choice.expression" value="flowVars['faultElement'] == null"/>
                         <property-collection name="choice.attributes">
                             <property name="expression" value="flowVars['faultElement'] == null"/>
                         </property-collection>
                     </property-collection>
+                    <property-collection name="718634ee-82db-4cd6-9235-2c556ef36932">
+                        <property name="choice.expression" value="#[message.inboundProperties['http.status'] &gt;= 400]"/>
+                        <property-collection name="choice.attributes">
+                            <property name="expression" value="#[message.inboundProperties['http.status'] &gt;= 400]"/>
+                        </property-collection>
+                    </property-collection>
                 </properties>
                 <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#2"/>
                 <compartment entity-id="compartment#1">
-                    <lane hadOnlyOneElement="false" index="15" isChoiceOtherwiseLane="false" entity-id="02d14c6b-75f4-4f85-ad40-542f14325319">
+                    <lane hadOnlyOneElement="false" index="15" isChoiceOtherwiseLane="false" entity-id="718634ee-82db-4cd6-9235-2c556ef36932">
                         <pattern name="Property" type="http://www.mulesoft.org/schema/mule/core/properties-transformer" entity-id="Property#2">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
@@ -168,7 +167,7 @@
                             </properties>
                         </pattern>
                     </lane>
-                    <lane hadOnlyOneElement="false" index="18" isChoiceOtherwiseLane="false" entity-id="95cadd3c-3b63-4173-90ee-fe1552dc5a05">
+                    <lane hadOnlyOneElement="false" index="18" isChoiceOtherwiseLane="false" entity-id="9943ab6a-77e1-4db9-9ba5-3b44fabe1b2e">
                         <pattern name="Property" type="http://www.mulesoft.org/schema/mule/core/properties-transformer" entity-id="Property#3">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
@@ -186,7 +185,7 @@
                             </properties>
                         </pattern>
                     </lane>
-                    <lane hadOnlyOneElement="false" index="21" isChoiceOtherwiseLane="true" entity-id="16c5290c-e8f1-445c-8272-20f56990afdd">
+                    <lane hadOnlyOneElement="false" index="21" isChoiceOtherwiseLane="true" entity-id="93380886-4e10-4dd3-ba82-a18636c17586">
                         <pattern name="Object to String" type="http://www.mulesoft.org/schema/mule/core/object-to-string-transformer" entity-id="Object to String#1">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
@@ -217,7 +216,7 @@
             </unknown>
         </lane>
     </flow>
-    <flow SubFlow="false" name="notify-2-service" type="http://www.mulesoft.org/schema/mule/core/flow" entity-id="5d92542c-fb25-475d-bb6e-db8f530162b8">
+    <flow SubFlow="false" name="notify-2-service" type="http://www.mulesoft.org/schema/mule/core/flow" entity-id="4b5d85d7-edcf-459e-a99a-982b5b5e8c81">
         <properties>
             <property name="initialState"/>
             <property name="processingStrategy2"/>
@@ -310,49 +309,48 @@
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
                     <property name="port"/>
-                    <property name="contentType"/>
-                    <property name="password"/>
-                    <property name="tracking:enable-default-events"/>
-                    <property name="exchange-pattern" value="request-response"/>
-                    <property name="encoding"/>
-                    <property name="path"/>
-                    <property name="responseTransformer-refs" value="logRespIn"/>
-                    <property name="auxiliary;index" value="34"/>
-                    <property name="connector-ref-outbound" value="soitoolkit-https-connector"/>
-                    <property name="mimeType"/>
-                    <property name="responseTimeout" value="${SERVICE_TIMEOUT_MS}"/>
                     <property name="host"/>
                     <property name="businessEventsLabel"/>
                     <property name="followRedirects"/>
-                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/https/endpoint"/>
+                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/http/endpoint"/>
                     <property name="keep-alive"/>
+                    <property name="contentType"/>
                     <property name="disableTransportTransformer"/>
+                    <property name="password"/>
+                    <property name="exchange-pattern" value="request-response"/>
+                    <property name="tracking:enable-default-events"/>
                     <property name="ref"/>
-                    <property name="httpLabel"/>
                     <property name="transformer-refs" value="logReqOut"/>
+                    <property name="httpLabel"/>
                     <property name="address" value="${WIRETAP_2_NOTIFY_OUTBOUND_URL}"/>
+                    <property name="path"/>
+                    <property name="encoding"/>
+                    <property name="responseTransformer-refs" value="logRespIn"/>
                     <property name="method"/>
                     <property name="user"/>
-                    <property name="connector-ref" value="soitoolkit-https-connector"/>
+                    <property name="auxiliary;index" value="34"/>
+                    <property name="responseTimeout" value="${SERVICE_TIMEOUT_MS}"/>
+                    <property name="mimeType"/>
+                    <property name="connector-ref" value="soitoolkit-http-connector"/>
                 </properties>
             </endpoint>
             <splitter index="36" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#3">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
-                    <property-collection name="7d475780-d2d5-48cb-bbe6-de888183a67c">
+                    <property-collection name="f2360d7e-c8e5-4ebd-b73c-335e9753bae2">
+                        <property name="choice.otherwise" value="true"/>
+                        <property-collection name="choice.attributes"/>
+                    </property-collection>
+                    <property-collection name="4ec8f521-9fb0-479f-acfb-901338c4d5b9">
                         <property name="choice.expression" value="#[message.inboundProperties['http.status'] &gt;= 400]"/>
                         <property-collection name="choice.attributes">
                             <property name="expression" value="#[message.inboundProperties['http.status'] &gt;= 400]"/>
                         </property-collection>
                     </property-collection>
-                    <property-collection name="69db5f92-2c04-4a96-a229-6d4d8aba5ba7">
-                        <property name="choice.otherwise" value="true"/>
-                        <property-collection name="choice.attributes"/>
-                    </property-collection>
                 </properties>
                 <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#4"/>
                 <compartment entity-id="compartment#2">
-                    <lane hadOnlyOneElement="false" index="38" isChoiceOtherwiseLane="false" entity-id="7d475780-d2d5-48cb-bbe6-de888183a67c">
+                    <lane hadOnlyOneElement="false" index="38" isChoiceOtherwiseLane="false" entity-id="4ec8f521-9fb0-479f-acfb-901338c4d5b9">
                         <pattern name="Object to String" type="http://www.mulesoft.org/schema/mule/core/object-to-string-transformer" entity-id="Object to String#2">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
@@ -380,7 +378,7 @@
                             </properties>
                         </pattern>
                     </lane>
-                    <lane hadOnlyOneElement="false" index="42" isChoiceOtherwiseLane="true" entity-id="69db5f92-2c04-4a96-a229-6d4d8aba5ba7">
+                    <lane hadOnlyOneElement="false" index="42" isChoiceOtherwiseLane="true" entity-id="f2360d7e-c8e5-4ebd-b73c-335e9753bae2">
                         <pattern name="Object to String" type="http://www.mulesoft.org/schema/mule/core/object-to-string-transformer" entity-id="Object to String#3">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
