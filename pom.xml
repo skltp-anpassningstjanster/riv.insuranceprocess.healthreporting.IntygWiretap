@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>org.soitoolkit.commons.poms</groupId>
 		<artifactId>soitoolkit-default-parent</artifactId>
-		<version>0.6.1-M2</version>
+		<version>0.6.1</version>
 	</parent>
 
 	<groupId>se.skltp.adapterservices.insuranceprocess.healthreporting</groupId>
@@ -32,6 +32,14 @@
 	</scm>
 
 	<dependencies>
+		
+		<!-- itintegration monitoring schemas för PingForConfiguration -->
+		<dependency>
+		  	<groupId>se.skltp.itintegration.monitoring</groupId>
+  			<artifactId>ServiceContracts_itintegration_monitoring</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.soitoolkit.commons.components</groupId>
 			<artifactId>soitoolkit-commons-mule</artifactId>
@@ -63,6 +71,44 @@
         </dependency>
     </dependencies>
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.mycila.maven-license-plugin</groupId>
+					<artifactId>maven-license-plugin</artifactId>
+					<version>1.10.b1</version>
+					<configuration>
+						<properties>
+							<year>2014</year>
+							<copyright>Center for eHalsa i samverkan (CeHis). 
+							&lt;http://cehis.se/&gt;</copyright>
+							<product>SKLTP</product>
+						</properties>
+						<strictCheck>true</strictCheck>
+						<basedir>${basedir}</basedir>
+						<header>http://skltp.googlecode.com/svn/tp/license/lgpl/header.txt</header>
+						<encoding>UTF-8</encoding>
+						<includes>
+							<include>src/main/**</include>
+							<include>src/test/**</include>
+						</includes>
+						<excludes>
+							<exclude>**/*.xsd</exclude>
+							<exclude>**/*.wsdl</exclude>
+							<exclude>**/*.xml</exclude>
+							<exclude>**/*.dtd</exclude>
+							<exclude>**/*.jks</exclude>
+							<exclude>**/*.pem</exclude>
+						</excludes>
+						<useDefaultExcludes>true</useDefaultExcludes>
+						<mapping>
+							<tag>DYNASCRIPT_STYLE</tag>
+						</mapping>
+						<useDefaultMapping>true</useDefaultMapping>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<resources>
 			<resource>
 				<directory>${basedir}/src/main/resources</directory>
@@ -73,6 +119,10 @@
 			</resource>
 		</resources>
 		<plugins>
+			<plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+			</plugin>
 			<plugin><!-- Add mule-nature to the eclipse-.project-file -->
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<configuration>
@@ -198,46 +248,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-codegen-plugin</artifactId>
-				<version>2.5.1</version>
-				<executions>
-					<execution>
-						<id>generate-sources-td-monitoring</id>
-						<phase>generate-sources</phase>
-						<configuration>
-							<sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
-							<wsdlOptions>
-								<wsdlOption>
-									<extraargs>
-										<extraarg>-validate</extraarg>
-										<extraarg>-p</extraarg>
-										Note: be careful when changing this - must be in sync for all
-										schemas generations in this namespace!
-										<extraarg>
-											urn:riv:itintegration:monitoring:PingForConfiguration:1:rivtabp20=se.riv.itintegration.monitoring.v1
-										</extraarg>
-										<extraarg>-p</extraarg>
-										<extraarg>
-											urn:riv:itintegration:monitoring:PingForConfigurationResponder:1=se.riv.itintegration.monitoring.v1
-										</extraarg>
-										<extraarg>-p</extraarg>
-										<extraarg>
-											http://www.w3.org/2005/08/addressing=org.w3.wsaddressing10
-										</extraarg>
-									</extraargs>
-									<wsdl>${schema.path}/schemas/monitoring/interactions/PingForConfigurationInteraction/PingForConfigurationInteraction_1.0_RIVTABP20.wsdl</wsdl>
-								</wsdlOption>
-							</wsdlOptions>
-						</configuration>
-						<goals>
-							<goal>wsdl2java</goal>
-						</goals>
-					</execution>
-										
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 	<profiles>
@@ -269,6 +279,29 @@
 						<configuration>
 							<skip>true</skip>
 						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>license</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.mycila.maven-license-plugin</groupId>
+						<artifactId>maven-license-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>check</id>
+								<phase>compile</phase>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 				</plugins>
 			</build>
