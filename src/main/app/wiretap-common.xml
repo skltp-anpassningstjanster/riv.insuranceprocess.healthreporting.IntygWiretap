@@ -102,7 +102,12 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 		or production environments) -->
 
 	<rest-router:config />
-
+	
+	<spring:beans>
+      <!-- import the common logger config -->
+	  <spring:import resource="classpath:tp-commons-mule-logging.xml" />
+	</spring:beans>
+	
 	<spring:beans>
 		<spring:import resource="classpath:soitoolkit-mule-http-connector.xml" />
 		<spring:import resource="classpath:soitoolkit-mule-https-connector.xml"/>

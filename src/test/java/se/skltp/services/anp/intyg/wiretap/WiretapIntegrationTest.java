@@ -130,6 +130,8 @@ public class WiretapIntegrationTest extends AbstractTestCase {
 
 		// Verify that the message on the wiretap queue is the same as the request
 		assertXml(input, getFirstMessage(messagesOnQueue));
+		
+		assertLoggingQueuesAreEmpty();
 	}
 
     @Test
@@ -202,5 +204,10 @@ public class WiretapIntegrationTest extends AbstractTestCase {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+    }
+    
+    private void assertLoggingQueuesAreEmpty() {
+		assertEquals("JMS info message(s)", 0, jmsUtil.browseMessagesOnQueue(rb.getString("SOITOOLKIT_LOG_INFO_QUEUE")).size());
+		assertEquals("JMS error message(s)", 0,jmsUtil.browseMessagesOnQueue(rb.getString("SOITOOLKIT_LOG_ERROR_QUEUE")).size());
     }
 }

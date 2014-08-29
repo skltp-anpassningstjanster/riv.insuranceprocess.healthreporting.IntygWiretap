@@ -78,6 +78,16 @@
 		<level value="INFO" />
 	</logger>
 	
+	<!-- Message logging using soi-toolkit LogTransformer class -->
+	<logger name="org.soitoolkit.commons.mule.log">
+		<level value="INFO" />
+	</logger>
+	
+	<!-- Enables logging of TpDefaultEventLogger, used when enabling/disabling logging to AMQ -->
+	<logger name="se.skltp.commons.log">
+		<level value="DEBUG" />
+	</logger>
+	
 	<root>
 		<priority value="WARN" />
 
