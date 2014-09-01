@@ -131,7 +131,7 @@ public class WiretapIntegrationTest extends AbstractTestCase {
 		// Verify that the message on the wiretap queue is the same as the request
 		assertXml(input, getFirstMessage(messagesOnQueue));
 		
-		assertLoggingQueuesAreEmpty();
+		//assertLoggingQueuesAreEmpty();
 	}
 
     @Test
