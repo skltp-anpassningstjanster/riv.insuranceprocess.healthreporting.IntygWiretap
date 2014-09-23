@@ -49,6 +49,7 @@ public class NotifyIntegrationTest extends AbstractTestCase {
 	private static final RecursiveResourceBundle rb = new RecursiveResourceBundle("wiretap-config");
 
 	private static final String WIRETAP_1_QUEUE = rb.getString("WIRETAP_1_QUEUE");
+	private static final String WIRETAP_2_QUEUE = rb.getString("WIRETAP_2_QUEUE");
  
 	private static final String ERROR_LOG_QUEUE = "SOITOOLKIT.LOG.ERROR";
 
@@ -76,6 +77,8 @@ public class NotifyIntegrationTest extends AbstractTestCase {
 		super.doSetUp();
 
 		doSetUpJms();
+		
+		WiretapTestProducerLogger.reset();
      }
 
 	private void doSetUpJms() {
@@ -88,7 +91,7 @@ public class NotifyIntegrationTest extends AbstractTestCase {
     }
 
     @Test
-    public void test_ok() throws Exception {
+    public void test_ok_notify_1_flow() throws Exception {
 		NotifyTestProducer.inputFile = "src/test/resources/testfiles/wiretap/RegisterMedicalCertificate-expected-response.xml";		
 
     	String inputFile = "src/test/resources/testfiles/wiretap/RegisterMedicalCertificate-request.xml";
@@ -109,6 +112,41 @@ public class NotifyIntegrationTest extends AbstractTestCase {
 		List<Message> messagesOnQueue = jmsUtil.browseMessagesOnQueue(WIRETAP_1_QUEUE);
 
 		assertEquals(0, messagesOnQueue.size());
+		
+		//Verify http headers are propagated frpm Wiretap to producer (VP)
+		assertEquals(rb.getString("WIRETAP_HSA_ID"), WiretapTestProducerLogger.getLastSenderId());
+		assertEquals(rb.getString("VP_INSTANCE_ID"), WiretapTestProducerLogger.getLastVpInstance());
+		assertEquals(rb.getString("WIRETAP_ORIGINAL_HSA_ID"), WiretapTestProducerLogger.getLastOriginalConsumer());
+
+	}
+    
+    @Test
+    public void test_ok_notify_2_flow() throws Exception {
+		NotifyTestProducer.inputFile = "src/test/resources/testfiles/wiretap/SendMedicalCertificateQuestion-expected-response.xml";		
+
+    	String inputFile = "src/test/resources/testfiles/wiretap/SendMedicalCertificateQuestion-request.xml";
+		String input = MiscUtil.readFileAsString(inputFile);
+    	
+		MuleMessage mr = dispatchAndWaitForServiceComponent("jms://" + WIRETAP_2_QUEUE + "?connector=soitoolkit-jms-connector", input, null, "wiretap-2-notify-teststub-service", TEST_TIMEOUT);
+
+		assertTrue(mr.getPayloadAsString().contains(">OK<"));
+		// Expect no message on the error log queue
+		assertEquals(0, jmsUtil.browseMessagesOnQueue(ERROR_LOG_QUEUE).size());
+
+		// Sleep for a short time period  to allow the JMS response message to be delivered, otherwise ActiveMQ data store seems to be corrupt afterwards...
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {}
+		
+		// Expect zero messages on the wiretap queue, i.e. that it has been consumed
+		List<Message> messagesOnQueue = jmsUtil.browseMessagesOnQueue(WIRETAP_2_QUEUE);
+
+		assertEquals(0, messagesOnQueue.size());
+		
+		//Verify http headers are propagated frpm Wiretap to producer (VP)
+		assertEquals(rb.getString("WIRETAP_HSA_ID"), WiretapTestProducerLogger.getLastSenderId());
+		assertEquals(rb.getString("VP_INSTANCE_ID"), WiretapTestProducerLogger.getLastVpInstance());
+		assertEquals(rb.getString("WIRETAP_ORIGINAL_HSA_ID"), WiretapTestProducerLogger.getLastOriginalConsumer());
 
 	}
     

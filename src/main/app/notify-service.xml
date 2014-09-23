@@ -29,7 +29,16 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
 		<!--  Log incoming request now when the wiretap-name is set -->
 		<transformer ref="logMsgIn" doc:name="Transformer Reference"/>
 
- 		<set-property propertyName="x-rivta-original-serviceconsumer-hsaid" value="${WIRETAP_ORIGINAL_HSA_ID}" doc:name="x-rivta-original-serviceconsumer-hsaid" />
+ 		<set-property propertyName="#[se.skltp.services.anp.intyg.wiretap.WiretapConstants.X_RIVTA_ORIGINAL_SERVICE_CONSUMER_HSA_ID]" value="${WIRETAP_ORIGINAL_HSA_ID}" doc:name="x-rivta-original-serviceconsumer-hsaid" />
+ 		
+ 		<!-- 
+ 			Propagate x-vp-sender-id as an outbound property, value is the hsa id of Wiretap to be used when invoking VP.
+ 			Propagate x-vp-instance-id as an outbound property, value is set as an id of the invoked VP.
+ 			
+ 			These two headers are dependent on each other in a way that when using x-vp-sender-id against VP, VP will check for a valid x-vp-instance-id.
+ 		-->
+ 		<set-property propertyName="#[se.skltp.services.anp.intyg.wiretap.WiretapConstants.X_VP_SENDER_ID]" value="${WIRETAP_HSA_ID}" doc:name="propagate x-vp-sender-id when invoking VP" />
+ 		<set-property propertyName="#[se.skltp.services.anp.intyg.wiretap.WiretapConstants.X_VP_INSTANCE_ID]" value="${VP_INSTANCE_ID}" doc:name="propagate x-vp-instance-id when invoking VP" />
 
 		<custom-transformer  class="se.skltp.services.anp.intyg.wiretap.LogicalAddressTransformer" doc:name="Java">
 			<spring:property
@@ -118,8 +127,17 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
 		<!--  Log incoming request now when the wiretap-name is set -->
 		<transformer ref="logMsgIn" doc:name="Transformer Reference"/>
  		
- 		<set-property propertyName="x-rivta-original-serviceconsumer-hsaid" value="${WIRETAP_ORIGINAL_HSA_ID}" doc:name="x-rivta-original-serviceconsumer-hsaid" />
+ 		<set-property propertyName="#[se.skltp.services.anp.intyg.wiretap.WiretapConstants.X_RIVTA_ORIGINAL_SERVICE_CONSUMER_HSA_ID]" value="${WIRETAP_ORIGINAL_HSA_ID}" doc:name="x-rivta-original-serviceconsumer-hsaid" />
 
+		<!-- 
+ 			Propagate x-vp-sender-id as an outbound property, value is the hsa id of Wiretap to be used when invoking VP.
+ 			Propagate x-vp-instance-id as an outbound property, value is set as an id of the invoked VP.
+ 			
+ 			These two headers are dependent on each other in a way that when using x-vp-sender-id against VP, VP will check for a valid x-vp-instance-id.
+ 		-->
+ 		<set-property propertyName="#[se.skltp.services.anp.intyg.wiretap.WiretapConstants.X_VP_SENDER_ID]" value="${WIRETAP_HSA_ID}" doc:name="propagate x-vp-sender-id when invoking VP" />
+ 		<set-property propertyName="#[se.skltp.services.anp.intyg.wiretap.WiretapConstants.X_VP_INSTANCE_ID]" value="${VP_INSTANCE_ID}" doc:name="propagate x-vp-instance-id when invoking VP" />
+ 		
 		<custom-transformer  class="se.skltp.services.anp.intyg.wiretap.LogicalAddressTransformer" doc:name="Java">
 			<spring:property
             	name="newLogicalAddress"

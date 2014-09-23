@@ -11,17 +11,21 @@
 		http://www.mulesoft.org/schema/mule/core    http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 		http://www.mulesoft.org/schema/mule/http    http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 	">
+	
+	<custom-transformer name="wiretapTestProducerLogger" class="se.skltp.services.anp.intyg.wiretap.WiretapTestProducerLogger"/>
 
 	<simple-service 
 		name="wiretap-1-notify-teststub-service"
         address="${WIRETAP_1_NOTIFY_TESTSTUB_INBOUND_URL}" 
         component-class="se.skltp.services.anp.intyg.wiretap.NotifyTestProducer"
+        transformer-refs="wiretapTestProducerLogger"
         type="jax-ws" />
 
 	<simple-service 
 		name="wiretap-2-notify-teststub-service"
         address="${WIRETAP_2_NOTIFY_TESTSTUB_INBOUND_URL}" 
         component-class="se.skltp.services.anp.intyg.wiretap.NotifyTestProducer"
+        transformer-refs="wiretapTestProducerLogger"
         type="jax-ws" />
 
 
