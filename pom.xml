@@ -22,7 +22,7 @@
 	<name>intyg-wiretap</name>
 
 	<properties>
-		<!-- Property for generating code from XML Schemas (JAXB) -->
+		<!-- Properties for generating code from XML Schemas (JAXB) -->
 		<schema.path>${basedir}/src/main/resources</schema.path>
 	</properties>
 	<scm>
