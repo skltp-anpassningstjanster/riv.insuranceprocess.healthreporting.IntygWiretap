@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- DON'T CHANGE THE CONTENT OF THIS 
-	COMMENT UNLESS YOU REALLY KNOW WHAT YOU ARE DOING! 
-	[soi-toolkit.gen.version=0.6.1-M3-SNAPSHOT] 
-	[soi-toolkit.gen.type=services] 
-	[soi-toolkit.gen.createDate=2013-06-13T11:17:09.494+02:00] 
+<!-- DON'T CHANGE THE CONTENT OF THIS
+	COMMENT UNLESS YOU REALLY KNOW WHAT YOU ARE DOING!
+	[soi-toolkit.gen.version=0.6.1-M3-SNAPSHOT]
+	[soi-toolkit.gen.type=services]
+	[soi-toolkit.gen.createDate=2013-06-13T11:17:09.494+02:00]
 	[soi-toolkit.gen.artifactId=wiretap] -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<parent>
 		<groupId>org.soitoolkit.commons.poms</groupId>
 		<artifactId>soitoolkit-default-parent</artifactId>
@@ -25,28 +25,30 @@
 		<!-- Properties for generating code from XML Schemas (JAXB) -->
 		<schema.path>${basedir}/src/main/resources</schema.path>
 	</properties>
+
 	<scm>
-		<connection>https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/trunk</connection>
-		<developerConnection>scm:svn:https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/trunk</developerConnection>
-		<url>https://skltpservices.googlecode.com/svn/Components/intyg-wiretap/trunk</url>
+		<url>https://github.com/skltp-anpassningstjanster/riv.insuranceprocess.healthreporting.IntygWiretap</url>
+		<connection>scm:git:git://github.com/skltp-anpassningstjanster/riv.insuranceprocess.healthreporting.IntygWiretap.git</connection>
+		<developerConnection>scm:git:git://github.com/skltp-anpassningstjanster/riv.insuranceprocess.healthreporting.IntygWiretap.git</developerConnection>
+		<tag>HEAD</tag>
 	</scm>
 
 	<dependencies>
-		
+
 		<!-- itintegration monitoring schemas för PingForConfiguration -->
 		<dependency>
 		  	<groupId>se.skltp.itintegration.monitoring</groupId>
   			<artifactId>ServiceContracts_itintegration_monitoring</artifactId>
 			<version>1.0</version>
 		</dependency>
-		
+
 		<!-- add the possibilities to enable/disable logging to amq using property TP_DO_LOG_TO_JMS=true/false -->
 		<dependency>
 			<groupId>se.skltp.commons</groupId>
 			<artifactId>tp-commons-mule</artifactId>
 			<version>1.0.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.soitoolkit.commons.components</groupId>
 			<artifactId>soitoolkit-commons-mule</artifactId>
@@ -87,7 +89,7 @@
 					<configuration>
 						<properties>
 							<year>2014</year>
-							<copyright>Center for eHalsa i samverkan (CeHis). 
+							<copyright>Center for eHalsa i samverkan (CeHis).
 							&lt;http://cehis.se/&gt;</copyright>
 							<product>SKLTP</product>
 						</properties>
@@ -114,13 +116,24 @@
 						<useDefaultMapping>true</useDefaultMapping>
 					</configuration>
 				</plugin>
+				<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-release-plugin</artifactId>
+						<version>2.5.1</version>
+						<configuration>
+								<autoVersionSubmodules>true</autoVersionSubmodules>
+								<tagNameFormat>v@{project.version}</tagNameFormat>
+								<pushChanges>false</pushChanges>
+								<localCheckout>true</localCheckout>
+						</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<resources>
 			<resource>
 				<directory>${basedir}/src/main/resources</directory>
 			</resource>
-			<resource><!-- To get mule-config files from the Mule Studio defined resource-folder 
+			<resource><!-- To get mule-config files from the Mule Studio defined resource-folder
 					in the classpath... -->
 				<directory>${basedir}/src/main/app</directory>
 			</resource>
@@ -144,7 +157,7 @@
 			<plugin>
 				<groupId>org.mule.tools</groupId>
 				<artifactId>maven-mule-plugin</artifactId>
-				<extensions>true</extensions><!-- Include mule-dependencies that doesn't 
+				<extensions>true</extensions><!-- Include mule-dependencies that doesn't
 					come with Mule 3.x otherwise we can't install to a vanilla Mule 3.x installation -->
 				<configuration>
 					<inclusions>
@@ -157,32 +170,32 @@
 							<artifactId>devkit</artifactId>
 						</inclusion>
 					</inclusions>
-					<exclusions><!-- xercesImpl is endorsed in MULE_HOME/lib/endorsed, see 
+					<exclusions><!-- xercesImpl is endorsed in MULE_HOME/lib/endorsed, see
 							issue 274 -->
 						<exclusion>
 							<groupId>xerces</groupId>
 							<artifactId>xercesImpl</artifactId>
-						</exclusion><!-- log4j is already included in MULE_HOME/lib/boot, see 
+						</exclusion><!-- log4j is already included in MULE_HOME/lib/boot, see
 							issue 283 -->
 						<exclusion>
 							<groupId>log4j</groupId>
 							<artifactId>log4j</artifactId>
-						</exclusion><!-- junit is already included in MULE_HOME/lib/opt, see 
+						</exclusion><!-- junit is already included in MULE_HOME/lib/opt, see
 							issue 283 -->
 						<exclusion>
 							<groupId>junit</groupId>
 							<artifactId>junit</artifactId>
-						</exclusion><!-- servlet-api-2.5 is already included in MULE_HOME/lib/opt, 
+						</exclusion><!-- servlet-api-2.5 is already included in MULE_HOME/lib/opt,
 							see issue 283 -->
 						<exclusion>
 							<groupId>org.mortbay.jetty</groupId>
 							<artifactId>servlet-api-2.5</artifactId>
-						</exclusion><!-- jug is already included in MULE_HOME/lib/opt, see 
+						</exclusion><!-- jug is already included in MULE_HOME/lib/opt, see
 							issue 283 -->
 						<exclusion>
 							<groupId>org.safehaus.jug</groupId>
 							<artifactId>jug.osgi</artifactId>
-						</exclusion><!-- activemq needs to be added manually to MULE_HOME/lib/user 
+						</exclusion><!-- activemq needs to be added manually to MULE_HOME/lib/user
 							if required, see issue 283 -->
 						<exclusion>
 							<groupId>org.apache.activemq</groupId>
@@ -191,7 +204,7 @@
 						<exclusion>
 							<groupId>org.apache.xbean</groupId>
 							<artifactId>xbean-spring</artifactId>
-						</exclusion><!-- hornetq needs to be added manually to MULE_HOME/lib/user 
+						</exclusion><!-- hornetq needs to be added manually to MULE_HOME/lib/user
 							if required, see issue 283 -->
 						<exclusion>
 							<groupId>org.hornetq</groupId>
@@ -204,7 +217,7 @@
 						<exclusion>
 							<groupId>org.jboss.netty</groupId>
 							<artifactId>netty</artifactId>
-						</exclusion><!-- jtds (JDBC driver fpr Microsoft SQL Server) needs 
+						</exclusion><!-- jtds (JDBC driver fpr Microsoft SQL Server) needs
 							to be added manually to MULE_HOME/lib/user if required, see issue 283 -->
 						<exclusion>
 							<groupId>net.sourceforge.jtds</groupId>
@@ -215,8 +228,8 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
-				<configuration><!-- if no classifier is declared, then a mvn install 
-						results in a file in the local repo: ic2-1.0.0-SNAPSHOT.mule which is a jar-file 
+				<configuration><!-- if no classifier is declared, then a mvn install
+						results in a file in the local repo: ic2-1.0.0-SNAPSHOT.mule which is a jar-file
 						- only strangely named and with a bad extension -->
 					<classifier>core</classifier>
 					<excludes>
@@ -259,8 +272,8 @@
 	</build>
 	<profiles>
 		<profile>
-			<id>muleServer</id><!-- Start mule server with the command "mvn -PmuleServer" 
-				or "mvn -PmuleServer -Dexec.args="${artifaceId}-config.xml"" if you want 
+			<id>muleServer</id><!-- Start mule server with the command "mvn -PmuleServer"
+				or "mvn -PmuleServer -Dexec.args="${artifaceId}-config.xml"" if you want
 				to override the default config-file -->
 			<build>
 				<defaultGoal>test</defaultGoal>
