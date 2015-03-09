@@ -16,7 +16,7 @@
             </patient>
             <skapadAvHosPersonal>
                <ns2:personal-id extension="Personal HSA-ID" root="1.2.752.129.2.1.4.1"/>
-               <ns2:fullstandigtNamn>En Läkare</ns2:fullstandigtNamn>
+               <ns2:fullstandigtNamn>En läkare</ns2:fullstandigtNamn>
                <ns2:enhet>
                   <ns2:enhets-id extension="VardenhetY" root="1.2.752.129.2.1.4.1"/>
                   <ns2:arbetsplatskod extension="123456789011" root="1.2.752.29.4.71"/>
