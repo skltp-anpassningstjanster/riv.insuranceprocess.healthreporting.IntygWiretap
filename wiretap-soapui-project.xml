@@ -887,7 +887,7 @@
             </patient>
             <skapadAvHosPersonal>
                <ns2:personal-id extension="Personal HSA-ID" root="1.2.752.129.2.1.4.1"/>
-               <ns2:fullstandigtNamn>En Läkare</ns2:fullstandigtNamn>
+               <ns2:fullstandigtNamn>En läkare</ns2:fullstandigtNamn>
                <ns2:enhet>
                   <ns2:enhets-id extension="VardenhetY" root="1.2.752.129.2.1.4.1"/>
                   <ns2:arbetsplatskod extension="123456789011" root="1.2.752.29.4.71"/>
@@ -1560,7 +1560,7 @@
             <adressVard>
                <ns2:hosPersonal>
                   <ns3:personal-id extension="Personal HSA-ID" root="1.2.752.129.2.1.4.1"/>
-                  <ns3:fullstandigtNamn>En Läkare</ns3:fullstandigtNamn>
+                  <ns3:fullstandigtNamn>En läkare</ns3:fullstandigtNamn>
                   <ns3:enhet>
                      <ns3:enhets-id extension="VardenhetY" root="1.2.752.129.2.1.4.1"/>
                      <ns3:enhetsnamn>Kir mott som ligger till vänster</ns3:enhetsnamn>
@@ -1616,7 +1616,7 @@ WIRETAP_2_NOTIFY_TESTSTUB_INBOUND_UR=${WIRETAP_2_TESTSTUB_INBOUND_URL}</con:desc
             </patient>
             <skapadAvHosPersonal>
                <ns2:personal-id extension="Personal HSA-ID" root="1.2.752.129.2.1.4.1"/>
-               <ns2:fullstandigtNamn>En Läkare</ns2:fullstandigtNamn>
+               <ns2:fullstandigtNamn>En läkare</ns2:fullstandigtNamn>
                <ns2:enhet>
                   <ns2:enhets-id extension="VardenhetY" root="1.2.752.129.2.1.4.1"/>
                   <ns2:arbetsplatskod extension="123456789011" root="1.2.752.29.4.71"/>
@@ -1692,7 +1692,7 @@ WIRETAP_2_NOTIFY_TESTSTUB_INBOUND_UR=${WIRETAP_2_TESTSTUB_INBOUND_URL}</con:desc
             <adressVard>
                <ns2:hosPersonal>
                   <ns3:personal-id extension="Personal HSA-ID" root="1.2.752.129.2.1.4.1"/>
-                  <ns3:fullstandigtNamn>En Läkare</ns3:fullstandigtNamn>
+                  <ns3:fullstandigtNamn>En läkare</ns3:fullstandigtNamn>
                   <ns3:enhet>
                      <ns3:enhets-id extension="VardenhetY" root="1.2.752.129.2.1.4.1"/>
                      <ns3:enhetsnamn>Kir mott som ligger till vänster</ns3:enhetsnamn>
