@@ -102,7 +102,7 @@
             &lt;/patient&gt;
             &lt;skapadAvHosPersonal&gt;
                &lt;ns2:personal-id extension=&quot;Personal HSA-ID&quot; root=&quot;1.2.752.129.2.1.4.1&quot;/&gt;
-               &lt;ns2:fullstandigtNamn&gt;En Läkare&lt;/ns2:fullstandigtNamn&gt;
+               &lt;ns2:fullstandigtNamn&gt;En läkare&lt;/ns2:fullstandigtNamn&gt;
                &lt;ns2:enhet&gt;
                   &lt;ns2:enhets-id extension=&quot;VardenhetY&quot; root=&quot;1.2.752.129.2.1.4.1&quot;/&gt;
                   &lt;ns2:arbetsplatskod extension=&quot;123456789011&quot; root=&quot;1.2.752.29.4.71&quot;/&gt;
