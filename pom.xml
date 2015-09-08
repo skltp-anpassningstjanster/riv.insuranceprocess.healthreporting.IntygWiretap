@@ -10,9 +10,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.soitoolkit.commons.poms</groupId>
-		<artifactId>soitoolkit-default-parent</artifactId>
-		<version>0.6.1</version>
+		<groupId>se.skltp.commons</groupId>
+		<artifactId>skltp-commons-mule-parent</artifactId>
+		<version>1.0.1</version>
 	</parent>
 
 	<groupId>se.skltp.adapterservices.insuranceprocess.healthreporting</groupId>
@@ -63,7 +63,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.soitoolkit.commons.poms.mule-dependencies</groupId>
-			<artifactId>soitoolkit-mule-3.3.0-dependencies</artifactId>
+			<artifactId>soitoolkit-mule-3.3.1-dependencies</artifactId>
 			<version>${soitoolkit.version}</version>
 			<type>pom</type>
 		</dependency>
