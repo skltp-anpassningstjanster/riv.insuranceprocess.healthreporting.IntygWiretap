@@ -38,7 +38,6 @@ import javax.xml.ws.soap.SOAPFaultException;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.Test;
-import org.junit.Ignore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.soitoolkit.commons.mule.test.AbstractJmsTestUtil;

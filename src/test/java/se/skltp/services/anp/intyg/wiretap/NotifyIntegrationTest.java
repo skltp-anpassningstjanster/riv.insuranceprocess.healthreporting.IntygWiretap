@@ -29,7 +29,6 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 
 import org.junit.Test;
-import org.junit.Ignore;
 import org.mule.api.MuleMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +37,6 @@ import org.soitoolkit.commons.mule.test.ActiveMqJmsTestUtil;
 import org.soitoolkit.commons.mule.test.junit4.AbstractTestCase;
 import org.soitoolkit.commons.mule.util.MiscUtil;
 import org.soitoolkit.commons.mule.util.RecursiveResourceBundle;
-import org.soitoolkit.refapps.sd.sample.schema.v1.SampleResponse;
 import org.soitoolkit.refapps.sd.sample.wsdl.v1.Fault;
  
 public class NotifyIntegrationTest extends AbstractTestCase {
