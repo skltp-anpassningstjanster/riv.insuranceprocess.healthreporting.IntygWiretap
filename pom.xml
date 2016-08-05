@@ -10,9 +10,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>se.skltp.commons</groupId>
-		<artifactId>skltp-commons-mule-parent</artifactId>
-		<version>1.0.1</version>
+    <groupId>se.skltp.commons</groupId>
+    <artifactId>skltp-commons-mule-parent</artifactId>
+    <version>1.0.1</version>
 	</parent>
 
 	<groupId>se.skltp.adapterservices.insuranceprocess.healthreporting</groupId>
@@ -95,7 +95,7 @@
 						</properties>
 						<strictCheck>true</strictCheck>
 						<basedir>${basedir}</basedir>
-						<header>http://skltp.googlecode.com/svn/tp/license/lgpl/header.txt</header>
+						<header>https://raw.githubusercontent.com/skltp/license/develop/header.txt</header>
 						<encoding>UTF-8</encoding>
 						<includes>
 							<include>src/main/**</include>
