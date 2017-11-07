@@ -89,9 +89,8 @@
 					<configuration>
 						<properties>
 							<year>2014</year>
-							<copyright>Center for eHalsa i samverkan (CeHis).
-							&lt;http://cehis.se/&gt;</copyright>
-							<product>SKLTP</product>
+							<copyright>Inera AB, &lt;http://inera.se/&gt;</copyright>
+                            <product>SKLTP</product>
 						</properties>
 						<strictCheck>true</strictCheck>
 						<basedir>${basedir}</basedir>
